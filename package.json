@@ -6,6 +6,7 @@
     "esm",
     "README.md",
     "page.js",
+    "LICENSE",
     "component.js"
   ],
   "scripts": {
