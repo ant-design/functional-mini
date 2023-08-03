@@ -21,7 +21,7 @@ const DANGER_ZONE_BYPASS_FUNCTION_CALL_WITH_DATA =
 export interface IAppxOptions {
   data: Record<string, any>;
   options: Record<string, string>;
-  methods?: Record<string, (args?) => void>;
+  methods?: Record<string, (args: any) => void>;
   [handlerName: string]: any;
 }
 
@@ -42,9 +42,12 @@ export interface IInstanceMap {
 }
 
 function compositeElementWithContext(
+  //@ts-expect-error
   id,
+  //@ts-expect-error
   elementFn,
   appxContext: IElementContext,
+  //@ts-expect-error
   pendingProps,
 ) {
   const el = React.createElement(elementFn, pendingProps);
@@ -115,6 +118,7 @@ export function functionalMiniElement<TProps>(
   }
 
   const nameTag = `[${elementType}/${displayName || '(unnamed)'}]`;
+  //@ts-expect-error
   const log = (...args) => {
     globalLog(nameTag, ...args);
   };
@@ -143,10 +147,12 @@ export function functionalMiniElement<TProps>(
   const defaultPropKeys = Object.keys(defaultProps || {});
   let observers = {};
   const elementMap: IInstanceMap = {};
+  //@ts-expect-error
   let commonTestRenderer;
   function updateReactTree() {
     act(() => {
       const parent = flushReactTree(elementMap);
+      //@ts-expect-error
       if (!commonTestRenderer) {
         commonTestRenderer = mountElement(parent);
       } else {
@@ -166,8 +172,9 @@ export function functionalMiniElement<TProps>(
       try {
         miniData = element.call(undefined, props);
       } catch (e) {
+        //@ts-expect-error
         e.message = `渲染出错 ${e.message}`;
-        return logErrorAndThrow(e);
+        return logErrorAndThrow(e as Error);
       }
     }
     if (typeof miniData === 'undefined') {
@@ -249,6 +256,7 @@ export function functionalMiniElement<TProps>(
     }
   }
 
+  //@ts-expect-error
   function dispatchNewProps(appxInstance, nextProps) {
     const id = getIdFromAppxInstance(appxInstance);
     const instance = elementMap[id];
@@ -271,6 +279,7 @@ export function functionalMiniElement<TProps>(
   }
 
   const handlersController = new HandlersController(nameTag);
+  //@ts-expect-error
   const anyUnknownContext = (ctx) => {
     if (!ctx) throw new Error('ctx is required');
     const id = getIdFromAppxInstance(ctx);
@@ -316,6 +325,7 @@ export function functionalMiniElement<TProps>(
       observers = {
         // 忽略函数参数，直接从 this 里面找
         // 搞不懂小程序的设计逻辑，为什么非要在 props 里夹着 data
+        //@ts-expect-error
         [props](this: any, ...args) {
           log('observer is being called', args);
           const newProps = getPropsFromInstance(this, defaultPropKeys);
@@ -330,6 +340,7 @@ export function functionalMiniElement<TProps>(
 
   // 做一次预渲染，获取所有 appx 需要的属性
   const generateInstanceContext = (
+    //@ts-expect-error
     instance,
     ifServerRender: boolean,
   ): IElementContext => {
@@ -343,9 +354,10 @@ export function functionalMiniElement<TProps>(
   };
 
   // 收集 initData
-  let initData = {};
+  let initData: unknown = {};
   const fakeAppxInstance = {
     $id: `_minifish_hooks_pre_render_${Math.random()}`,
+    //@ts-expect-error
     setData(data) {
       initData = {
         ...(initData || {}),
@@ -372,8 +384,10 @@ export function functionalMiniElement<TProps>(
   const handlers = handlersController.getHandlersImplProxy();
   for (const name in handlers) {
     if (platformExposedEvents.indexOf(name) >= 0) {
+      //@ts-expect-error
       lifeCycleHandlers[name] = handlers[name];
     } else {
+      //@ts-expect-error
       userEventHandlers[name] = handlers[name];
     }
   }
@@ -389,8 +403,4 @@ export function functionalMiniElement<TProps>(
   );
   log('element options', finalOptions);
   return finalOptions;
-}
-
-export function tellIfFunctionalMiniContent(elementJson) {
-  return elementJson?.children[0] === FUNCTIONAL_MINI_PAGE_DOM_PLACEHOLDER;
 }

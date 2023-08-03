@@ -82,7 +82,11 @@ export default class HandlersController {
             return ret; // 如果不是 function，认为这个返回值有用，不是 off
           }
         } catch (e) {
-          error(`${self.elementTag} ${name} 执行出错，错误信息：${e.message}`);
+          error(
+            `${self.elementTag} ${name} 执行出错，错误信息：${
+              (e as Error).message
+            }`,
+          );
           throw e;
         }
       },
@@ -125,7 +129,7 @@ export default class HandlersController {
     this.handlerImpl = {};
   }
 
-  getHandlersByName(name, context): IImplInfo[] {
+  getHandlersByName(name: string, context: any): IImplInfo[] {
     if (!context) throw new Error('context is required');
     return this.handlerImpl[name].filter((handler) => {
       return this.filterContext(handler.bindContext, context);
@@ -156,7 +160,7 @@ export default class HandlersController {
     }
   }
 
-  callHandlers(name, context, args: any[]) {
+  callHandlers(name: string, context: any, args: any[]) {
     const controller = this;
     const handlers = (controller.handlerImpl[name] || []).filter((handler) => {
       const targetCtx = controller.filterContext(handler?.bindContext, context);
@@ -192,6 +196,7 @@ export default class HandlersController {
 
     const handlers = this.handlerNames.reduce((acc, handlerName) => {
       const controller = this;
+      //@ts-expect-error
       acc[handlerName] = function (this: any, ...args) {
         // 这里要保留调用方的 this
         const appxCaller = this;
@@ -229,6 +234,7 @@ export default class HandlersController {
     return handlers;
   }
 
+  //@ts-expect-error
   private filterContext(bindContext, nowContext) {
     if (typeof bindContext === 'function') {
       if (!bindContext(nowContext)) {

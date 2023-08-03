@@ -35,6 +35,7 @@ export const mountElement = function (element: any) {
       render(h('div', {}, 'unmounted'), entryDom);
     },
 
+    //@ts-expect-error
     update(newElement) {
       render(newElement, entryDom);
     },

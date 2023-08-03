@@ -11,6 +11,7 @@ const { useEffect, createContext, useContext } = React;
 
 export type THooksFn = (handler: Function, deps?: any[]) => void;
 
+//@ts-expect-error
 function generateEventHookName(eventName) {
   return `use${eventName[0].toUpperCase()}${eventName.slice(1)}`;
 }
@@ -60,6 +61,7 @@ function useEventCall(
     const off = appxInstanceContext.handlersController.addHandler(
       name,
       appxInstanceContext.instance,
+      //@ts-expect-error
       function (this, ...args) {
         return handler.call(undefined, ...args);
       },
@@ -91,7 +93,7 @@ export function useEvent(name: string, handler: Function, deps: any[]) {
 }
 
 export function getLifeCycleHooks(
-  eventName,
+  eventName: string,
   disableMultiImpl = false,
   specifyPlatform?: ETargetPlatform,
 ): THooksFn {
@@ -129,10 +131,13 @@ export function useSyncMiniData(data = {}) {
     // 比对一下，只 set 不同的部分
     for (const key in data) {
       if (!Object.prototype.hasOwnProperty.call(data, key)) continue;
+      //@ts-expect-error
       if (typeof data[key] === 'function')
         throw new Error(`${key} - 不允许传入函数类型的数据`); // 暂不支持，有需求再说
 
+      //@ts-expect-error
       if (!previousData[key] || previousData[key] !== data[key]) {
+        //@ts-expect-error
         pendingData[key] = data[key];
       }
     }
@@ -141,6 +146,7 @@ export function useSyncMiniData(data = {}) {
     for (const key of Object.keys(previousData)) {
       if (propNames.indexOf(key) >= 0) continue;
       if (!Object.prototype.hasOwnProperty.call(data, key)) {
+        //@ts-expect-error
         pendingData[key] = null;
       }
     }

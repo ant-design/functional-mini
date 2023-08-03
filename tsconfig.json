@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitThis": true,
+    "moduleResolution": "NodeNext",
+    "target": "ES5",
+    "module": "esnext",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "skipLibCheck": true,
+    "jsx": "react",
+    "baseUrl": "./",
+    "outDir": "./esm"
+  },
+  "include": ["src"]
+}

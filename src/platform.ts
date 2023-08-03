@@ -17,11 +17,17 @@ export interface IPlatformConstants {
   buildOptions: (
     // 构建喂给小程序框架的 options
     elementType: EElementType,
+    //@ts-expect-error
     props,
+    //@ts-expect-error
     data,
+    //@ts-expect-error
     lifeCycleHandlers,
+    //@ts-expect-error
     userEventHandlers,
+    //@ts-expect-error
     options,
+    //@ts-expect-error
     observers,
   ) => Record<string, any>;
 }
@@ -169,6 +175,7 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
     getPropsFromInstance(instance, propNames) {
       const newProps = {};
       for (const propName of propNames) {
+        //@ts-expect-error
         newProps[propName] = instance.data[propName];
       }
       return newProps;

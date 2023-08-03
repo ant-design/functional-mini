@@ -44,9 +44,13 @@ const copyTask = files.map(async (file) => {
 
 await Promise.all(copyTask);
 
-spawnSync('tsc', [], {
+const tscResult = spawnSync('tsc', [], {
+  stdio: 'inherit',
   cwd: process.cwd(),
 });
+if (tscResult.status !== 0) {
+  process.exit(tscResult.status ?? -1);
+}
 
 await fs.rm(resolveRoot('esm/3rd-party'), { recursive: true, force: true });
 await fs.cp(resolveRoot('src/3rd-party'), resolveRoot('esm/3rd-party'), {
