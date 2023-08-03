@@ -204,7 +204,6 @@ export function functionalMiniElement<TProps>(
     }
 
     // 上面的 early-return 都是检查和抛错，忽略 hooks 规则
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     useSyncMiniData(miniData || {});
     return React.createElement('div', {}, FUNCTIONAL_MINI_PAGE_DOM_PLACEHOLDER);
   };

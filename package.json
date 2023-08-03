@@ -52,7 +52,8 @@
     "rollup": "^3.23.1",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6",
-    "vitest": "^0.34.1"
+    "vitest": "^0.34.1",
+    "eslint": "^8.46.0"
   },
   "description": "",
   "author": "OttoMao,DiamondYuan",

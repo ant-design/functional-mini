@@ -27,16 +27,14 @@ options.debounceRendering = (cb) => {
 };
 
 export const mountElement = function (element: any) {
-  const entryDom = virtualDocument.createElement('div') as any;
+  const entryDom = virtualDocument.createElement('div') as unknown as Element;
   render(element, entryDom);
-
   return {
     unmount() {
       render(h('div', {}, 'unmounted'), entryDom);
     },
 
-    //@ts-expect-error
-    update(newElement) {
+    update(newElement: Element) {
       render(newElement, entryDom);
     },
 

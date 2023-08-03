@@ -6,7 +6,7 @@ import _traverse from '@babel/traverse';
 import * as types from '@babel/types';
 import { resolveRoot } from '../utils';
 import fs from 'fs/promises';
-import { resolve } from 'path';
+import { resolve, dirname } from 'path';
 import babel from '@babel/core';
 
 const traverse = (_traverse as any).default as typeof _traverse;
@@ -75,6 +75,19 @@ export function virtualDocument() {
         await fs.writeFile(
           resolve(outputDir, 'virtual-document.d.ts'),
           `export { virtualDocument } from './_virtual/virtual-document.js';`,
+        );
+        await fs.mkdir(
+          dirname(resolve(outputDir, '_virtual/virtual-document.d.ts')),
+          {
+            recursive: true,
+          },
+        );
+        await fs.writeFile(
+          resolve(outputDir, '_virtual/virtual-document.d.ts'),
+          await readFile(
+            resolveRoot('scripts/rollup-plugins/assets/virtual-document.d.ts'),
+            'utf-8',
+          ),
         );
       }
     },
