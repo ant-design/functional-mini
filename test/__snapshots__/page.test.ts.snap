@@ -1,0 +1,8 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`page - common and alipay > minium get appx options 1`] = `
+{
+  "d": "d-initValue",
+  "foo": "aa",
+}
+`;

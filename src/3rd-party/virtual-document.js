@@ -1,0 +1,1 @@
+export { virtualDocument } from './_virtual/virtual-document.js';

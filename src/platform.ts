@@ -1,0 +1,234 @@
+import { ETargetPlatform, EElementType } from './types.js';
+
+export interface IPlatformConstants {
+  name: ETargetPlatform;
+  tellIfInThisPlatform: () => boolean;
+  pageEvents: string[]; // 平台的页面生命周期方法
+  pageLifeCycleToMount: string;
+  pageLifeCycleToUnmount: string;
+  componentEvents: string[]; // 平台的组件生命周期方法
+  blockedProperty: string[]; // 不允许开发者注册使用的属性
+  componentLifeCycleToMount: string; // 触发加载 react 组件的生命周期方法
+  componentLifeCycleToUnmount: string;
+  getPropsFromInstance: (
+    instance: any,
+    propNames: string[],
+  ) => Record<string, any>;
+  buildOptions: (
+    // 构建喂给小程序框架的 options
+    elementType: EElementType,
+    props,
+    data,
+    lifeCycleHandlers,
+    userEventHandlers,
+    options,
+    observers,
+  ) => Record<string, any>;
+}
+
+export interface IWechatProperty {
+  [name: string]: {
+    type: any;
+    value: any;
+  };
+}
+
+const ifInAlipay = () => {
+  //@ts-expect-error
+  return typeof my !== 'undefined';
+};
+
+const ifInWeChat = () => {
+  //@ts-expect-error
+  return typeof wx !== 'undefined';
+};
+
+export const checkIfPlatformIsLoadCorrectly = function (
+  config: IPlatformConstants,
+  target: ETargetPlatform,
+) {
+  if (config.name !== target) {
+    const errMsg = `期望的运行平台为 ${target}，但是当前平台配置为 ${config.name}，请检查是否加载了正确的平台配置`;
+    throw new Error(errMsg);
+
+    // 这里的判断方法可能不准，有反馈了再改
+  } else if (!config.tellIfInThisPlatform()) {
+    const errMsg = `期望的运行平台为 ${target}，但是当前运行时环境不是 ${target}，请检查是否加载了正确的平台配置`;
+    throw new Error(errMsg);
+  }
+  return true;
+};
+
+// 方便 ts 类型推导
+export const commonPageEvents = {
+  onLoad: 'onLoad',
+  onShow: 'onShow',
+  onReady: 'onReady',
+  onHide: 'onHide',
+  onPullDownRefresh: 'onPullDownRefresh',
+  onReachBottom: 'onReachBottom',
+  onShareAppMessage: 'onShareAppMessage',
+  onPageScroll: 'onPageScroll',
+  onTabItemTap: 'onTabItemTap',
+  onResize: 'onResize',
+  onUnload: 'onUnload',
+};
+
+export const alipayPageEvents = {
+  onTitleClick: 'onTitleClick',
+  onOptionMenuClick: 'onOptionMenuClick',
+  beforeTabItemTap: 'beforeTabItemTap',
+  onKeyboardHeight: 'onKeyboardHeight',
+  onBack: 'onBack',
+  onSelectedTabItemTap: 'onSelectedTabItemTap',
+  beforeReload: 'beforeReload',
+};
+
+export const commonComponentEvents = {
+  created: 'created',
+  attached: 'attached',
+  ready: 'ready',
+  moved: 'moved',
+  detached: 'detached',
+};
+
+export const alipayComponentEvents = {
+  onInit: 'onInit',
+  didMount: 'didMount',
+  didUpdate: 'didUpdate',
+  deriveDataFromProps: 'deriveDataFromProps',
+  didUnmount: 'didUnmount',
+};
+
+export const wechatComponentEvents = {
+  error: 'error',
+};
+
+// 保留字，不允许开发者注册使用
+export const blockedProperty = ['mixins', 'methods', 'observers'];
+
+export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
+  [ETargetPlatform.alipay]: {
+    name: ETargetPlatform.alipay,
+    tellIfInThisPlatform: ifInAlipay,
+    pageEvents: [
+      ...Object.keys(commonPageEvents),
+      ...Object.keys(alipayPageEvents),
+    ],
+    pageLifeCycleToMount: commonPageEvents.onLoad,
+    pageLifeCycleToUnmount: commonPageEvents.onUnload,
+    componentEvents: [
+      ...Object.keys(commonComponentEvents),
+      ...Object.keys(alipayComponentEvents),
+    ],
+    componentLifeCycleToMount: alipayComponentEvents.onInit,
+    componentLifeCycleToUnmount: alipayComponentEvents.didUnmount,
+    blockedProperty,
+    getPropsFromInstance(instance) {
+      return instance.props;
+    },
+    buildOptions: (
+      elementType,
+      props,
+      data,
+      lifeCycleHandlers,
+      userEventHandlers,
+      options = null,
+    ) => {
+      if (elementType === EElementType.page) {
+        return {
+          data,
+          options,
+          ...lifeCycleHandlers,
+          ...userEventHandlers,
+        };
+      } else {
+        return {
+          props, // 支付宝端：直接传入 props
+          data,
+          options,
+          ...lifeCycleHandlers,
+          methods: userEventHandlers,
+        };
+      }
+    },
+  },
+  [ETargetPlatform.wechat]: {
+    name: ETargetPlatform.wechat,
+    tellIfInThisPlatform: ifInWeChat,
+    pageEvents: [...Object.keys(commonPageEvents)],
+    pageLifeCycleToMount: commonPageEvents.onLoad,
+    pageLifeCycleToUnmount: commonPageEvents.onUnload,
+    componentEvents: [
+      ...Object.keys(commonComponentEvents),
+      ...Object.keys(wechatComponentEvents),
+    ],
+    componentLifeCycleToMount: commonComponentEvents.created,
+    componentLifeCycleToUnmount: commonComponentEvents.detached,
+    blockedProperty,
+    getPropsFromInstance(instance, propNames) {
+      const newProps = {};
+      for (const propName of propNames) {
+        newProps[propName] = instance.data[propName];
+      }
+      return newProps;
+    },
+    buildOptions: (
+      elementType,
+      props,
+      data,
+      lifeCycleHandlers,
+      userEventHandlers,
+      options = null,
+      observers,
+    ) => {
+      if (elementType === EElementType.page) {
+        return {
+          data,
+          options,
+          ...lifeCycleHandlers,
+          ...userEventHandlers,
+        };
+      } else {
+        const defaultProps = props || {};
+        const properties: IWechatProperty = {};
+        for (const key in defaultProps) {
+          if (!Object.prototype.hasOwnProperty.call(defaultProps, key))
+            continue;
+
+          const value = defaultProps[key];
+          let targetType;
+          if (typeof value === 'string') {
+            targetType = String;
+          } else if (typeof value === 'number') {
+            targetType = Number;
+          } else if (typeof value === 'boolean') {
+            targetType = Boolean;
+          } else if (Array.isArray(value)) {
+            targetType = Array;
+          } else if (typeof value === 'object') {
+            // 即使是 null， 也该落入这个分支？
+            targetType = Object;
+          } else {
+            throw new Error(
+              `不支持的 properties 类型: ${key} - ${typeof value}`,
+            );
+          }
+          properties[key] = {
+            type: targetType,
+            value,
+          };
+        }
+
+        return {
+          properties,
+          data,
+          // options,
+          observers,
+          lifetimes: lifeCycleHandlers || {},
+          methods: userEventHandlers || {},
+        };
+      }
+    },
+  },
+};

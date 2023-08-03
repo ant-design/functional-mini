@@ -1,0 +1,62 @@
+{
+  "name": "functional-mini",
+  "version": "0.1.0",
+  "type": "module",
+  "files": [
+    "esm",
+    "README.md",
+    "page.js",
+    "component.js"
+  ],
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "tsx ./scripts/build.ts",
+    "prepublishOnly": "npm run build",
+    "test": "vitest run",
+    "cov": "vitest run --coverage"
+  },
+  "typesVersions": {
+    "*": {
+      "./page": [
+        "./esm/page.d.ts"
+      ],
+      "./component": [
+        "./esm/component.d.ts"
+      ]
+    }
+  },
+  "exports": {
+    "./page": {
+      "types": "./esm/page.d.ts",
+      "import": "./esm/page.js"
+    },
+    "./component": {
+      "types": "./esm/component.d.ts",
+      "import": "./esm/component.js"
+    }
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.9",
+    "@babel/generator": "^7.22.9",
+    "@babel/preset-env": "^7.22.9",
+    "@babel/traverse": "^7.22.8",
+    "@babel/types": "^7.22.5",
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@types/babel__traverse": "^7.20.1",
+    "@vitest/coverage-v8": "^0.34.1",
+    "globby": "^13.2.2",
+    "preact": "^10.15.1",
+    "preact-render-to-string": "^6.0.3",
+    "prettier": "^3.0.0",
+    "rollup": "^3.23.1",
+    "tsx": "^3.12.7",
+    "typescript": "^5.1.6",
+    "vitest": "^0.34.1"
+  },
+  "description": "",
+  "author": "OttoMao,DiamondYuan",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ant-design/functional-mini"
+  }
+}

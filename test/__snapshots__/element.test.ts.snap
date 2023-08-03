@@ -1,0 +1,61 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`element > basic react render 1`] = `"<div>1</div>"`;
+
+exports[`element > basic react render 2`] = `"<div>2</div>"`;
+
+exports[`element > basic react render 3`] = `"<div>1</div>"`;
+
+exports[`element > basic render content 1`] = `"<div>0</div>"`;
+
+exports[`element > component 交叉更新，会出错 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > component 交叉更新，会出错 2`] = `"<div>empty1newName2</div>"`;
+
+exports[`element > component 都挂在一棵树上 > empty1newName2 1`] = `"<div><div>2</div><div>empty1newName2</div></div>"`;
+
+exports[`element > component 都挂在一棵树上 1`] = `"<div><div>init</div><div>empty1newNameAA</div></div>"`;
+
+exports[`element > nested component 0 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > nested component 1 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > nested component 2 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > nested component 3 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > nested component 4 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > nested component 5 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > nested component 6 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > nested component 7 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > nested component 8 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > nested component 9 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > nested component 10 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > nested component 11 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > nested component 12 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > nested component 13 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > nested component 14 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > nested component 15 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > nested component 16 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > nested component 17 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > nested component 18 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > nested component 19 1`] = `"<div>empty1newName1</div>"`;
+
+exports[`element > test async action with .act 1`] = `"<div>show-2</div>"`;
+
+exports[`element > test unmount 1`] = `"<span>Title</span>"`;
