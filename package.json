@@ -1,6 +1,6 @@
 {
   "name": "functional-mini",
-  "version": "0.4.1-beta-1",
+  "version": "0.4.1-beta-2",
   "type": "module",
   "files": [
     "esm",
