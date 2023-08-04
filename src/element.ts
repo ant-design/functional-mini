@@ -1,4 +1,4 @@
-import { React, VNode, act, mountElement, serverRender } from './r.js';
+import { VNode, act, mountElement, serverRender, createElement } from './r.js';
 import {
   log as globalLog,
   error as globalError,
@@ -50,9 +50,9 @@ function compositeElementWithContext(
   //@ts-expect-error
   pendingProps,
 ) {
-  const el = React.createElement(elementFn, pendingProps);
+  const el = createElement(elementFn, pendingProps);
   // eslint-disable-next-line react/no-children-prop
-  return React.createElement(
+  return createElement(
     reactContext.Provider,
     { value: appxContext, key: id, children: [el] },
     el,
@@ -84,7 +84,7 @@ export function flushReactTree(elementMap: IInstanceMap) {
     item.pendingProps = null;
   }
 
-  const parent = React.createElement('div', {}, children);
+  const parent = createElement('div', {}, children);
   return parent;
 }
 
@@ -205,7 +205,7 @@ export function functionalMiniElement<TProps>(
 
     // 上面的 early-return 都是检查和抛错，忽略 hooks 规则
     useSyncMiniData(miniData || {});
-    return React.createElement('div', {}, FUNCTIONAL_MINI_PAGE_DOM_PLACEHOLDER);
+    return createElement('div', {}, FUNCTIONAL_MINI_PAGE_DOM_PLACEHOLDER);
   };
 
   // 在 onload 的时候，正式创建一个 react 组件
@@ -237,16 +237,14 @@ export function functionalMiniElement<TProps>(
 
     // 触发 onLoad
     if (elementType === 'page') {
-      log('React 页面（Page）已经 Mount，开始触发 onLoad');
+      log('页面（Page）已经 Mount，开始触发 onLoad');
       return context.handlersController.callHandlers(
         pageLifeCycleToMount,
         appxInstance,
         args,
       ); // 直接调用controller 内部的方法，插队执行 onLoad
     } else {
-      log(
-        `React 组件（Component）已经 Mount，开始触发 ${componentLifeCycleToMount}`,
-      );
+      log(`组件（Component）已经 Mount，开始触发 ${componentLifeCycleToMount}`);
       return context.handlersController.callHandlers(
         componentLifeCycleToMount,
         appxInstance,

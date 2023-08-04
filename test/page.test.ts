@@ -8,7 +8,7 @@ import {
   beforeEach,
   afterEach,
 } from 'vitest';
-import { React } from '../src/r';
+import { useEffect, useState, useMemo } from '../src/r';
 import { mountAlipayPage, setupAlipayEnv, setupWechatEnv } from './common';
 import {
   alipayPage,
@@ -35,8 +35,6 @@ function functionalPage<TProps>(
     targetPlatform,
   );
 }
-
-const { useEffect, useState, useMemo } = React;
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 

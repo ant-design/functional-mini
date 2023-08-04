@@ -1,8 +1,17 @@
 import { expect, test, vi } from 'vitest';
 import { delay } from './utils';
-import { React, act, mountElement, serverRender } from '../src/r';
+import {
+  useEffect,
+  useState,
+  useLayoutEffect,
+  act,
+  mountElement,
+  serverRender,
+  createElement,
+  VNode,
+} from '../src/r';
 
-const { useEffect, useState, useLayoutEffect, h } = React;
+const h = createElement;
 
 test('act 里的方法都是同步执行完成的', async () => {
   const onceEffect = vi.fn();
@@ -127,7 +136,7 @@ test('server render', async () => {
     });
     return h('div', {}, p?.text);
   };
-  const instance = h(C, { text: 'value' });
+  const instance = h(C, { text: 'value' }) as VNode;
   const data = serverRender(instance);
-  expect(data).toMatchSnapshot();
+  expect(data).toMatchInlineSnapshot('"<div>value</div>"');
 });

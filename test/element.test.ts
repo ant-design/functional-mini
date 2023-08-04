@@ -4,11 +4,15 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { IInstanceMap, flushReactTree } from '../src/element';
 import { IElementContext } from '../src/hooks';
-import { React, act, mountElement } from '../src/r';
+import {
+  useEffect,
+  useState,
+  act,
+  mountElement,
+  createElement,
+} from '../src/r';
 
 import { delay } from './utils';
-
-const { useEffect, useState } = React;
 
 describe('element', () => {
   afterEach(() => {
@@ -28,12 +32,12 @@ describe('element', () => {
         return off;
       }, []);
 
-      return React.createElement('span', {}, 'Title');
+      return createElement('span', {}, 'Title');
     };
 
     let fakeRoot;
     act(() => {
-      const reactEl = React.createElement(Component, { foo: 'test' });
+      const reactEl = createElement(Component, { foo: 'test' });
       fakeRoot = mountElement(reactEl);
     });
     const rootString = fakeRoot.toString();
@@ -50,12 +54,12 @@ describe('element', () => {
     const C = function (props: { name: string }) {
       const [counterToShow] = useState(0);
 
-      return React.createElement('div', {}, counterToShow);
+      return createElement('div', {}, counterToShow);
     };
 
     let fakeRoot;
     act(() => {
-      const reactEl = React.createElement(C, { name: 'test' });
+      const reactEl = createElement(C, { name: 'test' });
       fakeRoot = mountElement(reactEl);
     });
 
@@ -76,12 +80,12 @@ describe('element', () => {
         setCounterToShow(`show-${counter}`);
       }, [counter]);
 
-      return React.createElement('div', {}, counterToShow);
+      return createElement('div', {}, counterToShow);
     };
 
     let fakeRoot;
     act(() => {
-      const reactEl = React.createElement(C, { name: 'test' });
+      const reactEl = createElement(C, { name: 'test' });
       fakeRoot = mountElement(reactEl);
     });
     setTimeout(() => {
@@ -103,13 +107,13 @@ describe('element', () => {
         setCounter(counter + 1);
       }, [props?.name]);
 
-      return React.createElement('div', {}, counter);
+      return createElement('div', {}, counter);
     };
 
     // 同一个组件，更新 props
     let fakeRoot;
     act(() => {
-      const reactEl = React.createElement(C, {
+      const reactEl = createElement(C, {
         name: initName,
       });
       fakeRoot = mountElement(reactEl);
@@ -119,7 +123,7 @@ describe('element', () => {
     await delay(50);
 
     act(() => {
-      const reactEl = React.createElement(C, {
+      const reactEl = createElement(C, {
         name: newName,
       });
       fakeRoot.update(reactEl);
@@ -129,7 +133,7 @@ describe('element', () => {
     // 用新的 root ，一定是新对象
     let newRoot;
     act(() => {
-      const reactEl = React.createElement(C, {
+      const reactEl = createElement(C, {
         name: newName,
       });
       newRoot = mountElement(reactEl);
@@ -150,12 +154,12 @@ describe('element', () => {
       useEffect(() => {
         outerFn && outerFn();
       }, [s]);
-      return React.createElement('div', {}, s);
+      return createElement('div', {}, s);
     };
 
     // .create 需要在 .act 里面触发
     act(() => {
-      const parentEl = React.createElement(Parent, {});
+      const parentEl = createElement(Parent, {});
       mountElement(parentEl);
     });
 
@@ -171,12 +175,12 @@ describe('element', () => {
         setName(props.query || 'empty');
       }, [props.query]);
 
-      return React.createElement('div', {}, name + props.foo + childName);
+      return createElement('div', {}, name + props.foo + childName);
     };
 
     let childRoot;
     act(() => {
-      const reactEl = React.createElement(C, {
+      const reactEl = createElement(C, {
         foo: '1',
       });
       childRoot = mountElement(reactEl);
@@ -210,12 +214,12 @@ describe('element', () => {
         useEffect(() => {
           outerFn && outerFn();
         }, [s]);
-        return React.createElement('div', {}, s);
+        return createElement('div', {}, s);
       };
 
       // .create 需要在 .act 里面触发
       act(() => {
-        const parentEl = React.createElement(Parent, {});
+        const parentEl = createElement(Parent, {});
         mountElement(parentEl);
       });
 
@@ -230,12 +234,12 @@ describe('element', () => {
           setName(props.query || 'empty');
         }, [props.query]);
 
-        return React.createElement('div', {}, name + props.foo + childName);
+        return createElement('div', {}, name + props.foo + childName);
       };
 
       let childRoot;
       act(() => {
-        const reactEl = React.createElement(C, {
+        const reactEl = createElement(C, {
           foo: '1',
         });
         childRoot = mountElement(reactEl);
@@ -264,13 +268,13 @@ describe('element', () => {
         fn();
         return off;
       });
-      return React.createElement('div', {});
+      return createElement('div', {});
     };
 
     const props = { key: 'a' };
     let testRenderer;
     act(() => {
-      const el = React.createElement(Element, props);
+      const el = createElement(Element, props);
       testRenderer = mountElement(el);
     });
 
@@ -279,7 +283,7 @@ describe('element', () => {
 
     act(() => {
       // 多创建一次就是多跑一次函数，除非复用 element
-      const el = React.createElement(Element, props);
+      const el = createElement(Element, props);
       testRenderer.update(el);
     });
 
@@ -301,7 +305,7 @@ describe('element', () => {
       useEffect(() => {
         outerFn && outerFn();
       }, [s]);
-      return React.createElement('div', {}, s);
+      return createElement('div', {}, s);
     };
 
     // 内部组件
@@ -316,14 +320,14 @@ describe('element', () => {
         setName(props.query || 'empty');
       }, [props.query]);
 
-      return React.createElement('div', {}, name + props.foo + childName);
+      return createElement('div', {}, name + props.foo + childName);
     };
 
     let root;
     act(() => {
-      const a = React.createElement(A, { key: 'a' });
-      const b = React.createElement(B, { foo: 1, key: 'b' });
-      const reactEl = React.createElement('div', {}, [a, b]);
+      const a = createElement(A, { key: 'a' });
+      const b = createElement(B, { foo: 1, key: 'b' });
+      const reactEl = createElement('div', {}, [a, b]);
       root = mountElement(reactEl);
     });
 
@@ -387,7 +391,7 @@ describe('element', () => {
     };
 
     expect(() => {
-      mountElement(React.createElement(C, { shouldThrow: false }));
+      mountElement(createElement(C, { shouldThrow: false }));
     }).toThrow();
   });
 
@@ -399,16 +403,14 @@ describe('element', () => {
         }
       });
       useEffect(() => {}, []);
-      return React.createElement('div', {}, 'hello');
+      return createElement('div', {}, 'hello');
     };
 
     expect(() => {
-      const instance = mountElement(
-        React.createElement(C, { shouldThrow: false }),
-      );
+      const instance = mountElement(createElement(C, { shouldThrow: false }));
       let newInstance;
       act(() => {
-        newInstance = React.createElement(C, { shouldThrow: true });
+        newInstance = createElement(C, { shouldThrow: true });
         instance.update(newInstance);
       });
     }).toThrow();

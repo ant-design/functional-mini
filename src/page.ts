@@ -59,6 +59,7 @@ export const useOnKeyboardHeight = getLifeCycleHooks(
   undefined,
   ETargetPlatform.alipay,
 );
+
 export const useOnBack = getLifeCycleHooks(
   alipayPageEvents.onBack,
   undefined,

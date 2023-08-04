@@ -1,6 +1,6 @@
 /* eslint-disable no-prototype-builtins */
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
-import { React } from '../src/r';
+import { useState, useEffect } from '../src/r';
 import {
   mountAlipayComponent,
   mountWechatComponent,
@@ -19,8 +19,6 @@ import {
   useError,
   useWechatTriggerEvent,
 } from '../src/component';
-
-const { useState, useEffect } = React;
 
 interface IComponentState {
   stateFoo: string;

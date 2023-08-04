@@ -1,4 +1,4 @@
-import { React } from './r.js';
+import { useEffect, createContext, useContext } from './r.js';
 import HandlersController from './handlers.js';
 import { instanceKeyPropNames } from './utils.js';
 import {
@@ -6,8 +6,6 @@ import {
   checkIfPlatformIsLoadCorrectly,
 } from './platform.js';
 import { ETargetPlatform } from './types.js';
-
-const { useEffect, createContext, useContext } = React;
 
 export type THooksFn = (handler: Function, deps?: any[]) => void;
 

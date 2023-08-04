@@ -1,9 +1,7 @@
 import { expect, test } from 'vitest';
-import { React } from '../src/r';
+import { useEffect, useContext, createElement } from '../src/r';
 
-test('React', () => {
-  const { useEffect, useContext, createElement } = React;
-  expect(React).toBeDefined();
+test('rest r', () => {
   expect(useEffect).toBeDefined();
   expect(useContext).toBeDefined();
   expect(createElement).toBeDefined();
