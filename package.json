@@ -7,7 +7,8 @@
     "README.md",
     "page.js",
     "LICENSE",
-    "component.js"
+    "component.js",
+    "compat.js"
   ],
   "scripts": {
     "prepare": "npm run build",
@@ -35,9 +36,9 @@
       "types": "./esm/component.d.ts",
       "import": "./esm/component.js"
     },
-    "./react": {
-      "types": ".//esm/3rd-party/react-compat.d.ts",
-      "import": "./esm/3rd-party/react-compat.js"
+    "./compat": {
+      "types": "./esm/3rd-party/compat.d.ts",
+      "import": "./esm/3rd-party/compat.js"
     }
   },
   "devDependencies": {
