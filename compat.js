@@ -1,1 +1,4 @@
-export * from './esm/3rd-party/compat.js';
+export * from './esm/compat.js';
+
+import compat from './esm/compat.js';
+export default compat;
