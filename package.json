@@ -37,8 +37,8 @@
       "import": "./esm/component.js"
     },
     "./compat": {
-      "types": "./esm/3rd-party/compat.d.ts",
-      "import": "./esm/3rd-party/compat.js"
+      "types": "./esm/compat.d.ts",
+      "import": "./esm/compat.js"
     }
   },
   "devDependencies": {
