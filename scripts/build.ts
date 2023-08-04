@@ -10,6 +10,7 @@ const bundle = await rollup({
   input: [
     resolveRoot('3rd-party/preact-test-utils.js'),
     resolveRoot('3rd-party/preact.js'),
+    resolveRoot('3rd-party/compat.js'),
   ],
   plugins: [
     virtualDocument(),

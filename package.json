@@ -1,13 +1,14 @@
 {
   "name": "functional-mini",
-  "version": "0.4.0",
+  "version": "0.4.1-beta-3",
   "type": "module",
   "files": [
     "esm",
     "README.md",
     "page.js",
     "LICENSE",
-    "component.js"
+    "component.js",
+    "compat.js"
   ],
   "scripts": {
     "prepare": "npm run build",
@@ -34,6 +35,10 @@
     "./component": {
       "types": "./esm/component.d.ts",
       "import": "./esm/component.js"
+    },
+    "./compat": {
+      "types": "./esm/compat.d.ts",
+      "import": "./esm/compat.js"
     }
   },
   "devDependencies": {
