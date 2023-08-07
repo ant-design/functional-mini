@@ -500,13 +500,3 @@ describe('component - wechat', async () => {
     expect(instance.data).toEqual({ s: 'foo' });
   });
 });
-
-const wewe = () => {
-  useEffect(() => {
-    document.addEventListener('click', () => {});
-  }, []);
-
-  return {
-    name: 'w',
-  };
-};
