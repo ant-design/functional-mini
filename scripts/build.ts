@@ -5,6 +5,7 @@ import { rollup } from 'rollup';
 import { copyDts } from './rollup-plugins/copy-dts.js';
 import { virtualDocument } from './rollup-plugins/virtual-document';
 import { resolveRoot } from './utils';
+import terser from '@rollup/plugin-terser';
 
 const bundle = await rollup({
   input: [
@@ -73,9 +74,31 @@ const wechat = await rollup({
     resolveRoot('dist/esm/component.js'),
     resolveRoot('dist/esm/compat.js'),
   ],
+  plugins: [terser()],
 });
 
-wechat.write({
+await wechat.write({
   dir: resolveRoot('dist'),
   format: 'esm',
 });
+
+const distRoot = resolveRoot('dist');
+const distFiles = await fs.readdir(distRoot);
+const distFileSize = await Promise.all(
+  distFiles.map(async (file) => {
+    const stat = await fs.stat(resolveRoot('dist', file));
+    if (stat.isFile()) {
+      return stat.size;
+    }
+    return 0;
+  }),
+);
+
+const totalSize = distFileSize.reduce((acc, size) => acc + size, 0);
+
+console.log(`Total size: ${totalSize / 1024}KB`);
+
+if (totalSize > 60 * 1024) {
+  console.error('Size limit exceeded');
+  process.exit(1);
+}

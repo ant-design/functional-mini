@@ -46,6 +46,7 @@
     }
   },
   "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.3",
     "@babel/core": "^7.22.9",
     "@babel/generator": "^7.22.9",
     "@babel/preset-env": "^7.22.9",
