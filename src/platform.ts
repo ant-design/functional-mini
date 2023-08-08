@@ -1,4 +1,5 @@
 import { ETargetPlatform, EElementType } from './types.js';
+import { mergeKeys } from './utils.js';
 
 export interface IPlatformConstants {
   name: ETargetPlatform;
@@ -117,16 +118,10 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
   [ETargetPlatform.alipay]: {
     name: ETargetPlatform.alipay,
     tellIfInThisPlatform: ifInAlipay,
-    pageEvents: [
-      ...Object.keys(commonPageEvents),
-      ...Object.keys(alipayPageEvents),
-    ],
+    pageEvents: mergeKeys(commonPageEvents, alipayPageEvents),
     pageLifeCycleToMount: commonPageEvents.onLoad,
     pageLifeCycleToUnmount: commonPageEvents.onUnload,
-    componentEvents: [
-      ...Object.keys(commonComponentEvents),
-      ...Object.keys(alipayComponentEvents),
-    ],
+    componentEvents: mergeKeys(commonComponentEvents, alipayComponentEvents),
     componentLifeCycleToMount: alipayComponentEvents.onInit,
     componentLifeCycleToUnmount: alipayComponentEvents.didUnmount,
     blockedProperty,
@@ -142,33 +137,34 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
       options = null,
     ) => {
       if (elementType === EElementType.page) {
-        return {
-          data,
-          options,
-          ...lifeCycleHandlers,
-          ...userEventHandlers,
-        };
+        return Object.assign(
+          {
+            data,
+            options,
+          },
+          lifeCycleHandlers,
+          userEventHandlers,
+        );
       } else {
-        return {
-          props, // 支付宝端：直接传入 props
-          data,
-          options,
-          ...lifeCycleHandlers,
-          methods: userEventHandlers,
-        };
+        return Object.assign(
+          {
+            props, // 支付宝端：直接传入 props
+            data,
+            options,
+          },
+          lifeCycleHandlers,
+          { methods: userEventHandlers },
+        );
       }
     },
   },
   [ETargetPlatform.wechat]: {
     name: ETargetPlatform.wechat,
     tellIfInThisPlatform: ifInWeChat,
-    pageEvents: [...Object.keys(commonPageEvents)],
+    pageEvents: Object.keys(commonPageEvents),
     pageLifeCycleToMount: commonPageEvents.onLoad,
     pageLifeCycleToUnmount: commonPageEvents.onUnload,
-    componentEvents: [
-      ...Object.keys(commonComponentEvents),
-      ...Object.keys(wechatComponentEvents),
-    ],
+    componentEvents: mergeKeys(commonComponentEvents, wechatComponentEvents),
     componentLifeCycleToMount: commonComponentEvents.created,
     componentLifeCycleToUnmount: commonComponentEvents.detached,
     blockedProperty,
@@ -190,12 +186,14 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
       observers,
     ) => {
       if (elementType === EElementType.page) {
-        return {
-          data,
-          options,
-          ...lifeCycleHandlers,
-          ...userEventHandlers,
-        };
+        return Object.assign(
+          {
+            data,
+            options,
+          },
+          lifeCycleHandlers,
+          userEventHandlers,
+        );
       } else {
         const defaultProps = props || {};
         const properties: IWechatProperty = {};

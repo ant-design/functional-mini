@@ -136,7 +136,7 @@ export default class HandlersController {
     });
   }
 
-  async lockExecution(): Promise<() => void> {
+  lockExecution(): Promise<() => void> {
     const unlockAndFlush = () => {
       this.executionInProgress = false;
       if (this.executionQueue.length > 0) {
@@ -149,7 +149,7 @@ export default class HandlersController {
 
     if (!this.executionInProgress) {
       this.executionInProgress = true;
-      return unlockAndFlush;
+      return Promise.resolve(unlockAndFlush);
     } else {
       return new Promise((resolve) => {
         this.executionQueue.push(() => {

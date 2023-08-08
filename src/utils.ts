@@ -7,24 +7,24 @@ export const setLogSwitch = (on: boolean) => {
 //@ts-expect-error
 export const log = (...args) => {
   if (!logSwitch) return;
-  console.log(...args);
+
+  console.log.apply(console, args);
 };
 
 //@ts-expect-error
 export const error = (...args) => {
-  console.error(...args);
+  console.error.apply(console, args);
 };
 
-//@ts-expect-error
-export const time = (...args) => {
+export const time = (label?: string) => {
   if (!logSwitch) return;
-  console.time(...args);
+
+  console.time(label);
 };
 
-//@ts-expect-error
-export const timeEnd = (...args) => {
+export const timeEnd = (label?: string) => {
   if (!logSwitch) return;
-  console.timeEnd(...args);
+  console.timeEnd(label);
 };
 
 //@ts-expect-error
@@ -88,3 +88,11 @@ export function getIdFromAppxInstance(appxInstance) {
 }
 
 export const instanceKeyPropNames = '_functional_instance_prop_names_';
+
+export function mergeKeys(...objects: any[]): string[] {
+  let res: string[] = [];
+  for (const iterator of objects) {
+    res = res.concat(iterator);
+  }
+  return res;
+}
