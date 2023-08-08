@@ -120,7 +120,7 @@ export function functionalMiniElement<TProps>(
   const nameTag = `[${elementType}/${displayName || '(unnamed)'}]`;
   //@ts-expect-error
   const log = (...args) => {
-    globalLog(nameTag, ...args);
+    globalLog.apply(null, [nameTag].concat(args));
   };
   const logErrorAndThrow = (err: Error) => {
     if (!err) return;
@@ -145,7 +145,7 @@ export function functionalMiniElement<TProps>(
     elementType === 'page' ? pageEvents : componentEvents;
 
   const defaultPropKeys = Object.keys(defaultProps || {});
-  let observers = {};
+  let observers: Record<string, unknown> = {};
   const elementMap: IInstanceMap = {};
   //@ts-expect-error
   let commonTestRenderer;
@@ -319,19 +319,19 @@ export function functionalMiniElement<TProps>(
     } else if (targetPlatform === ETargetPlatform.wechat) {
       const props = defaultPropKeys.join(', ');
       log(`将注册以下 key 的 props 更新：${props}`);
-      observers = {
-        // 忽略函数参数，直接从 this 里面找
-        // 搞不懂小程序的设计逻辑，为什么非要在 props 里夹着 data
-        //@ts-expect-error
-        [props](this: any, ...args) {
-          log('observer is being called', args);
-          const newProps = getPropsFromInstance(this, defaultPropKeys);
-          return dispatchNewProps(this, newProps);
-          //
+      observers = Object.assign(
+        {
+          // 忽略函数参数，直接从 this 里面找
+          // 搞不懂小程序的设计逻辑，为什么非要在 props 里夹着 data
+          [props](this: any, ...args: any[]) {
+            log('observer is being called', args);
+            const newProps = getPropsFromInstance(this, defaultPropKeys);
+            return dispatchNewProps(this, newProps);
+            //
+          },
         },
-        ...observers,
-        // []
-      };
+        observers,
+      );
     }
   }
 
@@ -356,10 +356,7 @@ export function functionalMiniElement<TProps>(
     $id: `_minifish_hooks_pre_render_${Math.random()}`,
     //@ts-expect-error
     setData(data) {
-      initData = {
-        ...(initData || {}),
-        ...data,
-      };
+      initData = Object.assign(initData || {}, data);
     },
   };
   const fakeCtx = generateInstanceContext(fakeAppxInstance, true);

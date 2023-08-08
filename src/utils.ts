@@ -88,3 +88,11 @@ export function getIdFromAppxInstance(appxInstance) {
 }
 
 export const instanceKeyPropNames = '_functional_instance_prop_names_';
+
+export function mergeKeys(...objects: any[]): string[] {
+  let res: string[] = [];
+  for (const iterator of objects) {
+    res = res.concat(iterator);
+  }
+  return res;
+}

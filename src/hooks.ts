@@ -61,7 +61,7 @@ function useEventCall(
       appxInstanceContext.instance,
       //@ts-expect-error
       function (this, ...args) {
-        return handler.call(undefined, ...args);
+        return handler.apply(undefined, args);
       },
       disableMultiImpl,
     );
