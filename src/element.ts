@@ -356,7 +356,7 @@ export function functionalMiniElement<TProps>(
     $id: `_minifish_hooks_pre_render_${Math.random()}`,
     //@ts-expect-error
     setData(data) {
-      initData = Object.assign(initData || {}, data);
+      initData = Object.assign({}, initData || {}, data);
     },
   };
   const fakeCtx = generateInstanceContext(fakeAppxInstance, true);

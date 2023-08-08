@@ -14,7 +14,7 @@
   "scripts": {
     "prepare": "npm run build",
     "build": "tsx ./scripts/build.ts",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "npm run test && npm run build",
     "test": "vitest run",
     "cov": "vitest run --coverage"
   },
@@ -63,12 +63,16 @@
     "rollup": "^3.23.1",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6",
-    "vitest": "^0.34.1"
+    "vitest": "^0.34.1",
+    "simple-git-hooks": "^2.9.0"
   },
   "description": "",
   "author": "OttoMao,DiamondYuan",
   "repository": {
     "type": "git",
     "url": "https://github.com/ant-design/functional-mini"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npm run test"
   }
 }

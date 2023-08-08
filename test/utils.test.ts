@@ -1,7 +1,10 @@
 import { describe, expect, test } from 'vitest';
-import { getIdFromAppxInstance } from '../src/utils';
+import { getIdFromAppxInstance, mergeObjectKeys } from '../src/utils';
 
 describe('utils', () => {
+  test('test mergeObjectKeys', () => {
+    expect(mergeObjectKeys({ a: 1 }, { b: 2 })).toEqual(['a', 'b']);
+  });
   test('instance id', async () => {
     const mockInstance = {
       $id: 'aa',
