@@ -1,6 +1,6 @@
 {
   "name": "functional-mini",
-  "version": "0.4.1",
+  "version": "0.5.0-beta-0",
   "type": "module",
   "miniprogram": "dist",
   "files": [
@@ -46,13 +46,13 @@
     }
   },
   "devDependencies": {
-    "@rollup/plugin-terser": "^0.4.3",
     "@babel/core": "^7.22.9",
     "@babel/generator": "^7.22.9",
     "@babel/preset-env": "^7.22.9",
     "@babel/traverse": "^7.22.8",
     "@babel/types": "^7.22.5",
     "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-terser": "^0.4.3",
     "@types/babel__traverse": "^7.20.1",
     "@vitest/coverage-v8": "^0.34.1",
     "eslint": "^8.46.0",
