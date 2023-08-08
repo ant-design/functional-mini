@@ -45,6 +45,12 @@ const copyTask = files.map(async (file) => {
 
 await Promise.all(copyTask);
 
+await fs.rm(resolveRoot('dist'), {
+  recursive: true,
+  maxRetries: 3,
+  force: true,
+});
+
 const tscResult = spawnSync('tsc', [], {
   stdio: 'inherit',
   cwd: process.cwd(),
