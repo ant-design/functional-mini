@@ -1,1 +1,1 @@
-export * from './esm/page.js';
+export * from './dist/esm/page.js';

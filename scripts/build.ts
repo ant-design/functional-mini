@@ -53,7 +53,23 @@ if (tscResult.status !== 0) {
   process.exit(tscResult.status ?? -1);
 }
 
-await fs.rm(resolveRoot('esm/3rd-party'), { recursive: true, force: true });
-await fs.cp(resolveRoot('src/3rd-party'), resolveRoot('esm/3rd-party'), {
+await fs.rm(resolveRoot('dist/esm/3rd-party'), {
   recursive: true,
+  force: true,
+});
+await fs.cp(resolveRoot('src/3rd-party'), resolveRoot('dist/esm/3rd-party'), {
+  recursive: true,
+});
+
+const wechat = await rollup({
+  input: [
+    resolveRoot('dist/esm/page.js'),
+    resolveRoot('dist/esm/component.js'),
+    resolveRoot('dist/esm/compat.js'),
+  ],
+});
+
+wechat.write({
+  dir: resolveRoot('dist'),
+  format: 'esm',
 });

@@ -11,7 +11,7 @@
     "skipLibCheck": true,
     "jsx": "react",
     "baseUrl": "./",
-    "outDir": "./esm"
+    "outDir": "./dist/esm"
   },
   "include": ["src"]
 }

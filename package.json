@@ -2,11 +2,12 @@
   "name": "functional-mini",
   "version": "0.4.1",
   "type": "module",
+  "miniprogram": "dist",
   "files": [
-    "esm",
+    "dist",
     "README.md",
-    "page.js",
     "LICENSE",
+    "page.js",
     "component.js",
     "compat.js"
   ],
@@ -20,25 +21,28 @@
   "typesVersions": {
     "*": {
       "./page": [
-        "./esm/page.d.ts"
+        "./dist/esm/page.d.ts"
       ],
       "./component": [
-        "./esm/component.d.ts"
+        "./dist/esm/component.d.ts"
+      ],
+      "./compat": [
+        "./dist/esm/compat.d.ts"
       ]
     }
   },
   "exports": {
     "./page": {
-      "types": "./esm/page.d.ts",
-      "import": "./esm/page.js"
+      "types": "./dist/esm/page.d.ts",
+      "import": "./dist/esm/page.js"
     },
     "./component": {
-      "types": "./esm/component.d.ts",
-      "import": "./esm/component.js"
+      "types": "./dist/esm/component.d.ts",
+      "import": "./dist/esm/component.js"
     },
     "./compat": {
-      "types": "./esm/compat.d.ts",
-      "import": "./esm/compat.js"
+      "types": "./dist/esm/compat.d.ts",
+      "import": "./dist/esm/compat.js"
     }
   },
   "devDependencies": {
