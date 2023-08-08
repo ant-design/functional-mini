@@ -1,5 +1,5 @@
 import { ETargetPlatform, EElementType } from './types.js';
-import { mergeKeys } from './utils.js';
+import { mergeObjectKeys } from './utils.js';
 
 export interface IPlatformConstants {
   name: ETargetPlatform;
@@ -118,10 +118,13 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
   [ETargetPlatform.alipay]: {
     name: ETargetPlatform.alipay,
     tellIfInThisPlatform: ifInAlipay,
-    pageEvents: mergeKeys(commonPageEvents, alipayPageEvents),
+    pageEvents: mergeObjectKeys(commonPageEvents, alipayPageEvents),
     pageLifeCycleToMount: commonPageEvents.onLoad,
     pageLifeCycleToUnmount: commonPageEvents.onUnload,
-    componentEvents: mergeKeys(commonComponentEvents, alipayComponentEvents),
+    componentEvents: mergeObjectKeys(
+      commonComponentEvents,
+      alipayComponentEvents,
+    ),
     componentLifeCycleToMount: alipayComponentEvents.onInit,
     componentLifeCycleToUnmount: alipayComponentEvents.didUnmount,
     blockedProperty,
@@ -164,7 +167,10 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
     pageEvents: Object.keys(commonPageEvents),
     pageLifeCycleToMount: commonPageEvents.onLoad,
     pageLifeCycleToUnmount: commonPageEvents.onUnload,
-    componentEvents: mergeKeys(commonComponentEvents, wechatComponentEvents),
+    componentEvents: mergeObjectKeys(
+      commonComponentEvents,
+      wechatComponentEvents,
+    ),
     componentLifeCycleToMount: commonComponentEvents.created,
     componentLifeCycleToUnmount: commonComponentEvents.detached,
     blockedProperty,
