@@ -1,6 +1,6 @@
 {
   "name": "functional-mini",
-  "version": "0.5.0-beta-0",
+  "version": "0.5.1-beta-1",
   "type": "module",
   "miniprogram": "dist",
   "files": [
@@ -61,10 +61,10 @@
     "preact-render-to-string": "^6.0.3",
     "prettier": "^3.0.0",
     "rollup": "^3.23.1",
+    "simple-git-hooks": "^2.9.0",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6",
-    "vitest": "^0.34.1",
-    "simple-git-hooks": "^2.9.0"
+    "vitest": "^0.34.1"
   },
   "description": "",
   "author": "OttoMao,DiamondYuan",
