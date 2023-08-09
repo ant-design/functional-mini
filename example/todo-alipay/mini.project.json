@@ -1,3 +1,6 @@
 {
-  "enableAppxNg": true
+  "format":2,
+  "compileOptions": {
+    "component2": true
+  }
 }

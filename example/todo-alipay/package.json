@@ -1,0 +1,9 @@
+{
+  "name": "todo-alipay",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "functional-mini": "^0.5.1"
+  }
+}

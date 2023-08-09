@@ -1,24 +1,29 @@
+import { alipayPage, useEvent, useState } from 'functional-mini/page';
+
 const app = getApp();
 
-Page({
-  data: {
-    inputValue: '',
-  },
+const AddTodo = () => {
+  const [inputValue, setInputValue] = useState('');
 
-  onBlur(e) {
-    this.setData({
-      inputValue: e.detail.value,
-    });
-  },
+  useEvent('onBlur', (e) => {
+    setInputValue(e.detail.value);
+  },[]);
+  
+  useEvent(
+    'add',
+    () => {
+      app.todos = app.todos.concat([
+        {
+          text: inputValue,
+          compeleted: false,
+        },
+      ]);
 
-  add() {
-    app.todos = app.todos.concat([
-      {
-        text: this.data.inputValue,
-        compeleted: false,
-      },
-    ]);
+      my.navigateBack();
+    },
+    [inputValue],
+  );
 
-    my.navigateBack();
-  },
-});
+  return { inputValue };
+};
+Page(alipayPage(AddTodo));
