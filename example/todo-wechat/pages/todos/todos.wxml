@@ -1,27 +1,16 @@
 <view class="page-todos">
-
-<view class="user">
-  <view class="nickname">My Todo List</view>
-</view>
-
-<view class="todo-items">
-
-  <checkbox-group class="todo-items-group" bindchange="onTodoChanged">
-    <label
-      wx:for="{{todos}}"
-      wx:for-item="item"
-      class="todo-item {{item.completed ? 'checked' : ''}}"
-      wx:key="*this"
-    >
-      <checkbox class="todo-item-checkbox" value="{{item.text}}" checked="{{item.completed}}" />
-      <text class="todo-item-text">{{item.text}}</text>
-    </label>
-  </checkbox-group>
-
-</view>
-
-<view class="todo-footer">
-  <add-button text="Add Todo" bind:onClickMe="addTodo"></add-button>
-</view>
-
+  <view class="user">
+    <view class="nickname">My Todo List</view>
+  </view>
+  <view class="todo-items">
+    <checkbox-group class="todo-items-group" bindchange="onTodoChanged">
+      <label wx:for="{{todos}}" wx:for-item="item" class="todo-item {{item.completed ? 'checked' : ''}}" wx:key="*this">
+        <checkbox class="todo-item-checkbox" value="{{item.text}}" checked="{{item.completed}}" />
+        <text class="todo-item-text">{{item.text}}</text>
+      </label>
+    </checkbox-group>
+  </view>
+  <view class="todo-footer">
+    <add-button text="Add Todo" bind:onClickMe="addTodo"></add-button>
+  </view>
 </view>
