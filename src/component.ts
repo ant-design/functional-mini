@@ -52,3 +52,5 @@ export const useError = getLifeCycleHooks(
 export { useWechatTriggerEvent };
 
 export * from './export-hooks.js';
+
+export { useComponent } from './hooks.js';
