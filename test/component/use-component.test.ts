@@ -9,14 +9,14 @@ import { mountAlipayComponent, mountWechatComponent } from '../utils/common';
 
 describe('test useComponent', () => {
   it('wechat', () => {
-    let flag;
+    let instance;
     const option = mountWechatComponent(
       wechatComponent(() => {
-        flag = useComponent();
+        instance = useComponent();
         return {};
       }),
     );
-    expect(flag === option).toBe(true);
+    expect(instance === option).toBe(true);
   });
 
   it('alipay', () => {

@@ -45,7 +45,7 @@ export const useDidMount = getLifeCycleHooks(
   ETargetPlatform.alipay,
 );
 
-// onInit, deriveDataFromProps、 didUnmount、didUpdate 是不开放 Hooks 的，请使用 react 生命周期方法
+// onInit, deriveDataFromProps, didUnmount, didUpdate 是不开放 Hooks 的，请使用 React 生命周期方法
 
 // 生命周期 - 微信端特有
 export const useError = getLifeCycleHooks(
