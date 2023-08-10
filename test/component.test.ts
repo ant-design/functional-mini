@@ -1,6 +1,16 @@
 /* eslint-disable no-prototype-builtins */
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
-import { useState, useEffect } from '../src/r';
+import {
+  alipayComponent,
+  useCreated,
+  useDidMount,
+  useError,
+  useEvent,
+  useWechatTriggerEvent,
+  wechatComponent,
+} from '../src/component';
+import { useEffect, useState } from '../src/r';
+import { EComponent2Status, updateComponent2Status } from '../src/utils';
 import {
   mountAlipayComponent,
   mountWechatComponent,
@@ -8,30 +18,6 @@ import {
   setupWechatEnv,
 } from './utils/common';
 import { delay } from './utils/utils';
-import { EComponent2Status, updateComponent2Status } from '../src/utils';
-import {
-  wechatComponent,
-  alipayComponent,
-  useCreated,
-  useEvent,
-  useError,
-  useWechatTriggerEvent,
-} from '../src/component';
-import { getLifeCycleHooks } from '../src/hooks';
-import { alipayComponentEvents } from '../src/platform';
-import { ETargetPlatform } from '../src/types';
-
-const useOnInit = getLifeCycleHooks(
-  alipayComponentEvents.onInit,
-  undefined,
-  ETargetPlatform.alipay,
-);
-
-const useDidMount = getLifeCycleHooks(
-  alipayComponentEvents.didMount,
-  undefined,
-  ETargetPlatform.alipay,
-);
 
 interface IComponentState {
   stateFoo: string;
@@ -60,8 +46,8 @@ describe('component - common and alipay', () => {
     const unmountFn = vi.fn();
     const defaultProps = { defaultFoo: 123, query: 'aaa' };
     const functionOpt = alipayComponent<IComponentProps>(function (props) {
-      useOnInit((param) => {
-        initFn(param);
+      useEffect(() => {
+        initFn();
         return unmountFn;
       }, []);
 
@@ -191,8 +177,8 @@ describe('component - common and alipay', () => {
       const [stateEffect, setStateEffect] = useState(initStateValue);
       expect(props.hasOwnProperty('minifishHooks')).toBeFalsy();
 
-      useOnInit((param) => {
-        initFn(param);
+      useEffect(() => {
+        initFn();
       }, []);
 
       useEvent(
