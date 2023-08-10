@@ -1,12 +1,19 @@
-import { wechatComponent, useEvent ,useWechatTriggerEvent } from 'functional-mini/component';
+import {
+  wechatComponent,
+  useEvent,
+  useComponent,
+} from 'functional-mini/component';
 
 const AddButton = () => {
-  const tragger = useWechatTriggerEvent()
-  useEvent('onClickMe', () => {
-    console.log(11)
-    tragger('onClickMe')
-  },[]);
-  return {}
+  const component = useComponent();
+  useEvent(
+    'onClickMe',
+    () => {
+      component.triggerEvent('onClickMe');
+    },
+    [],
+  );
+  return {};
 };
 
 Component(

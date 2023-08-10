@@ -10,8 +10,8 @@ const {
   useState,
   useContext,
   useLayoutEffect,
-  useDebugValue,
   useRef,
+  useReducer,
 } = preactHooks;
 
 const createElement = h;
@@ -36,7 +36,7 @@ export {
   useState,
   useContext,
   useLayoutEffect,
-  useDebugValue,
+  useReducer,
 };
 
 export type VNode = preact.VNode;

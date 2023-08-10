@@ -1,6 +1,6 @@
 import { functionalMiniElement, TElementFunction } from './element.js';
 import { EElementType, ETargetPlatform } from './types.js';
-import { getLifeCycleHooks, useWechatTriggerEvent } from './hooks.js';
+import { getLifeCycleHooks } from './hooks.js';
 import {
   alipayComponentEvents,
   commonComponentEvents,
@@ -46,16 +46,6 @@ export const useDidMount = getLifeCycleHooks(
 );
 
 // onInit, deriveDataFromProps, didUnmount, didUpdate 是不开放 Hooks 的，请使用 React 生命周期方法
-
-// 生命周期 - 微信端特有
-export const useError = getLifeCycleHooks(
-  wechatComponentEvents.error,
-  undefined,
-  ETargetPlatform.wechat,
-);
-
-// 事件触发 - 微信端
-export { useWechatTriggerEvent };
 
 export * from './export-hooks.js';
 

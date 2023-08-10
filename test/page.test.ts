@@ -20,7 +20,6 @@ import {
   useOnTitleClick,
   wechatPage,
   useEvent,
-  useOnLoad,
   useOnShow,
 } from '../src/page';
 import { TElementFunction, functionalMiniElement } from '../src/element';
