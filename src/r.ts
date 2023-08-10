@@ -11,6 +11,7 @@ const {
   useContext,
   useLayoutEffect,
   useDebugValue,
+  useRef,
 } = preactHooks;
 
 const createElement = h;
@@ -25,6 +26,7 @@ options.debounceRendering = (cb) => {
 
 export {
   act,
+  useRef,
   createElement,
   createContext,
   serverRender,

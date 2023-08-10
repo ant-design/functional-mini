@@ -4,7 +4,7 @@ import {
   useAttached,
   useCreated,
   useMoved,
-} from '/src/component';
+} from '../../../src/component';
 
 it('test lifetimes option', () => {
   const option = alipayComponent(() => {

@@ -5,7 +5,7 @@ import {
   wechatComponent,
   useEffect,
   useMoved,
-} from '/src/component.js';
+} from '../../../src/component.js';
 
 it('test lifetimes option', () => {
   const option = wechatComponent(() => {

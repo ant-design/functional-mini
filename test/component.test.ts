@@ -14,11 +14,24 @@ import {
   alipayComponent,
   useCreated,
   useEvent,
-  useOnInit,
-  useDidMount,
   useError,
   useWechatTriggerEvent,
 } from '../src/component';
+import { getLifeCycleHooks } from '../src/hooks';
+import { alipayComponentEvents } from '../src/platform';
+import { ETargetPlatform } from '../src/types';
+
+const useOnInit = getLifeCycleHooks(
+  alipayComponentEvents.onInit,
+  undefined,
+  ETargetPlatform.alipay,
+);
+
+const useDidMount = getLifeCycleHooks(
+  alipayComponentEvents.didMount,
+  undefined,
+  ETargetPlatform.alipay,
+);
 
 interface IComponentState {
   stateFoo: string;

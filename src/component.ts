@@ -39,18 +39,7 @@ export const useReady = getLifeCycleHooks(commonComponentEvents.ready);
 export const useMoved = getLifeCycleHooks(commonComponentEvents.moved);
 export const useDetached = getLifeCycleHooks(commonComponentEvents.detached);
 
-// 生命周期 - 支付宝端特有
-export const useOnInit = getLifeCycleHooks(
-  alipayComponentEvents.onInit,
-  undefined,
-  ETargetPlatform.alipay,
-);
-export const useDidMount = getLifeCycleHooks(
-  alipayComponentEvents.didMount,
-  undefined,
-  ETargetPlatform.alipay,
-);
-// deriveDataFromProps、 didUnmount、didUpdate 是不开放 Hooks 的，请使用 react 生命周期方法
+// onInit, didMount, deriveDataFromProps、 didUnmount、didUpdate 是不开放 Hooks 的，请使用 react 生命周期方法
 
 // 生命周期 - 微信端特有
 export const useError = getLifeCycleHooks(
