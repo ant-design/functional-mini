@@ -39,7 +39,13 @@ export const useReady = getLifeCycleHooks(commonComponentEvents.ready);
 export const useMoved = getLifeCycleHooks(commonComponentEvents.moved);
 export const useDetached = getLifeCycleHooks(commonComponentEvents.detached);
 
-// onInit, didMount, deriveDataFromProps、 didUnmount、didUpdate 是不开放 Hooks 的，请使用 react 生命周期方法
+export const useDidMount = getLifeCycleHooks(
+  alipayComponentEvents.didMount,
+  undefined,
+  ETargetPlatform.alipay,
+);
+
+// onInit, deriveDataFromProps、 didUnmount、didUpdate 是不开放 Hooks 的，请使用 react 生命周期方法
 
 // 生命周期 - 微信端特有
 export const useError = getLifeCycleHooks(
