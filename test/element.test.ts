@@ -12,7 +12,7 @@ import {
   createElement,
 } from '../src/r';
 
-import { delay } from './utils';
+import { delay } from './utils/utils.js';
 
 describe('element', () => {
   afterEach(() => {

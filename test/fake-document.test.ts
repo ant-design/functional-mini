@@ -1,28 +1,25 @@
 import { expect, test } from 'vitest';
-import {
-  virtualDocument,
-  FakeDomNode,
-} from '../src/3rd-party/_virtual/virtual-document.js';
+import { virtualDocument } from '../src/3rd-party/_virtual/virtual-document.js';
 
-const { createTextNode } = virtualDocument;
+const { createTextNode, createElement } = virtualDocument;
 
 test('should create a new instance with the correct tagName', () => {
-  const myNode = new FakeDomNode('div');
+  const myNode = createElement('div');
   expect(myNode.tagName).to.equal('div');
 });
 
 test('should append a child node', () => {
-  const parent = new FakeDomNode('div');
-  const child = new FakeDomNode('span');
+  const parent = createElement('div');
+  const child = createElement('span');
   parent.appendChild(child);
   expect(parent.childNodes).to.deep.equal([child]);
   expect(child.parentNode).to.equal(parent);
 });
 
 test('should insert a child node before another node', () => {
-  const parent = new FakeDomNode('div');
-  const child1 = new FakeDomNode('span');
-  const child2 = new FakeDomNode('p');
+  const parent = createElement('div');
+  const child1 = createElement('span');
+  const child2 = createElement('p');
   parent.appendChild(child1);
   parent.insertBefore(child2, child1);
   expect(parent.childNodes).to.deep.equal([child2, child1]);
@@ -30,23 +27,27 @@ test('should insert a child node before another node', () => {
 });
 
 test('should set an attribute', () => {
-  const node = new FakeDomNode('div');
+  const node = createElement('div');
   node.setAttribute('class', 'my-class');
+  //@ts-expect-error
   expect(node._attributes).to.deep.equal({ class: 'my-class' });
 });
 
 test('should remove an attribute', () => {
-  const node = new FakeDomNode('div');
+  const node = createElement('div');
   node.setAttribute('class', 'my-class');
   node.removeAttribute('class');
+  //@ts-expect-error
   expect(node._attributes).to.deep.equal({});
 });
 
 test('should get the innerHTML', () => {
-  const parent = new FakeDomNode('div');
-  const child1 = new FakeDomNode('span');
-  const child2 = new FakeDomNode('p');
+  const parent = createElement('div');
+  const child1 = createElement('span');
+  const child2 = createElement('p');
+  //@ts-expect-error
   child1.textContent = 'Hello';
+  //@ts-expect-error
   child2.textContent = 'world';
   parent.appendChild(child1);
   parent.appendChild(child2);
@@ -54,7 +55,7 @@ test('should get the innerHTML', () => {
 });
 
 test('should get the innerHTML', () => {
-  const parent = new FakeDomNode('div');
+  const parent = createElement('div');
   const child1 = createTextNode('hello');
   const child2 = createTextNode('world');
   parent.appendChild(child1);
@@ -63,8 +64,8 @@ test('should get the innerHTML', () => {
 });
 
 test('should remove a child node', () => {
-  const parent = new FakeDomNode('div');
-  const child = new FakeDomNode('span');
+  const parent = createElement('div');
+  const child = createElement('span');
   parent.appendChild(child);
   parent.removeChild(child);
   expect(parent.childNodes).to.deep.equal([]);
@@ -83,18 +84,18 @@ test('should create a new text node', () => {
 });
 
 test('should get the first child node', () => {
-  const parent = new FakeDomNode('div');
-  const child1 = new FakeDomNode('span');
-  const child2 = new FakeDomNode('p');
+  const parent = createElement('div');
+  const child1 = createElement('span');
+  const child2 = createElement('p');
   parent.appendChild(child1);
   parent.appendChild(child2);
   expect(parent.firstChild).to.equal(child1);
 });
 
 test('should get the next sibling node', () => {
-  const parent = new FakeDomNode('div');
-  const child1 = new FakeDomNode('span');
-  const child2 = new FakeDomNode('p');
+  const parent = createElement('div');
+  const child1 = createElement('span');
+  const child2 = createElement('p');
   parent.appendChild(child1);
   parent.appendChild(child2);
   expect(child1.nextSibling).to.equal(child2);

@@ -9,7 +9,11 @@ import {
   afterEach,
 } from 'vitest';
 import { useEffect, useState, useMemo } from '../src/r';
-import { mountAlipayPage, setupAlipayEnv, setupWechatEnv } from './common';
+import {
+  mountAlipayPage,
+  setupAlipayEnv,
+  setupWechatEnv,
+} from './utils/common';
 import {
   alipayPage,
   useOnShareAppMessage,

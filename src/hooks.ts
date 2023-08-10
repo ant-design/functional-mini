@@ -167,3 +167,12 @@ export function useWechatTriggerEvent() {
   }
   return fn;
 }
+
+function useMiniInstance<T = any>(): T {
+  const appxInstanceContext = useAppxContext();
+  return appxInstanceContext.instance;
+}
+
+export const usePage = useMiniInstance;
+
+export const useComponent = useMiniInstance;

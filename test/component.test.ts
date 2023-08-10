@@ -1,24 +1,23 @@
 /* eslint-disable no-prototype-builtins */
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
-import { useState, useEffect } from '../src/r';
+import {
+  alipayComponent,
+  useCreated,
+  useDidMount,
+  useError,
+  useEvent,
+  useWechatTriggerEvent,
+  wechatComponent,
+} from '../src/component';
+import { useEffect, useState } from '../src/r';
+import { EComponent2Status, updateComponent2Status } from '../src/utils';
 import {
   mountAlipayComponent,
   mountWechatComponent,
   setupAlipayEnv,
   setupWechatEnv,
-} from './common';
-import { delay } from './utils';
-import { EComponent2Status, updateComponent2Status } from '../src/utils';
-import {
-  wechatComponent,
-  alipayComponent,
-  useCreated,
-  useEvent,
-  useOnInit,
-  useDidMount,
-  useError,
-  useWechatTriggerEvent,
-} from '../src/component';
+} from './utils/common';
+import { delay } from './utils/utils';
 
 interface IComponentState {
   stateFoo: string;
@@ -47,8 +46,8 @@ describe('component - common and alipay', () => {
     const unmountFn = vi.fn();
     const defaultProps = { defaultFoo: 123, query: 'aaa' };
     const functionOpt = alipayComponent<IComponentProps>(function (props) {
-      useOnInit((param) => {
-        initFn(param);
+      useEffect(() => {
+        initFn();
         return unmountFn;
       }, []);
 
@@ -178,8 +177,8 @@ describe('component - common and alipay', () => {
       const [stateEffect, setStateEffect] = useState(initStateValue);
       expect(props.hasOwnProperty('minifishHooks')).toBeFalsy();
 
-      useOnInit((param) => {
-        initFn(param);
+      useEffect(() => {
+        initFn();
       }, []);
 
       useEvent(
@@ -601,86 +600,6 @@ describe('component - wechat', async () => {
     expect(() => {
       alipayComponent(C);
     }).toThrow(/平台/);
-  });
-
-  test('测试自制的 mount', async () => {
-    const c = vi.fn();
-    const ob1 = vi.fn();
-    const ob2 = vi.fn();
-    const ob3 = vi.fn();
-    const ob4 = vi.fn();
-    const ob5 = vi.fn();
-
-    const opt = {
-      properties: {
-        foo: {
-          type: String,
-          value: 'abc',
-        },
-        bar: {
-          type: Number,
-          value: null,
-        },
-        bbloon: {
-          type: Boolean,
-          value: false,
-        },
-      },
-      data: {
-        ddd: 'aaa',
-      },
-      lifetimes: {
-        created() {
-          c();
-          const self = this;
-          setTimeout(() => {
-            self.setData({ ddd: '2222' });
-          }, 1);
-        },
-      },
-      observers: {
-        '**': ob1,
-        'foo, bbloon': ob2,
-        'bar, bbloon': ob3,
-        not_exits: ob4,
-        ddd: ob5,
-      },
-    };
-    expect(c).toBeCalledTimes(0);
-    const instance = mountWechatComponent(opt);
-    expect(c).toBeCalledTimes(1);
-    expect(instance.data).toEqual(instance.properties);
-    expect(instance.data).toMatchSnapshot();
-
-    // 各种 observers
-    // 没变
-    instance.updateProps({
-      foo: 'abc',
-      bar: 0,
-      bbloon: false,
-    });
-
-    expect(ob1).toBeCalledTimes(0);
-    expect(ob2).toBeCalledTimes(0);
-    expect(ob3).toBeCalledTimes(0);
-    expect(ob4).toBeCalledTimes(0);
-
-    instance.updateProps({
-      foo: 'abc',
-      bar: 123,
-      bbloon: false,
-    });
-
-    expect(ob1).toBeCalledTimes(1);
-    expect(ob2).toBeCalledTimes(0);
-    expect(ob3).toBeCalledTimes(1);
-    expect(ob4).toBeCalledTimes(0);
-    expect(instance.data).toMatchSnapshot();
-
-    expect(ob5).toBeCalledTimes(0);
-    await delay(5);
-    expect(instance.data).toMatchSnapshot();
-    expect(ob5).toBeCalledTimes(1);
   });
 
   test('basic opt', async () => {

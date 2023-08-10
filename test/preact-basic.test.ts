@@ -1,5 +1,5 @@
 import { expect, test, vi } from 'vitest';
-import { delay } from './utils';
+import { delay } from './utils/utils';
 import {
   useEffect,
   useState,

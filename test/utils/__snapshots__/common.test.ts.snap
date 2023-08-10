@@ -1,0 +1,244 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[` 1`] = `
+{
+  "bar": 0,
+  "bbloon": false,
+  "ddd": "aaa",
+  "foo": "abc",
+}
+`;
+
+exports[` 2`] = `
+{
+  "bar": 123,
+  "bbloon": false,
+  "ddd": "aaa",
+  "foo": "abc",
+}
+`;
+
+exports[` 3`] = `
+{
+  "bar": 123,
+  "bbloon": false,
+  "ddd": "2222",
+  "foo": "abc",
+}
+`;
+
+exports[`c 1`] = `
+{
+  "bar": 0,
+  "bbloon": false,
+  "ddd": "aaa",
+  "foo": "abc",
+}
+`;
+
+exports[`c 2`] = `
+{
+  "bar": 123,
+  "bbloon": false,
+  "ddd": "aaa",
+  "foo": "abc",
+}
+`;
+
+exports[`c 3`] = `
+{
+  "bar": 123,
+  "bbloon": false,
+  "ddd": "2222",
+  "foo": "abc",
+}
+`;
+
+exports[`ce 1`] = `
+{
+  "bar": 0,
+  "bbloon": false,
+  "ddd": "aaa",
+  "foo": "abc",
+}
+`;
+
+exports[`ce 2`] = `
+{
+  "bar": 123,
+  "bbloon": false,
+  "ddd": "aaa",
+  "foo": "abc",
+}
+`;
+
+exports[`ce 3`] = `
+{
+  "bar": 123,
+  "bbloon": false,
+  "ddd": "2222",
+  "foo": "abc",
+}
+`;
+
+exports[`ce s 1`] = `
+{
+  "bar": 0,
+  "bbloon": false,
+  "ddd": "aaa",
+  "foo": "abc",
+}
+`;
+
+exports[`ce s 2`] = `
+{
+  "bar": 123,
+  "bbloon": false,
+  "ddd": "aaa",
+  "foo": "abc",
+}
+`;
+
+exports[`ce s 3`] = `
+{
+  "bar": 123,
+  "bbloon": false,
+  "ddd": "2222",
+  "foo": "abc",
+}
+`;
+
+exports[`测 1`] = `
+{
+  "bar": 0,
+  "bbloon": false,
+  "ddd": "aaa",
+  "foo": "abc",
+}
+`;
+
+exports[`测 2`] = `
+{
+  "bar": 123,
+  "bbloon": false,
+  "ddd": "aaa",
+  "foo": "abc",
+}
+`;
+
+exports[`测 3`] = `
+{
+  "bar": 123,
+  "bbloon": false,
+  "ddd": "2222",
+  "foo": "abc",
+}
+`;
+
+exports[`测试  1`] = `
+{
+  "bar": 0,
+  "bbloon": false,
+  "ddd": "aaa",
+  "foo": "abc",
+}
+`;
+
+exports[`测试  2`] = `
+{
+  "bar": 123,
+  "bbloon": false,
+  "ddd": "aaa",
+  "foo": "abc",
+}
+`;
+
+exports[`测试  3`] = `
+{
+  "bar": 123,
+  "bbloon": false,
+  "ddd": "2222",
+  "foo": "abc",
+}
+`;
+
+exports[`测试 1`] = `
+{
+  "bar": 0,
+  "bbloon": false,
+  "ddd": "aaa",
+  "foo": "abc",
+}
+`;
+
+exports[`测试 2`] = `
+{
+  "bar": 123,
+  "bbloon": false,
+  "ddd": "aaa",
+  "foo": "abc",
+}
+`;
+
+exports[`测试 3`] = `
+{
+  "bar": 123,
+  "bbloon": false,
+  "ddd": "2222",
+  "foo": "abc",
+}
+`;
+
+exports[`测试 mountWechatComponent 1`] = `
+{
+  "bar": 0,
+  "bbloon": false,
+  "ddd": "aaa",
+  "foo": "abc",
+}
+`;
+
+exports[`测试 mountWechatComponent 2`] = `
+{
+  "bar": 123,
+  "bbloon": false,
+  "ddd": "aaa",
+  "foo": "abc",
+}
+`;
+
+exports[`测试 mountWechatComponent 3`] = `
+{
+  "bar": 123,
+  "bbloon": false,
+  "ddd": "2222",
+  "foo": "abc",
+}
+`;
+
+exports[`测试自制的 mount 1`] = `
+{
+  "bar": 0,
+  "bbloon": false,
+  "ddd": "aaa",
+  "foo": "abc",
+}
+`;
+
+exports[`测试自制的 mount 2`] = `
+{
+  "bar": 123,
+  "bbloon": false,
+  "ddd": "aaa",
+  "foo": "abc",
+}
+`;
+
+exports[`测试自制的 mount 3`] = `
+{
+  "bar": 123,
+  "bbloon": false,
+  "ddd": "2222",
+  "foo": "abc",
+}
+`;

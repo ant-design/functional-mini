@@ -41,30 +41,3 @@ exports[`component - wechat > basic opt 1`] = `
   \\"methods\\": {}
 }"
 `;
-
-exports[`component - wechat > 测试自制的 mount 1`] = `
-{
-  "bar": 0,
-  "bbloon": false,
-  "ddd": "aaa",
-  "foo": "abc",
-}
-`;
-
-exports[`component - wechat > 测试自制的 mount 2`] = `
-{
-  "bar": 123,
-  "bbloon": false,
-  "ddd": "aaa",
-  "foo": "abc",
-}
-`;
-
-exports[`component - wechat > 测试自制的 mount 3`] = `
-{
-  "bar": 123,
-  "bbloon": false,
-  "ddd": "2222",
-  "foo": "abc",
-}
-`;

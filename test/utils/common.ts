@@ -1,6 +1,5 @@
 import { vi } from 'vitest';
-import { IWechatProperty } from '../src/platform';
-import { shallowCompare } from '../src/utils';
+import { IWechatProperty } from '../../src/platform';
 
 interface ITestInstance {
   setData: (data?: Record<string, any>) => void;
@@ -16,51 +15,13 @@ interface ITestInstance {
   ) => void;
 }
 
-interface IAlipayInstance extends ITestInstance {
-  $id: string;
-  props: Record<string, any>;
-}
-
 interface IWechatInstance extends ITestInstance {
   properties: Record<string, any>;
   _data: Record<string, any>;
   _props: Record<string, any>;
 }
 
-export function mountAlipayComponent(
-  option,
-  props = {},
-  onSetData?: (any) => void,
-): IAlipayInstance {
-  const mockInstance = {
-    $id: `component-C-${Math.random()}`,
-    data: option?.data || {},
-    props,
-    setData(data = {}) {
-      mockInstance.data = {
-        ...(mockInstance.data || {}),
-        ...data,
-      };
-      option.deriveDataFromProps.call(mockInstance, mockInstance.props);
-      onSetData?.(data);
-    },
-    // 一些控制方法
-    updateProps(nextProps) {
-      if (shallowCompare(nextProps, mockInstance.props)) return;
-      option.deriveDataFromProps.call(mockInstance, nextProps);
-      mockInstance.props = nextProps;
-    },
-    callMethod(methodName, ...args) {
-      return option.methods[methodName]?.call(mockInstance, ...args);
-    },
-    unmount() {
-      return option.didUnmount?.call(mockInstance);
-    },
-  };
-
-  option.onInit.call(mockInstance);
-  return mockInstance;
-}
+export { mountAlipayComponent } from './mount-alipay-component.js';
 
 export function mountWechatComponent(
   option,
@@ -116,12 +77,7 @@ export function mountWechatComponent(
   const mockInstance: IWechatInstance = {
     _data: option?.data || {},
     _props: checkPropsMeetDefinition(initProps, propsConfig),
-    // _updateData(newData, newProps) {
-    //   const updatedKeys: string[] = [];
-    //   for (const key in newData) {
-    //   }
-    //   const observers = option.observers || {};
-    // },
+
     setData(data = {}) {
       mockInstance._data = {
         ...(mockInstance._data || {}),

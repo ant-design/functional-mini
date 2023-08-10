@@ -77,3 +77,5 @@ export const useBeforeReload = getLifeCycleHooks(
 );
 
 export * from './export-hooks.js';
+
+export { usePage } from './hooks.js';
