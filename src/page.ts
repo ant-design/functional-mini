@@ -24,7 +24,10 @@ export function wechatPage<TProps>(element: TElementFunction<TProps>) {
 }
 
 // 公共生命周期
-export const useOnLoad = getLifeCycleHooks(commonPageEvents.onLoad);
+
+/**
+ * 不暴露 useOnLoad , 使用 useEffect 代替
+ */
 export const useOnShow = getLifeCycleHooks('onShow');
 export const useOnReady = getLifeCycleHooks('onReady');
 export const useOnHide = getLifeCycleHooks('onHide');

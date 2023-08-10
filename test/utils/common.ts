@@ -152,6 +152,7 @@ export function mountAlipayPage(option, onSetData?: (any) => void) {
   };
 
   option.onLoad.call(mockInstance);
+
   return mockInstance;
 }
 

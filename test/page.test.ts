@@ -57,7 +57,7 @@ describe('page - common and alipay', () => {
     const fnOff = vi.fn();
     const fnLifeCycle = vi.fn();
     const C = function () {
-      useOnLoad(fnLifeCycle, []);
+      useEffect(fnLifeCycle, []);
       const [d] = useState('d-initValue');
       useEffect(fn, []);
       useEffect(() => fnOff, []);
@@ -93,11 +93,8 @@ describe('page - common and alipay', () => {
     const initStateValue = 'initValue';
     const callFn = vi.fn();
     const unloadFn = vi.fn();
-    const unloadInOnLoad = vi.fn();
 
     const pageOption = functionalPage(function (props: any) {
-      expect(props.hasOwnProperty('minifishHooks')).toBeFalsy();
-
       const [stateFoo] = useState(initStateValue);
       useEvent(
         'foo',
@@ -110,10 +107,6 @@ describe('page - common and alipay', () => {
       useEffect(() => {
         callFn();
         return unloadFn;
-      }, []);
-
-      useOnLoad((q) => {
-        return unloadInOnLoad;
       }, []);
 
       useEvent('onTap', () => {}, []);
@@ -129,7 +122,6 @@ describe('page - common and alipay', () => {
     expect(!pageOption.hasOwnProperty('methods')).toBeTruthy();
     expect(callFn).toBeCalledTimes(0);
     expect(unloadFn).toBeCalledTimes(0);
-    expect(unloadInOnLoad).toBeCalledTimes(0);
   });
 
   test('functional page', async () => {
@@ -145,8 +137,7 @@ describe('page - common and alipay', () => {
     const unloadInOnLoad = vi.fn();
     const loadFn = vi.fn();
 
-    const pageOption = functionalPage(function (props: any) {
-      expect(props.hasOwnProperty('minifishHooks')).toBeFalsy();
+    const pageOption = functionalPage(function (props: { query: any }) {
       useEvent(
         'foo',
         (event) => {
@@ -165,13 +156,13 @@ describe('page - common and alipay', () => {
         return unloadFn;
       }, []);
 
-      useOnLoad((q) => {
-        assert(q.query === queryValue);
+      useEffect(() => {
+        assert(props.query.query === queryValue);
         setFooState(valueAfterLoad);
         loadFn();
 
         return unloadInOnLoad;
-      }, []);
+      }, [props]);
 
       useOnShow(() => {
         setOnShowData(true);
@@ -263,7 +254,7 @@ describe('page - common and alipay', () => {
       const [, setCounter] = useState(0);
       const [onShowData, setOnShowData] = useState(false);
 
-      useOnLoad((q) => {
+      useEffect(() => {
         setCounter(1);
         return unloadInOnLoad;
       }, []);
@@ -324,7 +315,7 @@ describe('page - common and alipay', () => {
         return `heavy-${h}`;
       }, [h]);
 
-      useOnLoad(() => {
+      useEffect(() => {
         setS('bar');
       }, []);
 

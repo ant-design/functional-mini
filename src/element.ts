@@ -224,6 +224,11 @@ export function functionalMiniElement<TProps>(
     if (elementType === 'component') {
       initProps = getPropsFromInstance(appxInstance, defaultPropKeys);
     }
+    if (elementType === 'page') {
+      initProps = {
+        query: args[0] || {},
+      };
+    }
 
     elementMap[id] = {
       appxContext: context,

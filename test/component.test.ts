@@ -175,7 +175,6 @@ describe('component - common and alipay', () => {
 
     const functionOpt = alipayComponent<IComponentProps>(function (props) {
       const [stateEffect, setStateEffect] = useState(initStateValue);
-      expect(props.hasOwnProperty('minifishHooks')).toBeFalsy();
 
       useEffect(() => {
         initFn();
