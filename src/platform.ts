@@ -91,7 +91,7 @@ export const alipayPageEvents = {
   beforeReload: 'beforeReload',
 };
 
-export const commonComponentEvents = {
+export const commonComponentEvents: Record<string, string> = {
   created: 'created',
   attached: 'attached',
   ready: 'ready',
@@ -149,13 +149,34 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
           userEventHandlers,
         );
       } else {
+        /**
+         * 参考这里
+         * https://opendocs.alipay.com/mini/framework/component-lifecycle
+         */
+
+        const alipayLifeCycle: Record<string, unknown> = {};
+        const commonLifetime: Record<string, unknown> = {};
+        (Object.keys(lifeCycleHandlers) as string[]).forEach((key) => {
+          if (commonComponentEvents[key]) {
+            commonLifetime[key] = lifeCycleHandlers[key];
+          } else {
+            alipayLifeCycle[key] = lifeCycleHandlers[key];
+          }
+        });
+
         return Object.assign(
           {
             props, // 支付宝端：直接传入 props
             data,
-            options,
+            options: Object.assign(
+              {
+                lifetimes: true,
+              },
+              options || {},
+            ),
+            lifetimes: commonLifetime,
           },
-          lifeCycleHandlers,
+          alipayLifeCycle,
           { methods: userEventHandlers },
         );
       }
