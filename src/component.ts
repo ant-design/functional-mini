@@ -32,7 +32,6 @@ export function wechatComponent<TProps extends Record<string, any>>(
 export const useAttached = getLifeCycleHooks(commonComponentEvents.attached);
 export const useReady = getLifeCycleHooks(commonComponentEvents.ready);
 export const useMoved = getLifeCycleHooks(commonComponentEvents.moved);
-export const useDetached = getLifeCycleHooks(commonComponentEvents.detached);
 
 export const useDidMount = getLifeCycleHooks(
   alipayComponentEvents.didMount,
