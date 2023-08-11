@@ -93,7 +93,7 @@ const Counter = () => {
 <table>
   <tr>
     <th>小程序页面生命周期</th>
-    <th>hooks</th>
+    <th><code>import { hook } from 'functional-mini/page'<code></th>
   </tr>
   <tr>
     <td>onLoad<br />onUnload</td>
