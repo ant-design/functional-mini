@@ -196,22 +196,6 @@ const Counter = () => {
     <th><code>import { hook } from 'functional-mini/component'</code></th>
   </tr>
   <tr>
-    <td>created<br />detached</td>
-    <td>没有对应，可以使用 onInit 与 didUnmount 代替。</td>
-  </tr>
-  <tr>
-    <td>attached</td>
-    <td>useAttached</td>
-  </tr>
-  <tr>
-    <td>ready</td>
-    <td>useReady</td>
-  </tr>
-  <tr>
-    <td>moved</td>
-    <td>useMoved</td>
-  </tr>
-  <tr>
     <td>onInit<br />didUnmount</td>
     <td>
       <pre><code>useEffect(() => {
@@ -223,20 +207,36 @@ const Counter = () => {
     </td>
   </tr>
   <tr>
-    <td>deriveDataFromProps</td>
-    <td>我们可以在<strong>渲染过程中更新 state</strong>，以达到实现 deriveDataFromProps 的目的。</td>
+    <td>created<br />detached</td>
+    <td>没有对应，可以使用 onInit 与 didUnmount 代替。</td>
   </tr>
   <tr>
+    <td>attached</td>
+    <td>useAttached</td>
+  </tr>
+    <tr>
     <td>didMount</td>
     <td>useDidMount</td>
   </tr>
   <tr>
+    <td>ready</td>
+    <td>useReady</td>
+  </tr>
+    <tr>
     <td>didUpdate</td>
     <td>
       <pre><code>useEffect(() => {
   // 相当于 didUpdate
 }, [deps]);</code></pre>
     </td>
+  </tr>
+  <tr>
+    <td>moved</td>
+    <td>useMoved</td>
+  </tr>
+  <tr>
+    <td>deriveDataFromProps</td>
+    <td>我们可以在<strong>渲染过程中更新 state</strong>，以达到实现 deriveDataFromProps 的目的。</td>
   </tr>
 </table>
 
@@ -488,9 +488,9 @@ page 相关的 API 统一从 `functional-mini/page` 导入。
 - usePage()
   获取页面实例
 
-#### react hooks
+#### React hooks
 
-下面是 react 内置的hooks, 详细用法可以看 [React](https://react.dev/reference/react) 官方文档。
+下面是 React 内置的hooks, 详细用法可以看 [React](https://react.dev/reference/react) 官方文档。
 
 - useState
 - useReducer
@@ -546,9 +546,9 @@ component 相关的 API 统一从 `functional-mini/component` 导入。
 
   获取组件实例
 
-#### react hooks
+#### React hooks
 
-下面是 react 内置的hooks, 详细用法可以看 [React](https://react.dev/reference/react) 官方文档。
+下面是 React 内置的hooks, 详细用法可以看 [React](https://react.dev/reference/react) 官方文档。
 
 - useState
 - useReducer
@@ -562,6 +562,6 @@ component 相关的 API 统一从 `functional-mini/component` 导入。
 详细参数可以看 [支付宝小程序](https://opendocs.alipay.com/mini/framework/component-lifecycle?pathHash=9b628e01) 与 [微信小程序](https://developers.weixin.qq.com/miniprogram/dev/reference/api/Component.html) 文档。
 
 - useAttached
+- useDidMount
 - useReady
 - useMoved
-- useDidMount
