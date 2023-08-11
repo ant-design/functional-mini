@@ -1,7 +1,6 @@
 import { expect, it } from 'vitest';
 import {
   useAttached,
-  useCreated,
   wechatComponent,
   useEffect,
   useMoved,
@@ -14,9 +13,6 @@ it('test lifetimes option', () => {
       return () => {
         console.log('unmount');
       };
-    }, []);
-    useCreated(() => {
-      console.log('created');
     }, []);
 
     useAttached(() => {

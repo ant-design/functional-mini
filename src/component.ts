@@ -1,11 +1,7 @@
 import { functionalMiniElement, TElementFunction } from './element.js';
-import { EElementType, ETargetPlatform } from './types.js';
 import { getLifeCycleHooks } from './hooks.js';
-import {
-  alipayComponentEvents,
-  commonComponentEvents,
-  wechatComponentEvents,
-} from './platform.js';
+import { alipayComponentEvents, commonComponentEvents } from './platform.js';
+import { EElementType, ETargetPlatform } from './types.js';
 
 export function alipayComponent<TProps extends Record<string, any>>(
   element: TElementFunction<TProps>,
@@ -33,7 +29,6 @@ export function wechatComponent<TProps extends Record<string, any>>(
   );
 }
 
-export const useCreated = getLifeCycleHooks(commonComponentEvents.created);
 export const useAttached = getLifeCycleHooks(commonComponentEvents.attached);
 export const useReady = getLifeCycleHooks(commonComponentEvents.ready);
 export const useMoved = getLifeCycleHooks(commonComponentEvents.moved);
