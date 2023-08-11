@@ -10,8 +10,6 @@
 - 通过 React hooks 实现小程序生命周期的接入，如 `useOnShow`、 `useOnHide` 等
 - 在组件的最后返回 JSON，SDK 会自动提交到视图层渲染。注意不能在组件里写 JSX (原因详见后文）
 
-以下这张图示意了使用函数式组件开发小程序后的项目结构：
-
 在项目库的 `/example/todo-alipay` , `/example/todo-wechat` 目录中，我们分别提供了完整的支付宝和微信小程序 Demo 项目，可供查阅。
 
 ## 快速开始
