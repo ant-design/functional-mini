@@ -28,9 +28,9 @@ const Counter = ({ query }) => {
   useEvent(
     'add',
     () => {
-      setCount(value + 1);
+      setCount(count + 1);
     },
-    [],
+    [count],
   );
 
   // 将这些值提交到视图层
