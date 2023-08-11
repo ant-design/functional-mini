@@ -13,9 +13,9 @@
 - 支持开发小程序页面和自定义组件
 - 使用 React 函数式组件编写逻辑，控制渲染数据
 - 通过 React hooks 实现小程序生命周期的接入，如 `useOnShow`、 `useOnHide` 等
-- 在组件的最后返回 JSON，SDK 会自动提交到视图层渲染。注意不能在组件里写 JSX (原因详见后文）
+- 在组件的最后返回 JSON，SDK 会自动提交到视图层渲染。注意不能在组件里写 JSX (原因[详见](./doc.md#为何无法使用-jsx)）
 
-在项目库的 `/example/todo-alipay` , `/example/todo-wechat` 目录中，我们分别提供了完整的支付宝和微信小程序 Demo 项目，可供查阅。
+在项目库的 [`/example/todo-alipay`](./example//todo-alipay/) , [`/example/todo-wechat`](./example/todo-wechat/) 目录中，我们分别提供了完整的支付宝和微信小程序 Demo 项目，可供查阅。
 
 ## 快速开始
 
@@ -45,9 +45,9 @@ const Counter = ({ query }) => {
   useEvent(
     'add',
     () => {
-      setCount(value + 1);
+      setCount(count + 1);
     },
-    [],
+    [count],
   );
 
   // 将这些值提交到视图层
