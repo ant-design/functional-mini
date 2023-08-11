@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1100px" height="440px" viewBox="0 0 1100 440" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 2</title>
+    <g id="functional" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组-2">
+            <rect id="矩形" fill="#FFFFFF" x="0" y="0" width="1100" height="440"></rect>
+            <g id="编组" transform="translate(35.000000, 19.000000)">
+                <rect id="Rectangle" fill="#EFEFEF" x="0" y="0" width="227" height="378" rx="4"></rect>
+                <rect id="Rectangle" fill="#DCE9FD" x="260" y="0" width="406" height="379" rx="4"></rect>
+                <text id="Page({-//-页面数据-data:" font-family="AndaleMono, Andale Mono" font-size="12" font-weight="normal">
+                    <tspan x="20" y="28" fill="#000000">Page({</tspan>
+                    <tspan x="20" y="42" fill="#000000">  // </tspan>
+                    <tspan x="56.0058594" y="42" font-family="PingFangSC-Regular, PingFang SC" fill="#000000">页面数据</tspan>
+                    <tspan x="104.005859" y="42" fill="#000000"></tspan>
+                    <tspan x="20" y="59" fill="#000000">  </tspan>
+                    <tspan x="34.4023438" y="59" fill="#004BB4">data</tspan>
+                    <tspan x="63.2070312" y="59" fill="#000000">: {},</tspan>
+                    <tspan x="20" y="73" fill="#000000">  // </tspan>
+                    <tspan x="56.0058594" y="73" font-family="PingFangSC-Regular, PingFang SC" fill="#000000">生命周期</tspan>
+                    <tspan x="104.005859" y="73" fill="#000000"></tspan>
+                    <tspan x="20" y="90" fill="#000000">  </tspan>
+                    <tspan x="34.4023438" y="90" fill="#004BB4">onLoad</tspan>
+                    <tspan x="77.609375" y="90" fill="#000000">() {</tspan>
+                    <tspan x="20" y="104" fill="#000000">	// ...</tspan>
+                    <tspan x="20" y="118" fill="#000000">  },</tspan>
+                    <tspan x="20" y="132" fill="#000000">  </tspan>
+                    <tspan x="34.4023438" y="132" fill="#004BB4">onShow</tspan>
+                    <tspan x="77.609375" y="132" fill="#000000">()  {</tspan>
+                    <tspan x="20" y="146" fill="#000000">	// ...</tspan>
+                    <tspan x="20" y="160" fill="#000000">  },</tspan>
+                    <tspan x="20" y="174" fill="#000000">  // </tspan>
+                    <tspan x="56.0058594" y="174" font-family="PingFangSC-Regular, PingFang SC" fill="#000000">页面卸载</tspan>
+                    <tspan x="104.005859" y="174" fill="#000000"></tspan>
+                    <tspan x="20" y="191" fill="#000000">  </tspan>
+                    <tspan x="34.4023438" y="191" fill="#004BB4">didUnmount</tspan>
+                    <tspan x="106.414062" y="191" fill="#000000">() {</tspan>
+                    <tspan x="20" y="205" fill="#000000">    // ...</tspan>
+                    <tspan x="20" y="219" fill="#000000">  },</tspan>
+                    <tspan x="20" y="233" fill="#000000">  // </tspan>
+                    <tspan x="56.0058594" y="233" font-family="PingFangSC-Regular, PingFang SC" fill="#000000">事件处理函数</tspan>
+                    <tspan x="128.005859" y="233" fill="#000000"></tspan>
+                    <tspan x="20" y="250" fill="#000000">  </tspan>
+                    <tspan x="34.4023438" y="250" fill="#004BB4">onTodoChanged</tspan>
+                    <tspan x="128.017578" y="250" fill="#000000">(e) {</tspan>
+                    <tspan x="20" y="264" fill="#000000">    // ...</tspan>
+                    <tspan x="20" y="278" fill="#000000">  },</tspan>
+                    <tspan x="20" y="292" fill="#000000">  </tspan>
+                    <tspan x="34.4023438" y="292" fill="#004BB4">addTodo</tspan>
+                    <tspan x="84.8105469" y="292" fill="#000000">() {</tspan>
+                    <tspan x="20" y="306" fill="#000000">    // ...</tspan>
+                    <tspan x="20" y="320" fill="#000000">  },</tspan>
+                    <tspan x="20" y="334" fill="#000000">});</tspan>
+                </text>
+                <text id="返回-JSON-数据，绑定到-视图层-替" font-family="PingFangSC-Semibold, PingFang SC" font-size="10" font-weight="500" fill="#C60909">
+                    <tspan x="144.05" y="315">返回 JSON 数据，绑定到 视图层</tspan>
+                    <tspan x="207.54" y="329">替代 setData 操作</tspan>
+                </text>
+                <text id="生命周期走-hooks" font-family="PingFangSC-Semibold, PingFang SC" font-size="10" font-weight="500" fill="#C60909">
+                    <tspan x="213.12" y="60">生命周期走 hooks</tspan>
+                </text>
+                <text id="绑定事件" font-family="PingFangSC-Semibold, PingFang SC" font-size="10" font-weight="500" fill="#C60909">
+                    <tspan x="255" y="175">绑定事件</tspan>
+                </text>
+                <text id="const-MyPage-=-funct" font-family="AndaleMono, Andale Mono" font-size="12" font-weight="normal" fill="#000000">
+                    <tspan x="282" y="27">const MyPage = function(){</tspan>
+                    <tspan x="282" y="41">  const [todoList, setTodoList] = useState([]);</tspan>
+                    <tspan x="282" y="55"></tspan>
+                    <tspan x="282" y="69">  useOnShow(() =&gt; { /* ... */ }, []);</tspan>
+                    <tspan x="282" y="83"></tspan>
+                    <tspan x="282" y="97">  useEffect(() =&gt; {</tspan>
+                    <tspan x="282" y="111">    console.log(‘this is load’);</tspan>
+                    <tspan x="282" y="125">	return () =&gt; { console.log('this is unmount' };</tspan>
+                    <tspan x="282" y="139">  }, []); </tspan>
+                    <tspan x="282" y="153"></tspan>
+                    <tspan x="282" y="167">  useEvent(‘onTodoChanged', () =&gt; {</tspan>
+                    <tspan x="282" y="181">    // ...</tspan>
+                    <tspan x="282" y="195">  }, []);</tspan>
+                    <tspan x="282" y="209"></tspan>
+                    <tspan x="282" y="223">  useEvent('addTodo', e =&gt; {</tspan>
+                    <tspan x="282" y="237">    // ...</tspan>
+                    <tspan x="282" y="251">  }, [todoList]);</tspan>
+                    <tspan x="282" y="265"></tspan>
+                    <tspan x="282" y="279">  </tspan>
+                    <tspan x="296.402344" y="279" font-family="PingFangSC-Regular, PingFang SC">//  ...数据逻辑处理...</tspan>
+                    <tspan x="407.402344" y="279"></tspan>
+                    <tspan x="282" y="296">  // </tspan>
+                    <tspan x="318.005859" y="296" font-family="PingFangSC-Regular, PingFang SC">把数据变量绑定到视图层</tspan>
+                    <tspan x="450.005859" y="296"></tspan>
+                    <tspan x="282" y="313">  return { todos: todoList, };</tspan>
+                    <tspan x="282" y="327">}</tspan>
+                    <tspan x="282" y="341"></tspan>
+                    <tspan x="282" y="355">Page(alipayPage(MyPage));</tspan>
+                </text>
+                <text id="原生小程序页面" font-family="PingFangSC-Regular, PingFang SC" font-size="12" font-weight="normal" fill="#000000">
+                    <tspan x="71" y="398">原生小程序页面</tspan>
+                </text>
+                <text id="使用-React-函数式组件" font-family="PingFangSC-Regular, PingFang SC" font-size="12" font-weight="normal" fill="#000000">
+                    <tspan x="393" y="398">使用 React 函数式组件</tspan>
+                </text>
+                <text id="视图层-(不变)" font-family="PingFangSC-Regular, PingFang SC" font-size="12" font-weight="normal" fill="#000000">
+                    <tspan x="839" y="399">视图层 (不变)</tspan>
+                </text>
+                <path d="M95.5,57.5 C117.330949,130.844448 139.448336,181.533 161.852161,209.565655 C184.255986,237.598311 228.471932,269.909759 294.5,306.5" id="Line" stroke="#F22A2A" stroke-linecap="square"></path>
+                <path d="M95.5,124.590705 C137.307712,96.4663267 168.409129,79.3775384 188.804251,73.3243405 C209.199372,67.2711427 244.097955,64.7713712 293.5,65.8250262" id="Line-2" stroke="#F22A2A" stroke-linecap="square"></path>
+                <path d="M168.526778,249.605359 C181.777338,231.171917 198.319695,215.678897 218.153848,203.126298 C237.988001,190.573699 263.112311,183.06672 293.526778,180.605359" id="Line-2" stroke="#F22A2A" stroke-linecap="square"></path>
+                <line x1="694.5" y1="6.5" x2="694.5" y2="384.5" id="Line-3" stroke="#979797" stroke-linecap="square" stroke-dasharray="5,5"></line>
+                <rect id="Rectangle" stroke="#979797" x="720.5" y="1.5" width="309" height="377" rx="4"></rect>
+                <text id="&lt;view-class=&quot;todo-it" font-family="PingFangSC-Regular, PingFang SC" font-size="12" font-weight="normal" fill="#000000">
+                    <tspan x="733" y="50"></tspan>
+                    <tspan x="733" y="67"></tspan>
+                    <tspan x="733" y="84">  &lt;view class="todo-items"&gt;</tspan>
+                    <tspan x="733" y="101">    &lt;checkbox-group onChange="onTodoChanged"&gt;</tspan>
+                    <tspan x="733" y="118">      &lt;label a:for="{{todos}}" a:for-item="item" </tspan>
+                    <tspan x="733" y="135">a:key="*this"&gt;</tspan>
+                    <tspan x="733" y="152">        &lt;!--  .... --&gt;</tspan>
+                    <tspan x="733" y="169">      &lt;/label&gt;</tspan>
+                    <tspan x="733" y="186">    &lt;/checkbox-group&gt;</tspan>
+                    <tspan x="733" y="203">  &lt;/view&gt;</tspan>
+                    <tspan x="733" y="220"></tspan>
+                    <tspan x="733" y="237">  &lt;view class="todo-footer"&gt;</tspan>
+                    <tspan x="733" y="254">    &lt;add-button onClickMe="addTodo" &gt;</tspan>
+                    <tspan x="733" y="271">      add task</tspan>
+                    <tspan x="733" y="288">    &lt;/add-button&gt;</tspan>
+                    <tspan x="733" y="305">  &lt;/view&gt;</tspan>
+                    <tspan x="733" y="322">&lt;/view&gt;</tspan>
+                </text>
+                <line x1="886.5" y1="260.5" x2="955.5" y2="260.5" id="Line-4" stroke="#0B3FEB" stroke-linecap="square"></line>
+                <line x1="830.5" y1="124.5" x2="880.5" y2="124.5" id="Line-4" stroke="#0B3FEB" stroke-linecap="square"></line>
+                <polyline id="Line-4" stroke="#0B3FEB" stroke-linecap="square" points="919.5 110.5 964.723866 110.5 991.646254 110.5 1014.5 110.5"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
