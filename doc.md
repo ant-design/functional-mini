@@ -477,17 +477,16 @@ page 相关的 API 统一从 `functional-mini/page` 导入。
 
 - alipayPage(pageHook)
 
-在支付宝小程序中使用，构造传递给 Page 的 option
+  在支付宝小程序中使用，构造传递给 Page 的 option
 
 - wechatPage(pageHook)
 
-在微信小程序中使用，构造传递给 Page 的 option
+  在微信小程序中使用，构造传递给 Page 的 option
 
 #### functional hooks
 
 - usePage()
-
-获取页面实例
+  获取页面实例
 
 #### react hooks
 
@@ -545,7 +544,7 @@ const functionOption = wechatComponent(Counter, {
 
 - useComponent
 
-获取组件实例
+  获取组件实例
 
 #### react hooks
 
