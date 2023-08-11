@@ -3,7 +3,6 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import {
   alipayComponent,
   useComponent,
-  useCreated,
   useDidMount,
   useEvent,
   wechatComponent,
@@ -664,7 +663,7 @@ describe('component - wechat', async () => {
   test('lifetimes', async () => {
     const createFn = vi.fn();
     const C = function (props) {
-      useCreated(createFn, []);
+      useEffect(createFn, []);
 
       return {};
     };

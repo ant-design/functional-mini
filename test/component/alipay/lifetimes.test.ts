@@ -1,17 +1,8 @@
 import { expect, it } from 'vitest';
-import {
-  alipayComponent,
-  useAttached,
-  useCreated,
-  useMoved,
-} from '../../../src/component';
+import { alipayComponent, useAttached, useMoved } from '../../../src/component';
 
 it('test lifetimes option', () => {
   const option = alipayComponent(() => {
-    useCreated(() => {
-      console.log('created');
-    }, []);
-
     useAttached(() => {
       console.log('attached2');
     }, []);
@@ -24,9 +15,5 @@ it('test lifetimes option', () => {
   });
 
   expect(option.options).toEqual({ lifetimes: true });
-  expect(Object.keys(option.lifetimes)).toEqual([
-    'created',
-    'attached',
-    'moved',
-  ]);
+  expect(Object.keys(option.lifetimes)).toEqual(['attached', 'moved']);
 });
