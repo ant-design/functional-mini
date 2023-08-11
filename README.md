@@ -17,6 +17,8 @@
 
 在项目库的 [`/example/todo-alipay`](./example/todo-alipay/) , [`/example/todo-wechat`](./example/todo-wechat/) 目录中，我们分别提供了完整的支付宝和微信小程序 Demo 项目，可供查阅。
 
+![](./home.svg)
+
 ## 快速开始
 
 我们以最简单的计数器页面为例。
