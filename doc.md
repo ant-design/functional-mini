@@ -528,17 +528,17 @@ component 相关的 API 统一从 `functional-mini/component` 导入。
 
 - alipayComponent(componentHook, defaultProps)
 
-在支付宝小程序中使用，构造传递给 Component 的 option
+  在支付宝小程序中使用，构造传递给 Component 的 option
 
 - wechatComponent(componentHook, defaultProps)
 
-在微信小程序中使用，构造传递给 Component 的 option
+  在微信小程序中使用，构造传递给 Component 的 option
 
-```typescript
-const functionOption = wechatComponent(Counter, {
-  label: 'button', // 我们会根据 defaultProps 的类型生成组件的 properties
-});
-```
+  ```typescript
+  const functionOption = wechatComponent(Counter, {
+    label: 'button', // 我们会根据 defaultProps 的类型生成组件的 properties
+  });
+  ```
 
 #### functional hooks
 
@@ -565,3 +565,7 @@ const functionOption = wechatComponent(Counter, {
 - useReady
 - useMoved
 - useDidMount
+
+```
+
+```
