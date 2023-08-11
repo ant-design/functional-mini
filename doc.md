@@ -223,6 +223,10 @@ const Counter = () => {
     <td>useReady</td>
   </tr>
     <tr>
+    <td>deriveDataFromProps</td>
+    <td>我们可以在<strong>渲染过程中更新 state</strong>，以达到实现 deriveDataFromProps 的目的。</td>
+  </tr>
+  <tr>
     <td>didUpdate</td>
     <td>
       <pre><code>useEffect(() => {
@@ -233,10 +237,6 @@ const Counter = () => {
   <tr>
     <td>moved</td>
     <td>useMoved</td>
-  </tr>
-  <tr>
-    <td>deriveDataFromProps</td>
-    <td>我们可以在<strong>渲染过程中更新 state</strong>，以达到实现 deriveDataFromProps 的目的。</td>
   </tr>
 </table>
 
