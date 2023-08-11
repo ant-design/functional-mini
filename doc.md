@@ -565,7 +565,3 @@ component 相关的 API 统一从 `functional-mini/component` 导入。
 - useReady
 - useMoved
 - useDidMount
-
-```
-
-```
