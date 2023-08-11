@@ -9,7 +9,9 @@ const AddButton = () => {
   useEvent(
     'onClickMe',
     () => {
-      component.triggerEvent('onClickMe');
+      component.triggerEvent('onClickMe', {
+        time: Date.now(),
+      });
     },
     [],
   );

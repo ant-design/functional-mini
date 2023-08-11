@@ -5,15 +5,20 @@ const app = getApp();
 const AddTodo = () => {
   const [inputValue, setInputValue] = useState('');
 
-  useEvent('onBlur', (e) => {
-    setInputValue(e.detail.value);
-  },[]);
-  
+  useEvent(
+    'onBlur',
+    (e) => {
+      setInputValue(e.detail.value);
+    },
+    [],
+  );
+
   useEvent(
     'add',
-    () => {
-      if(!inputValue){
-        return
+    (e) => {
+      console.log("click time: ", e.detail.time)
+      if (!inputValue) {
+        return;
       }
       app.todos = app.todos.concat([
         {
