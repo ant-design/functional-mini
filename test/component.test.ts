@@ -2,11 +2,10 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import {
   alipayComponent,
+  useComponent,
   useCreated,
   useDidMount,
-  useError,
   useEvent,
-  useWechatTriggerEvent,
   wechatComponent,
 } from '../src/component';
 import { useEffect, useState } from '../src/r';
@@ -590,17 +589,6 @@ describe('component - wechat', async () => {
     off();
   });
 
-  test('不能在支付宝组件里使用微信的 hooks', async () => {
-    const C = function () {
-      useError(() => {});
-
-      return () => {};
-    };
-    expect(() => {
-      alipayComponent(C);
-    }).toThrow(/平台/);
-  });
-
   test('basic opt', async () => {
     const C = function () {
       return { foo: 'long-content' };
@@ -675,23 +663,18 @@ describe('component - wechat', async () => {
 
   test('lifetimes', async () => {
     const createFn = vi.fn();
-    const errorFn = vi.fn();
     const C = function (props) {
       useCreated(createFn, []);
-      useError(errorFn, []);
 
       return {};
     };
 
     const instance = mountWechatComponent(wechatComponent(C, {}));
     expect(createFn).toBeCalledTimes(1);
-    expect(errorFn).toBeCalledTimes(0);
 
     const paramError = new Error('sample_error');
     instance.callLifecycle('error', paramError);
     await delay(5);
-    expect(errorFn).toBeCalledTimes(1);
-    expect(errorFn.mock.calls[0][0]).toEqual(paramError);
   });
 
   test('event trigger', async () => {
@@ -699,13 +682,13 @@ describe('component - wechat', async () => {
     const payload = { a: 1 };
     const evtOpt = { opt: 'aaaa' };
     const C = function (props) {
-      const trigger = useWechatTriggerEvent();
+      const component = useComponent();
       useEvent(
         'clickSomething',
         () => {
-          trigger('clickSomething', payload, evtOpt);
+          component.triggerEvent('clickSomething', payload, evtOpt);
         },
-        [trigger],
+        [component],
       );
 
       return {};

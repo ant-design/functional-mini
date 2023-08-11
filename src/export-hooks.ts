@@ -1,20 +1,20 @@
 import {
-  useState,
+  useCallback,
   useEffect,
   useMemo,
-  useCallback,
-  useDebugValue,
+  useReducer,
   useRef,
+  useState,
 } from './r.js';
 
 import { useEvent } from './hooks.js';
 
 export {
-  useEvent,
   useCallback,
   useEffect,
+  useEvent,
   useMemo,
-  useState,
-  useDebugValue,
+  useReducer,
   useRef,
+  useState,
 };

@@ -156,18 +156,6 @@ export function useSyncMiniData(data = {}) {
   }, undefined as any);
 }
 
-export function useWechatTriggerEvent() {
-  const appxInstanceContext = useAppxContext();
-  const { platformConfig } = appxInstanceContext;
-  checkIfPlatformIsLoadCorrectly(platformConfig, ETargetPlatform.wechat);
-  const ifSSr = appxInstanceContext.ifServerRender;
-  const fn = appxInstanceContext.instance?.triggerEvent;
-  if (!ifSSr && !fn) {
-    throw new Error('cannot get triggerEvent function from instance');
-  }
-  return fn;
-}
-
 function useMiniInstance<T = any>(): T {
   const appxInstanceContext = useAppxContext();
   return appxInstanceContext.instance;
