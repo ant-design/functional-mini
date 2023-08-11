@@ -6,6 +6,7 @@
   "files": [
     "dist",
     "README.md",
+    "doc.md",
     "LICENSE",
     "page.js",
     "component.js",
