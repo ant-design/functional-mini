@@ -523,7 +523,7 @@ page 相关的 API 统一从 `functional-mini/page` 导入。
 
 ### Component
 
-page 相关的 API 统一从 `functional-mini/component` 导入。
+component 相关的 API 统一从 `functional-mini/component` 导入。
 
 #### 组件构造函数
 
