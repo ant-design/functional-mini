@@ -239,8 +239,12 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
           } else if (Array.isArray(value)) {
             targetType = Array;
           } else if (typeof value === 'object') {
-            // 即使是 null， 也该落入这个分支？
-            targetType = Object;
+            if (value === null) {
+              targetType = null;
+            } else {
+              // 即使是 null， 也该落入这个分支？
+              targetType = Object;
+            }
           } else {
             throw new Error(
               `不支持的 properties 类型: ${key} - ${typeof value}`,
