@@ -242,7 +242,6 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
             if (value === null) {
               targetType = null;
             } else {
-              // 即使是 null， 也该落入这个分支？
               targetType = Object;
             }
           } else {
