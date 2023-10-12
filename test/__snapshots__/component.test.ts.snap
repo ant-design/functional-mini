@@ -41,3 +41,10 @@ exports[`component - wechat > basic opt 1`] = `
   \\"methods\\": {}
 }"
 `;
+
+exports[`component - wechat > event trigger 1`] = `
+{
+  "type": null,
+  "value": null,
+}
+`;

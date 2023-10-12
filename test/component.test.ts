@@ -698,4 +698,23 @@ describe('component - wechat', async () => {
     expect(onEvt).toBeCalledTimes(1);
     expect(onEvt.mock.calls[0]).toEqual(['clickSomething', payload, evtOpt]);
   });
+
+  test('event trigger', async () => {
+    const option = wechatComponent(
+      () => {
+        return {};
+      },
+      {
+        value: null,
+      },
+    );
+    expect(option.properties.value).toMatchInlineSnapshot(
+      `
+      {
+        "type": null,
+        "value": null,
+      }
+    `,
+    );
+  });
 });
