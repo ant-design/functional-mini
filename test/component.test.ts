@@ -717,4 +717,41 @@ describe('component - wechat', async () => {
     `,
     );
   });
+
+  test('test component option', async () => {
+    const option = wechatComponent(
+      () => {
+        return {};
+      },
+      {},
+      {
+        options: {
+          styleIsolation: 'shared',
+        },
+      },
+    );
+    expect(option.options).toMatchInlineSnapshot(`
+      {
+        "styleIsolation": "shared",
+      }
+    `);
+
+    const alipayOption = alipayComponent(
+      () => {
+        return {};
+      },
+      {},
+      {
+        options: {
+          styleIsolation: 'shared',
+        },
+      },
+    );
+    expect(alipayOption.options).toMatchInlineSnapshot(`
+      {
+        "lifetimes": true,
+        "styleIsolation": "shared",
+      }
+    `);
+  });
 });

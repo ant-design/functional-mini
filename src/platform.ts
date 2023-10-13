@@ -209,7 +209,7 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
       data,
       lifeCycleHandlers,
       userEventHandlers,
-      options = null,
+      options = {},
       observers,
     ) => {
       if (elementType === EElementType.page) {
@@ -258,7 +258,7 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
         return {
           properties,
           data,
-          // options,
+          options,
           observers,
           lifetimes: lifeCycleHandlers || {},
           methods: userEventHandlers || {},
