@@ -88,12 +88,17 @@ export function flushReactTree(elementMap: IInstanceMap) {
   return parent;
 }
 
+export interface ElementOption {
+  options?: any;
+}
+
 export function functionalMiniElement<TProps>(
   element: TElementFunction<TProps>,
   displayName = '' /* 用于问题排查，和小程序 axml 无关 */,
   elementType: EElementType,
   defaultProps?: TProps,
   _targetPlatform?: ETargetPlatform,
+  elementOption: ElementOption = {},
 ) {
   let targetPlatform: ETargetPlatform =
     _targetPlatform ?? ETargetPlatform.alipay;
@@ -397,7 +402,7 @@ export function functionalMiniElement<TProps>(
     initData,
     lifeCycleHandlers,
     userEventHandlers,
-    null,
+    elementOption.options,
     observers,
   );
   log('element options', finalOptions);

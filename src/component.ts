@@ -3,9 +3,14 @@ import { getLifeCycleHooks } from './hooks.js';
 import { alipayComponentEvents, commonComponentEvents } from './platform.js';
 import { EElementType, ETargetPlatform } from './types.js';
 
+export interface ComponentOption {
+  options?: any;
+}
+
 export function alipayComponent<TProps extends Record<string, any>>(
   element: TElementFunction<TProps>,
   defaultProps?: TProps,
+  componentOption?: ComponentOption,
 ) {
   return functionalMiniElement(
     element,
@@ -13,12 +18,14 @@ export function alipayComponent<TProps extends Record<string, any>>(
     EElementType.component,
     defaultProps,
     ETargetPlatform.alipay,
+    componentOption,
   );
 }
 
 export function wechatComponent<TProps extends Record<string, any>>(
   element: TElementFunction<TProps>,
   defaultProps?: TProps,
+  componentOption?: ComponentOption,
 ) {
   return functionalMiniElement(
     element,
@@ -26,6 +33,7 @@ export function wechatComponent<TProps extends Record<string, any>>(
     EElementType.component,
     defaultProps,
     ETargetPlatform.wechat,
+    componentOption,
   );
 }
 
