@@ -225,7 +225,6 @@ export function functionalMiniElement<TProps>(
     appxInstance[instanceKeyPropNames] = defaultPropKeys;
     log('will mount react component');
     let initProps = {};
-    // 微信和支付宝的行为是有所不同的：微信这时候还是 defaultProps 的内容，支付宝已经是真的数据了
     if (elementType === 'component') {
       initProps = getPropsFromInstance(appxInstance, defaultPropKeys);
     }

@@ -5,6 +5,7 @@ import {
   useComponent,
   useEvent,
   wechatComponent,
+  useAttached,
 } from '../src/component';
 import { useEffect } from '../src/r';
 import { mountWechatComponent, setupWechatEnv } from './utils/common';
@@ -93,14 +94,16 @@ describe('component - wechat', async () => {
 
   test('lifetimes', async () => {
     const createFn = vi.fn();
+    const useAttachedFn = vi.fn();
     const C = function (props) {
       useEffect(createFn, []);
-
+      useAttached(useAttachedFn, []);
       return {};
     };
 
     const instance = mountWechatComponent(wechatComponent(C, {}));
     expect(createFn).toBeCalledTimes(1);
+    expect(useAttachedFn).toBeCalledTimes(1);
 
     const paramError = new Error('sample_error');
     instance.callLifecycle('error', paramError);

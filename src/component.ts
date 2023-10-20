@@ -47,8 +47,6 @@ export const useDidMount = getLifeCycleHooks(
   ETargetPlatform.alipay,
 );
 
-// onInit, deriveDataFromProps, didUnmount, didUpdate 是不开放 Hooks 的，请使用 React 生命周期方法
-
 export * from './export-hooks.js';
 
 export { useComponent } from './hooks.js';
