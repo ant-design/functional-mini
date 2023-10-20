@@ -30,7 +30,7 @@ test('测试 mountWechatComponent', async () => {
       ddd: 'aaa',
     },
     lifetimes: {
-      created() {
+      attached() {
         c();
         const self = this;
         setTimeout(() => {

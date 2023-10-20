@@ -130,9 +130,9 @@ export function mountWechatComponent(
     },
   };
 
-  const created = option.lifetimes?.created || option.created;
+  const created = option.lifetimes?.attached || option.attached;
+  mockInstance.updateProps(props); // 初始化 props
   created && created.call(mockInstance);
-  mockInstance.updateProps(props); // 这时候再 dispatch 真正的 props
   return mockInstance;
 }
 

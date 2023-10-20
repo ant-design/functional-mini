@@ -83,7 +83,7 @@ export function getIdFromAppxInstance(appxInstance) {
     id = `instance-${incrementalId++}`;
     appxInstance[instanceKeyId] = id;
   }
-  if (!id) throw new Error('failed to identifiy appxInstance.$id');
+  if (!id) throw new Error('failed to identify appxInstance.$id');
   return id;
 }
 
