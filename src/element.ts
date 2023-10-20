@@ -269,8 +269,6 @@ export function functionalMiniElement<TProps>(
     if (instance) {
       instance.pendingProps = nextProps;
       updateReactTree();
-    } else {
-      log(`触发 props 更新，但是未找到 id 为 ${id} 的实例。`);
     }
   }
 
