@@ -27,9 +27,8 @@ it('test lifetimes option', () => {
   });
 
   expect(Object.keys(option.lifetimes)).toEqual([
-    'created',
-    'detached',
     'attached',
+    'detached',
     'moved',
   ]);
 });

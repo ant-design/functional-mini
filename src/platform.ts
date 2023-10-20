@@ -192,7 +192,7 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
       commonComponentEvents,
       wechatComponentEvents,
     ),
-    componentLifeCycleToMount: commonComponentEvents.created,
+    componentLifeCycleToMount: commonComponentEvents.attached,
     componentLifeCycleToUnmount: commonComponentEvents.detached,
     blockedProperty,
     getPropsFromInstance(instance, propNames) {

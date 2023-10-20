@@ -36,7 +36,7 @@ exports[`component - wechat > basic opt 1`] = `
     \\"ss, value, bbb, aaa, oo\\": \\"[function ss, value, bbb, aaa, oo]\\"
   },
   \\"lifetimes\\": {
-    \\"created\\": \\"[function ]\\",
+    \\"attached\\": \\"[function ]\\",
     \\"detached\\": \\"[function ]\\"
   },
   \\"methods\\": {}

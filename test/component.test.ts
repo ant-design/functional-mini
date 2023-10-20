@@ -638,9 +638,8 @@ describe('component - wechat', async () => {
     // 加载之后，先用 initProps，再用真的初始化数据
     const instance = mountWechatComponent(opt, { counter: 100 });
     expect(instance.data).toEqual({ counterX2: 200, counter: 100 });
-    expect(logProps).toBeCalledTimes(3);
-    expect(logProps.mock.calls[1][0]).toEqual({ counter: 10 });
-    expect(logProps.mock.calls[2][0]).toEqual({ counter: 100 });
+    expect(logProps).toBeCalledTimes(2);
+    expect(logProps.mock.calls[1][0]).toEqual({ counter: 100 });
   });
 
   test('update props', async () => {

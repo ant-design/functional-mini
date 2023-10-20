@@ -267,8 +267,15 @@ export function functionalMiniElement<TProps>(
   function dispatchNewProps(appxInstance, nextProps) {
     const id = getIdFromAppxInstance(appxInstance);
     const instance = elementMap[id];
-    instance.pendingProps = nextProps;
-    updateReactTree();
+    if (instance) {
+      instance.pendingProps = nextProps;
+      updateReactTree();
+    } else {
+      const elements = Object.keys(elementMap);
+      if (elements.length !== 0) {
+        log(`触发 props 更新，但是未找到 id 为 ${id} 的实例。`);
+      }
+    }
   }
 
   function hookUnloadToUnmount(this: any) {
