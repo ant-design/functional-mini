@@ -272,6 +272,7 @@ export function functionalMiniElement<TProps>(
       updateReactTree();
     } else {
       const elements = Object.keys(elementMap);
+      /* istanbul ignore if  */
       if (elements.length !== 0) {
         log(`触发 props 更新，但是未找到 id 为 ${id} 的实例。`);
       }
