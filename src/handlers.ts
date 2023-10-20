@@ -136,30 +136,6 @@ export default class HandlersController {
     });
   }
 
-  lockExecution(): Promise<() => void> {
-    const unlockAndFlush = () => {
-      this.executionInProgress = false;
-      if (this.executionQueue.length > 0) {
-        const next = this.executionQueue.shift();
-        if (next) {
-          next();
-        }
-      }
-    };
-
-    if (!this.executionInProgress) {
-      this.executionInProgress = true;
-      return Promise.resolve(unlockAndFlush);
-    } else {
-      return new Promise((resolve) => {
-        this.executionQueue.push(() => {
-          this.executionInProgress = true;
-          resolve(unlockAndFlush);
-        });
-      });
-    }
-  }
-
   callHandlers(name: string, context: any, args: any[]) {
     const controller = this;
     const handlers = (controller.handlerImpl[name] || []).filter((handler) => {
@@ -204,7 +180,6 @@ export default class HandlersController {
           console.warn('cannot find appx caller instance');
         }
         // deriveData 的时候，异步可能会有问题，直接改同步看看疗效
-        // const unlock = await controller.lockExecution();
         let err;
         let ret;
         try {
