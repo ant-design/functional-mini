@@ -1,4 +1,4 @@
-import { useEffect, createContext, useContext } from './r.js';
+import { useEffect, createContext, useContext, useRef } from './r.js';
 import HandlersController from './handlers.js';
 import { instanceKeyPropNames } from './utils.js';
 import {
@@ -112,13 +112,16 @@ export function useSyncMiniData(data = {}) {
   if (!appxInstanceContext.instance) {
     throw new Error('cannot get appx instance, failed to set data');
   }
+  const lastDataRef = useRef<unknown>();
   if (appxInstanceContext.ifServerRender) {
     appxInstanceContext.instance.setData(data);
   }
 
   const debugLog = appxInstanceContext.debugLog || function () {};
+
   if (typeof data !== 'object')
     throw new Error(`函数返回的数据必须是一个对象，收到了 ${typeof data}`);
+
   // 这里是一个每次都要跑的 passive effect
   useEffect(() => {
     const { instance } = appxInstanceContext;
@@ -140,12 +143,16 @@ export function useSyncMiniData(data = {}) {
       }
     }
 
-    // 缺少某些 key，就设置成 null
-    for (const key of Object.keys(previousData)) {
-      if (propNames.indexOf(key) >= 0) continue;
-      if (!Object.prototype.hasOwnProperty.call(data, key)) {
-        //@ts-expect-error
-        pendingData[key] = null;
+    // 如果之前同步过 data，但是这次没有传入，就把之前的值设置成 null
+    // 这里用的是 lastDataRef 而不是 previousData，是因为 previousData 里可能有用户通过 this.data[key] 直接修改的值
+    if (lastDataRef.current) {
+      // 缺少某些 key，就设置成 null
+      for (const key of Object.keys(lastDataRef.current)) {
+        if (propNames.indexOf(key) >= 0) continue;
+        if (!Object.prototype.hasOwnProperty.call(data, key)) {
+          //@ts-expect-error
+          pendingData[key] = null;
+        }
       }
     }
 
@@ -153,6 +160,7 @@ export function useSyncMiniData(data = {}) {
       debugLog('calling setData', pendingData);
       instance.setData(pendingData);
     }
+    lastDataRef.current = data;
   }, undefined as any);
 }
 
