@@ -144,6 +144,7 @@ export function useSyncMiniData(data = {}) {
     }
 
     // 如果之前同步过 data，但是这次没有传入，就把之前的值设置成 null
+    // 这里用的是 lastDataRef 而不是 previousData，是因为 previousData 里可能有用户通过 this.data[key] 直接修改的值
     if (lastDataRef.current) {
       // 缺少某些 key，就设置成 null
       for (const key of Object.keys(lastDataRef.current)) {
