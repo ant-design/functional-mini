@@ -570,6 +570,27 @@ describe('component - common and alipay', () => {
     expect(instance.data).toEqual({ ...dangerData, foo: null });
   });
 
+  test('忽略掉不受控的 data', async () => {
+    const C = function () {
+      const [count, setCount] = useState(0);
+      useEvent(
+        'add',
+        () => {
+          setCount(count + 1);
+        },
+        [count],
+      );
+      return { foo: 'long-content' + String(count) };
+    };
+    const opt = alipayComponent(C);
+    opt.data.bar = 'bar';
+    const instance = mountAlipayComponent(opt);
+    expect(instance.data).toEqual({ foo: 'long-content0', bar: 'bar' });
+    instance.callMethod('add');
+    await delay(10);
+    expect(instance.data).toEqual({ foo: 'long-content1', bar: 'bar' });
+  });
+
   test('danger zone: bypass function call, support encoded json string', async () => {
     const C = function () {
       return { foo: 'long-content' };
