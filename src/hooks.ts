@@ -123,45 +123,43 @@ export function useSyncMiniData(data = {}) {
     throw new Error(`函数返回的数据必须是一个对象，收到了 ${typeof data}`);
 
   // 这里是一个每次都要跑的 passive effect
-  useEffect(() => {
-    const { instance } = appxInstanceContext;
-    const propNames = instance[instanceKeyPropNames] || []; // 微信的 data 里包含了 props，要手动踢掉
-    const pendingData = {};
-    const previousData = instance.data || {};
+  const { instance } = appxInstanceContext;
+  const propNames = instance[instanceKeyPropNames] || []; // 微信的 data 里包含了 props，要手动踢掉
+  const pendingData = {};
+  const previousData = instance.data || {};
 
-    // 比对一下，只 set 不同的部分
-    for (const key in data) {
-      if (!Object.prototype.hasOwnProperty.call(data, key)) continue;
-      //@ts-expect-error
-      if (typeof data[key] === 'function')
-        throw new Error(`${key} - 不允许传入函数类型的数据`); // 暂不支持，有需求再说
+  // 比对一下，只 set 不同的部分
+  for (const key in data) {
+    if (!Object.prototype.hasOwnProperty.call(data, key)) continue;
+    //@ts-expect-error
+    if (typeof data[key] === 'function')
+      throw new Error(`${key} - 不允许传入函数类型的数据`); // 暂不支持，有需求再说
 
+    //@ts-expect-error
+    if (!previousData[key] || previousData[key] !== data[key]) {
       //@ts-expect-error
-      if (!previousData[key] || previousData[key] !== data[key]) {
+      pendingData[key] = data[key];
+    }
+  }
+
+  // 如果之前同步过 data，但是这次没有传入，就把之前的值设置成 null
+  // 这里用的是 lastDataRef 而不是 previousData，是因为 previousData 里可能有用户通过 this.data[key] 直接修改的值
+  if (lastDataRef.current) {
+    // 缺少某些 key，就设置成 null
+    for (const key of Object.keys(lastDataRef.current)) {
+      if (propNames.indexOf(key) >= 0) continue;
+      if (!Object.prototype.hasOwnProperty.call(data, key)) {
         //@ts-expect-error
-        pendingData[key] = data[key];
+        pendingData[key] = null;
       }
     }
+  }
 
-    // 如果之前同步过 data，但是这次没有传入，就把之前的值设置成 null
-    // 这里用的是 lastDataRef 而不是 previousData，是因为 previousData 里可能有用户通过 this.data[key] 直接修改的值
-    if (lastDataRef.current) {
-      // 缺少某些 key，就设置成 null
-      for (const key of Object.keys(lastDataRef.current)) {
-        if (propNames.indexOf(key) >= 0) continue;
-        if (!Object.prototype.hasOwnProperty.call(data, key)) {
-          //@ts-expect-error
-          pendingData[key] = null;
-        }
-      }
-    }
-
-    if (Object.keys(pendingData).length > 0) {
-      debugLog('calling setData', pendingData);
-      instance.setData(pendingData);
-    }
-    lastDataRef.current = data;
-  }, undefined as any);
+  if (Object.keys(pendingData).length > 0) {
+    debugLog('calling setData', pendingData);
+    instance.setData(pendingData);
+  }
+  lastDataRef.current = data;
 }
 
 function useMiniInstance<T = any>(): T {
