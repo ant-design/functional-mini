@@ -382,7 +382,7 @@ describe('component - common and alipay', () => {
     });
     await delay(20);
     appxComponentC.callMethod('toggle');
-    res.push(`will-tigger-toggle`);
+    res.push(`will-trigger-toggle`);
     await delay(20);
     //
     expect(res).toMatchInlineSnapshot(`
@@ -391,7 +391,7 @@ describe('component - common and alipay', () => {
         "render-false",
         "setData-callback-false",
         "effect-false",
-        "will-tigger-toggle",
+        "will-trigger-toggle",
         "render-true",
         "setData-callback-true",
         "effect-true",
