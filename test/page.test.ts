@@ -1,29 +1,29 @@
 /* eslint-disable no-prototype-builtins */
 import {
+  afterEach,
   assert,
+  beforeEach,
   describe,
   expect,
   test,
   vi,
-  beforeEach,
-  afterEach,
 } from 'vitest';
-import { useEffect, useState, useMemo } from '../src/r';
+import { TElementFunction, functionalMiniElement } from '../src/element';
+import {
+  alipayPage,
+  useEvent,
+  useOnShareAppMessage,
+  useOnShow,
+  useOnTitleClick,
+  wechatPage,
+} from '../src/page';
+import { useEffect, useMemo, useState } from '../src/r';
+import { EElementType, ETargetPlatform } from '../src/types';
 import {
   mountAlipayPage,
   setupAlipayEnv,
   setupWechatEnv,
 } from './utils/common';
-import {
-  alipayPage,
-  useOnShareAppMessage,
-  useOnTitleClick,
-  wechatPage,
-  useEvent,
-  useOnShow,
-} from '../src/page';
-import { TElementFunction, functionalMiniElement } from '../src/element';
-import { EElementType, ETargetPlatform } from '../src/types';
 
 function functionalPage<TProps>(
   element: TElementFunction<TProps>,

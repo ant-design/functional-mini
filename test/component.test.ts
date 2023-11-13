@@ -1,20 +1,9 @@
 /* eslint-disable no-prototype-builtins */
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
-import {
-  alipayComponent,
-  useComponent,
-  useDidMount,
-  useEvent,
-  wechatComponent,
-} from '../src/component';
+import { alipayComponent, useDidMount, useEvent } from '../src/component';
 import { useEffect, useState } from '../src/r';
 import { EComponent2Status, updateComponent2Status } from '../src/utils';
-import {
-  mountAlipayComponent,
-  mountWechatComponent,
-  setupAlipayEnv,
-  setupWechatEnv,
-} from './utils/common';
+import { mountAlipayComponent, setupAlipayEnv } from './utils/common';
 import { delay } from './utils/utils';
 
 interface IComponentState {
@@ -158,7 +147,10 @@ describe('component - common and alipay', () => {
       /* empty */
     }
     appxComponentC2.updateProps({ data: 'aaa' });
-    expect(appxComponentC1.data).toEqual({ foo: 'bar', p: {} });
+    expect(appxComponentC1.data).toEqual({
+      foo: 'bar',
+      p: { shouldThrow: true },
+    });
     expect(appxComponentC2.data).toEqual({ p: { data: 'aaa' } });
   });
 
@@ -364,6 +356,48 @@ describe('component - common and alipay', () => {
     },
     20 * 1000,
   );
+
+  test('test set data order', async () => {
+    const res: string[] = [];
+    const opt = alipayComponent<IComponentProps>(function (props) {
+      const [state, setState] = useState(false);
+      useEvent(
+        'toggle',
+        () => {
+          setState((s) => !s);
+        },
+        [],
+      );
+      res.push(`render-${state}`);
+      useEffect(() => {
+        res.push(`effect-${state}`);
+      }, [state]);
+
+      return {
+        state,
+      };
+    });
+    const appxComponentC = mountAlipayComponent(opt, {}, (data) => {
+      res.push(`setData-callback-${data.state}`);
+    });
+    await delay(20);
+    appxComponentC.callMethod('toggle');
+    res.push(`will-trigger-toggle`);
+    await delay(20);
+    //
+    expect(res).toMatchInlineSnapshot(`
+      [
+        "render-false",
+        "render-false",
+        "setData-callback-false",
+        "effect-false",
+        "will-trigger-toggle",
+        "render-true",
+        "setData-callback-true",
+        "effect-true",
+      ]
+    `);
+  });
 
   test('multiple component instance', async () => {
     const fn = vi.fn();
