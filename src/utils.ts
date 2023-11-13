@@ -1,4 +1,4 @@
-let logSwitch = true;
+let logSwitch = false;
 
 export const setLogSwitch = (on: boolean) => {
   logSwitch = on;
