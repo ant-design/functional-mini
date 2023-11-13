@@ -357,7 +357,7 @@ describe('component - common and alipay', () => {
     20 * 1000,
   );
 
-  test('multiple component instance', async () => {
+  test('test set data order', async () => {
     const res: string[] = [];
     const opt = alipayComponent<IComponentProps>(function (props) {
       const [state, setState] = useState(false);
