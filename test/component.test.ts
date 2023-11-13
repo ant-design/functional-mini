@@ -378,21 +378,25 @@ describe('component - common and alipay', () => {
       };
     });
     const appxComponentC = mountAlipayComponent(opt, {}, (data) => {
-      res.push(`callback-${data.state}`);
+      res.push(`setData-callback-${data.state}`);
     });
     await delay(20);
     appxComponentC.callMethod('toggle');
+    res.push(`will-tigger-toggle`);
     await delay(20);
     //
-    expect(res).toEqual([
-      'render-false',
-      'render-false',
-      'callback-false',
-      'effect-false',
-      'render-true',
-      'callback-true',
-      'effect-true',
-    ]);
+    expect(res).toMatchInlineSnapshot(`
+      [
+        "render-false",
+        "render-false",
+        "setData-callback-false",
+        "effect-false",
+        "will-tigger-toggle",
+        "render-true",
+        "setData-callback-true",
+        "effect-true",
+      ]
+    `);
   });
 
   test('multiple component instance', async () => {
