@@ -25,13 +25,9 @@ const Counter = ({ query }) => {
   //通过 props 获取 query
   const [count, setCount] = useState(0);
   // 绑定视图层的 add 事件
-  useEvent(
-    'add',
-    () => {
-      setCount(count + 1);
-    },
-    [count],
-  );
+  useEvent('add', () => {
+    setCount(count + 1);
+  });
 
   // 将这些值提交到视图层
   return {
@@ -72,7 +68,6 @@ Page(wechatPage(Counter)); // 微信小程序使用 wechatPage
 2. 使用`useEvent`注册视图层的事件监听
 3. 逻辑层没有 DOM，所以无法使用 `useContext`
 4. React 组件的生命周期与组件 props 更新、销毁一致。如 onLoad 对应函数组件 mount、onUnload 对应 unmount、props 更新会触发函数重新运行。其他更多事件可以使用 hooks 订阅
-5. 使用生命周期、事件相关的 hooks 时，别忘了声明函数中依赖的变量（即 `deps`参数）
 
 ```javascript
 const Counter = () => {
@@ -80,7 +75,7 @@ const Counter = () => {
 
   useOnShow(() => {
     console.log(count);
-  }, [count]); // 不要忘了这里的 count
+  });
 };
 ```
 
@@ -289,13 +284,9 @@ import { useEvent } from 'functional-mini/component'; // 在小程序组件里
 
 const useCounter = () => {
   const [value, setValue] = useState(0);
-  useEvent(
-    'clickButton',
-    () => {
-      setValue(value + 1);
-    },
-    [value], // 要声明依赖
-  );
+  useEvent('clickButton', () => {
+    setValue(value + 1);
+  });
   return value;
 };
 ```
@@ -394,13 +385,9 @@ import { wechatComponent, useComponent } from 'functional-mini/component';
 const Counter = (props) => {
   const { triggerEvent } = useComponent();
 
-  useEvent(
-    'onClickCounter',
-    () => {
-      triggerEvent('handleChange', props.value + 1);
-    },
-    [props.value, triggerEvent],
-  );
+  useEvent('onClickCounter', () => {
+    triggerEvent('handleChange', props.value + 1);
+  });
 
   return {};
 };
@@ -410,13 +397,9 @@ const Counter = (props) => {
 import { wechatComponent } from 'functional-mini/component';
 
 const Counter = (props) => {
-  useEvent(
-    'onClickCounter',
-    () => {
-      props.handleChange(props.value + 1);
-    },
-    [props.value, props.handleChange],
-  );
+  useEvent('onClickCounter', () => {
+    props.handleChange(props.value + 1);
+  });
 
   return {};
 };

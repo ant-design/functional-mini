@@ -44,13 +44,9 @@ const Counter = ({ query }) => {
   //通过 props 获取 query
   const [count, setCount] = useState(0);
   // 绑定视图层的 add 事件
-  useEvent(
-    'add',
-    () => {
-      setCount(count + 1);
-    },
-    [count],
-  );
+  useEvent('add', () => {
+    setCount(count + 1);
+  });
 
   // 将这些值提交到视图层
   return {

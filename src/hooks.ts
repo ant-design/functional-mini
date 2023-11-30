@@ -1,4 +1,10 @@
-import { useEffect, createContext, useContext, useRef } from './r.js';
+import {
+  useEffect,
+  createContext,
+  useContext,
+  useRef,
+  useCallback,
+} from './r.js';
 import HandlersController from './handlers.js';
 import { instanceKeyPropNames } from './utils.js';
 import {
@@ -36,13 +42,9 @@ function useAppxContext(): IElementContext {
 function useEventCall(
   name: string,
   handler: Function,
-  deps: any[],
   disableMultiImpl: boolean,
 ) {
-  if (!deps)
-    console.warn(
-      `useEventCall ${name}: hooks 的 deps 参数为空，可能会导致性能问题`,
-    );
+  const realHandler = useStableCallback(handler);
 
   const appxInstanceContext = useAppxContext();
   if (appxInstanceContext.ifServerRender) {
@@ -61,17 +63,37 @@ function useEventCall(
       appxInstanceContext.instance,
       //@ts-expect-error
       function (this, ...args) {
-        return handler.apply(undefined, args);
+        return realHandler.apply(undefined, args);
       },
       disableMultiImpl,
     );
 
     return off;
-  }, deps);
+  }, []);
+}
+
+export function useStableCallback<T extends Function>(callback: T): T {
+  const fnRef = useRef<any>();
+  fnRef.current = callback;
+
+  const memoFn = useCallback<T>(
+    ((...args: any) => fnRef.current?.(...args)) as any,
+    [],
+  );
+
+  return memoFn;
 }
 
 // 注册和更新 handler，注意只能更新第一次注册过的 handler 实现，不允许变更数量和 key
-export function useEvent(name: string, handler: Function, deps: any[]) {
+export function useEvent(
+  name: string,
+  handler: Function,
+  /**
+   * @deprecated
+   * 以后无需依赖，这个只是为了让之前的代码 ts 不报错
+   */
+  deps?: any[],
+) {
   const appxInstanceContext = useAppxContext();
   const { platformConfig } = appxInstanceContext;
   const { pageEvents, componentEvents, blockedProperty } = platformConfig;
@@ -86,8 +108,10 @@ export function useEvent(name: string, handler: Function, deps: any[]) {
       `不允许注册名为 ${name} 的事件处理函数，这是小程序的保留属性，请换一个名称`,
     );
   }
-
-  useEventCall(name, handler, deps, true);
+  if (deps) {
+    console.warn(`useEventCall ${name}: hooks 的 deps 已废弃，无需填写。`);
+  }
+  useEventCall(name, handler, true);
 }
 
 export function getLifeCycleHooks(
@@ -95,14 +119,20 @@ export function getLifeCycleHooks(
   disableMultiImpl = false,
   specifyPlatform?: ETargetPlatform,
 ): THooksFn {
-  return (handler, deps?: any[]) => {
+  return (
+    handler,
+    /**
+     * @deprecated 无需填写依赖
+     */
+    deps?: any[],
+  ) => {
     const appxInstanceContext = useAppxContext();
     if (specifyPlatform) {
       const { platformConfig } = appxInstanceContext;
       checkIfPlatformIsLoadCorrectly(platformConfig, specifyPlatform);
     }
 
-    useEventCall(eventName, handler, deps ?? [], disableMultiImpl);
+    useEventCall(eventName, handler, disableMultiImpl);
   };
 }
 
