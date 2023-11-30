@@ -1,4 +1,10 @@
-import { useEffect, createContext, useContext, useRef } from './r.js';
+import {
+  useEffect,
+  createContext,
+  useContext,
+  useRef,
+  useCallback,
+} from './r.js';
 import HandlersController from './handlers.js';
 import { instanceKeyPropNames } from './utils.js';
 import {
@@ -39,6 +45,8 @@ function useEventCall(
   deps: any[],
   disableMultiImpl: boolean,
 ) {
+  const realHandler = useStableCallback(handler);
+
   if (!deps)
     console.warn(
       `useEventCall ${name}: hooks 的 deps 参数为空，可能会导致性能问题`,
@@ -61,13 +69,25 @@ function useEventCall(
       appxInstanceContext.instance,
       //@ts-expect-error
       function (this, ...args) {
-        return handler.apply(undefined, args);
+        return realHandler.apply(undefined, args);
       },
       disableMultiImpl,
     );
 
     return off;
-  }, deps);
+  }, []);
+}
+
+export function useStableCallback<T extends Function>(callback: T): T {
+  const fnRef = useRef<any>();
+  fnRef.current = callback;
+
+  const memoFn = useCallback<T>(
+    ((...args: any) => fnRef.current?.(...args)) as any,
+    [],
+  );
+
+  return memoFn;
 }
 
 // 注册和更新 handler，注意只能更新第一次注册过的 handler 实现，不允许变更数量和 key
