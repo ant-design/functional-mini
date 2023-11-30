@@ -25,13 +25,9 @@ const Counter = ({ query }) => {
   //通过 props 获取 query
   const [count, setCount] = useState(0);
   // 绑定视图层的 add 事件
-  useEvent(
-    'add',
-    () => {
-      setCount(count + 1);
-    },
-    [count],
-  );
+  useEvent('add', () => {
+    setCount(count + 1);
+  });
 
   // 将这些值提交到视图层
   return {
@@ -289,13 +285,9 @@ import { useEvent } from 'functional-mini/component'; // 在小程序组件里
 
 const useCounter = () => {
   const [value, setValue] = useState(0);
-  useEvent(
-    'clickButton',
-    () => {
-      setValue(value + 1);
-    },
-    [value], // 要声明依赖
-  );
+  useEvent('clickButton', () => {
+    setValue(value + 1);
+  });
   return value;
 };
 ```
@@ -394,13 +386,9 @@ import { wechatComponent, useComponent } from 'functional-mini/component';
 const Counter = (props) => {
   const { triggerEvent } = useComponent();
 
-  useEvent(
-    'onClickCounter',
-    () => {
-      triggerEvent('handleChange', props.value + 1);
-    },
-    [props.value, triggerEvent],
-  );
+  useEvent('onClickCounter', () => {
+    triggerEvent('handleChange', props.value + 1);
+  });
 
   return {};
 };
@@ -410,13 +398,9 @@ const Counter = (props) => {
 import { wechatComponent } from 'functional-mini/component';
 
 const Counter = (props) => {
-  useEvent(
-    'onClickCounter',
-    () => {
-      props.handleChange(props.value + 1);
-    },
-    [props.value, props.handleChange],
-  );
+  useEvent('onClickCounter', () => {
+    props.handleChange(props.value + 1);
+  });
 
   return {};
 };
