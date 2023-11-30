@@ -90,8 +90,9 @@ export function useEvent(
   handler: Function,
   /**
    * @deprecated
+   * 以后无需依赖，这个只是为了让之前的代码 ts 不报错
    */
-  deps: any[],
+  deps?: any[],
 ) {
   const appxInstanceContext = useAppxContext();
   const { platformConfig } = appxInstanceContext;
