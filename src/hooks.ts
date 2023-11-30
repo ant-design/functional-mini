@@ -118,14 +118,20 @@ export function getLifeCycleHooks(
   disableMultiImpl = false,
   specifyPlatform?: ETargetPlatform,
 ): THooksFn {
-  return (handler, deps?: any[]) => {
+  return (
+    handler,
+    /**
+     * @deprecated 无需填写依赖
+     */
+    deps?: any[],
+  ) => {
     const appxInstanceContext = useAppxContext();
     if (specifyPlatform) {
       const { platformConfig } = appxInstanceContext;
       checkIfPlatformIsLoadCorrectly(platformConfig, specifyPlatform);
     }
 
-    useEventCall(eventName, handler, deps ?? [], disableMultiImpl);
+    useEventCall(eventName, handler, disableMultiImpl);
   };
 }
 
