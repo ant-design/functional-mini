@@ -42,15 +42,9 @@ function useAppxContext(): IElementContext {
 function useEventCall(
   name: string,
   handler: Function,
-  deps: any[],
   disableMultiImpl: boolean,
 ) {
   const realHandler = useStableCallback(handler);
-
-  if (!deps)
-    console.warn(
-      `useEventCall ${name}: hooks 的 deps 参数为空，可能会导致性能问题`,
-    );
 
   const appxInstanceContext = useAppxContext();
   if (appxInstanceContext.ifServerRender) {
@@ -91,7 +85,14 @@ export function useStableCallback<T extends Function>(callback: T): T {
 }
 
 // 注册和更新 handler，注意只能更新第一次注册过的 handler 实现，不允许变更数量和 key
-export function useEvent(name: string, handler: Function, deps: any[]) {
+export function useEvent(
+  name: string,
+  handler: Function,
+  /**
+   * @deprecated
+   */
+  deps: any[],
+) {
   const appxInstanceContext = useAppxContext();
   const { platformConfig } = appxInstanceContext;
   const { pageEvents, componentEvents, blockedProperty } = platformConfig;
@@ -106,8 +107,10 @@ export function useEvent(name: string, handler: Function, deps: any[]) {
       `不允许注册名为 ${name} 的事件处理函数，这是小程序的保留属性，请换一个名称`,
     );
   }
-
-  useEventCall(name, handler, deps, true);
+  if (deps) {
+    console.warn(`useEventCall ${name}: hooks 的 deps 已废弃，无需填写。`);
+  }
+  useEventCall(name, handler, true);
 }
 
 export function getLifeCycleHooks(

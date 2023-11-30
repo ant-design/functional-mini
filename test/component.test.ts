@@ -649,4 +649,31 @@ describe('component - common and alipay', () => {
       });
     }).toThrow(/不允许注册/);
   });
+
+  test('useEvent 的依赖应该是没有用的', async () => {
+    const C = function () {
+      const [count, setCount] = useState(0);
+      useEvent(
+        'getCount',
+        () => {
+          return count;
+        },
+        [],
+      );
+      useEvent(
+        'updateCount',
+        (v) => {
+          setCount(v);
+        },
+        [],
+      );
+      return { foo: String(count) };
+    };
+    const instance = mountAlipayComponent(alipayComponent(C));
+    expect(instance.data).toEqual({ foo: '0' });
+    instance.callMethod('updateCount', 3);
+    await delay(10);
+    expect(instance.data).toEqual({ foo: '3' });
+    expect(instance.callMethod('getCount')).toEqual(3);
+  });
 });
