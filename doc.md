@@ -68,7 +68,6 @@ Page(wechatPage(Counter)); // 微信小程序使用 wechatPage
 2. 使用`useEvent`注册视图层的事件监听
 3. 逻辑层没有 DOM，所以无法使用 `useContext`
 4. React 组件的生命周期与组件 props 更新、销毁一致。如 onLoad 对应函数组件 mount、onUnload 对应 unmount、props 更新会触发函数重新运行。其他更多事件可以使用 hooks 订阅
-5. 使用生命周期、事件相关的 hooks 时，别忘了声明函数中依赖的变量（即 `deps`参数）
 
 ```javascript
 const Counter = () => {
@@ -76,7 +75,7 @@ const Counter = () => {
 
   useOnShow(() => {
     console.log(count);
-  }, [count]); // 不要忘了这里的 count
+  });
 };
 ```
 
