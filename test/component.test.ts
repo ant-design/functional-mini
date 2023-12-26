@@ -676,4 +676,25 @@ describe('component - common and alipay', () => {
     expect(instance.data).toEqual({ foo: '3' });
     expect(instance.callMethod('getCount')).toEqual(3);
   });
+
+  test('忽略 props 里 $slots 的更新', async () => {
+    const C = function (props) {
+      const [count, setCount] = useState(0);
+      useEffect(() => {
+        setCount((o) => o + 1);
+      }, [props]);
+      return { foo: String(count) };
+    };
+    const instance = mountAlipayComponent(alipayComponent(C));
+    expect(instance.data).toEqual({ foo: '1' });
+    instance.updateProps({
+      $slots: 1,
+    });
+    await delay(10);
+    expect(instance.data).toEqual({ foo: '2' });
+    instance.updateProps({
+      $slots: 2,
+    });
+    expect(instance.data).toEqual({ foo: '2' });
+  });
 });

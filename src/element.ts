@@ -7,6 +7,7 @@ import {
   updateComponent2Status,
   getIdFromAppxInstance,
   instanceKeyPropNames,
+  shallowCompare,
 } from './utils.js';
 
 import HandlersController from './handlers.js';
@@ -323,7 +324,14 @@ export function functionalMiniElement<TProps>(
         'deriveDataFromProps',
         anyContext,
         function hookDeriveDataFromProps(this: any, nextProps) {
-          if (this.props && this.props === nextProps) return; // 可能是setData触发的，不要死循环了
+          if (this.props && this.props === nextProps) {
+            // 可能是setData触发的，不要死循环了
+            return;
+          } else {
+            if (shallowCompare(this.props, nextProps, ['$slots'])) {
+              return;
+            }
+          }
           return dispatchNewProps(this, nextProps);
         },
       );

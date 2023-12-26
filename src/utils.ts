@@ -28,7 +28,7 @@ export const timeEnd = (label?: string) => {
 };
 
 //@ts-expect-error
-export const shallowCompare = (obj1, obj2) => {
+export const shallowCompare = (obj1, obj2, skipKey?: string[]) => {
   if (obj1 === obj2) return true;
   if (typeof obj1 !== typeof obj2) return false;
   if (typeof obj1 !== 'object' || typeof obj2 !== 'object') return false;
@@ -36,7 +36,9 @@ export const shallowCompare = (obj1, obj2) => {
   if (Array.isArray(obj1) || Array.isArray(obj2)) return false;
   if (Object.keys(obj1).length !== Object.keys(obj2).length) return false;
   for (const key in obj1) {
-    if (obj1[key] !== obj2[key]) return false;
+    if (obj1[key] !== obj2[key] && (!skipKey || skipKey.indexOf(key) === -1)) {
+      return false;
+    }
   }
   return true;
 };
