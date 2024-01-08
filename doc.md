@@ -374,6 +374,51 @@ Component(
 
 ```
 
+#### 将函数传递给子组件
+
+有时我们需要把函数传递给子组件，用来定制组件的内部功能。比如在 Antd Mini 的表单组件中，常常需要外部业务传入 `onFormat` 方法，用来指定文案的展示形式。
+
+- 在微信端，我们需要使用 `useEvent` 注册函数并设置 `{ handleResult: true }`, 然后我们就可以在子组件的 props 里获取到父组件传递的函数。
+- 在支付宝端，我们只需要使用 `useEvent` 注册函数即可。
+
+```xml
+<!-- 微信小程序 -->
+<child onFormat="{{ onFormat }}" />
+<!-- 支付宝小程序 -->
+<child onFormat="onFormat" />
+<!-- 兼容两个平台 -->
+<child onFormat="{{ onFormat? onFormat : 'onFormat'}}" />
+```
+
+```javascript
+import { useEvent } from 'functional-mini/component';
+
+// 父组件
+const Counter = (props) => {
+  useEvent(
+    'onFormat',
+    () => {
+      return 'value';
+    },
+    {
+      // 因为支付宝小程序原生支持传递函数
+      // 所以此变量只在微信小程序生效
+      handleResult: true,
+    },
+  );
+  return {};
+};
+
+// 子组件
+const CounterChild = (props) => {
+  let formatText;
+  if (props.onFormat) {
+    formatText = props.onFormat();
+  }
+  return { formatText };
+};
+```
+
 #### 子组件向父组件传递数据
 
 - 在微信端，我们通过 useComponent 获取组件实例 ， 然后通过 `component.triggerEvent('eventname', value)`的方式向父组件传递数据。

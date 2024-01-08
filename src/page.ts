@@ -1,7 +1,7 @@
 import { functionalMiniElement, TElementFunction } from './element.js';
 import { ETargetPlatform, EElementType } from './types.js';
 import { getLifeCycleHooks } from './hooks.js';
-import { alipayPageEvents, commonPageEvents } from './platform.js';
+import { alipayPageEvents } from './platform.js';
 
 export function alipayPage<TProps>(element: TElementFunction<TProps>) {
   return functionalMiniElement(

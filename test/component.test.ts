@@ -697,4 +697,49 @@ describe('component - common and alipay', () => {
     });
     expect(instance.data).toEqual({ foo: '2' });
   });
+
+  test('测试 handleResult', async () => {
+    const C = function (props) {
+      const [counter, setCounter] = useState(0);
+      useEvent(
+        'one',
+        () => {
+          return {
+            counter,
+            props: props,
+          };
+        },
+        { handleResult: true },
+      );
+      useEvent('updateCount', (v) => {
+        setCounter(v);
+      });
+      return { two: '2', props, counter };
+    };
+    const componentOptions = alipayComponent(C);
+    expect(typeof componentOptions.methods.updateCount).toBe('function');
+    expect(typeof componentOptions.methods.one).toBe('function');
+    const instance = mountAlipayComponent(componentOptions, { foo: 'bar' });
+    expect(typeof instance.data.one).toEqual('undefined');
+    await delay(10);
+    expect(instance.data).toEqual({
+      counter: 0,
+      props: {
+        foo: 'bar',
+      },
+      two: '2',
+    });
+    instance.updateProps({ foo: '2' });
+    await instance.callMethod('updateCount', 3);
+    await delay(10);
+    expect(instance.callMethod('one')).toEqual({
+      counter: 3,
+      props: {
+        foo: '2',
+      },
+    });
+    expect(instance.data.props).toEqual({
+      foo: '2',
+    });
+  });
 });
