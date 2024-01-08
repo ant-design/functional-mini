@@ -67,7 +67,6 @@ await fs.rm(resolveRoot('dist/esm/3rd-party'), {
 await fs.cp(resolveRoot('src/3rd-party'), resolveRoot('dist/esm/3rd-party'), {
   recursive: true,
 });
-
 const wechat = await rollup({
   input: [
     resolveRoot('dist/esm/page.js'),
@@ -102,9 +101,30 @@ const distNodeModules = await fs.readdir(
   resolveRoot('dist/esm/3rd-party/node_modules'),
 );
 const distNodeModulesFiles = distNodeModules.sort().join(',');
+
 if (distNodeModulesFiles !== 'preact,preact-render-to-string') {
   console.log('监测到产物包含软链, 请使用 npm 或者 yarn 安装依赖');
   process.exit(1);
+}
+
+for (const exportFile of ['compat', 'page', 'compat']) {
+  try {
+    const tsContent = await fs.readFile(
+      resolveRoot(exportFile + '.js'),
+      'utf-8',
+    );
+    const jsContent = await fs.readFile(
+      resolveRoot(exportFile + '.d.ts'),
+      'utf8',
+    );
+    if (tsContent !== jsContent) {
+      console.log(`${exportFile}.d.ts 与 ${exportFile}.js 内容不一致`);
+      process.exit(1);
+    }
+  } catch (error) {
+    console.log(`读取 ${exportFile} 失败`);
+    process.exit(1);
+  }
 }
 
 if (totalSize > 60 * 1024) {
