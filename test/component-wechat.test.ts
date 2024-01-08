@@ -7,7 +7,7 @@ import {
   wechatComponent,
   useAttached,
 } from '../src/component';
-import { useEffect } from '../src/r';
+import { useEffect, useState } from '../src/r';
 import { mountWechatComponent, setupWechatEnv } from './utils/common';
 import { delay } from './utils/utils';
 
@@ -90,6 +90,72 @@ describe('component - wechat', async () => {
 
     instance.updateProps({ foo: 234 });
     expect(instance.data).toEqual({ data: 'aaa', foo: '' });
+  });
+
+  test('测试 handleResult', async () => {
+    const C = function (props) {
+      const [counter, setCounter] = useState(0);
+      useEvent(
+        'one',
+        () => {
+          return {
+            counter,
+            props: props,
+          };
+        },
+        { handleResult: true },
+      );
+      useEvent('updateCount', (v) => {
+        setCounter(v);
+      });
+      return { two: '2', props, counter };
+    };
+    const componentOptions = wechatComponent(C, { foo: 'bar' });
+    expect(typeof componentOptions.methods.updateCount).toBe('function');
+    expect(typeof componentOptions.methods.one).toBe('undefined');
+    const instance = mountWechatComponent(componentOptions);
+    expect(instance.data.one()).toEqual({
+      counter: 0,
+      props: {
+        foo: 'bar',
+      },
+    });
+    expect(instance.data.props).toEqual({
+      foo: 'bar',
+    });
+    instance.updateProps({ foo: '2' });
+    await instance.callMethod('updateCount', 3);
+    await delay(10);
+    expect(instance.data.one()).toEqual({
+      counter: 3,
+      props: {
+        foo: '2',
+      },
+    });
+    expect(instance.data.props).toEqual({
+      foo: '2',
+    });
+  });
+
+  test('测试 handleResult', async () => {
+    const C = function (props) {
+      useEvent(
+        'one',
+        () => {
+          return 'one';
+        },
+        { handleResult: true },
+      );
+
+      return { ...props.data };
+    };
+    const componentOptions = wechatComponent(C, { data: { foo: 'bar' } });
+    const instance = mountWechatComponent(componentOptions);
+    expect(() =>
+      instance.updateProps({
+        data: { one: '2' },
+      }),
+    ).toThrow('one - 禁止修改 data 上已经存在的函数');
   });
 
   test('lifetimes', async () => {

@@ -84,18 +84,26 @@ export function useStableCallback<T extends Function>(callback: T): T {
   return memoFn;
 }
 
+type DepsOrOptions =
+  | {
+      /**
+       * 是否需要消费 event 的返回结果
+       */
+      handleResult?: boolean;
+    }
+  | any[];
+
 // 注册和更新 handler，注意只能更新第一次注册过的 handler 实现，不允许变更数量和 key
 export function useEvent(
   name: string,
   handler: Function,
   /**
-   * @deprecated
-   * 以后无需依赖，这个只是为了让之前的代码 ts 不报错
+   *
    */
-  deps?: any[],
+  depsOrOptions?: DepsOrOptions,
 ) {
   const appxInstanceContext = useAppxContext();
-  const { platformConfig } = appxInstanceContext;
+  const { platformConfig, instance } = appxInstanceContext;
   const { pageEvents, componentEvents, blockedProperty } = platformConfig;
   if (pageEvents.indexOf(name) >= 0 || componentEvents.indexOf(name) >= 0) {
     throw new Error(
@@ -108,10 +116,26 @@ export function useEvent(
       `不允许注册名为 ${name} 的事件处理函数，这是小程序的保留属性，请换一个名称`,
     );
   }
-  if (deps) {
+  if (Array.isArray(depsOrOptions)) {
     console.warn(`useEventCall ${name}: hooks 的 deps 已废弃，无需填写。`);
   }
-  useEventCall(name, handler, true);
+
+  const putMethodOnData =
+    !Array.isArray(depsOrOptions) &&
+    depsOrOptions?.handleResult &&
+    !platformConfig.supportHandleEventResult;
+
+  // 对于同一个 name ,此变量永久不变，所以可以用 if else 写 hooks
+  if (putMethodOnData) {
+    const stableHandler = useStableCallback(handler);
+    useEffect(() => {
+      instance.setData({
+        [name]: stableHandler,
+      });
+    }, []);
+  } else {
+    useEventCall(name, handler, true);
+  }
 }
 
 export function getLifeCycleHooks(
@@ -169,6 +193,10 @@ export function useSyncMiniData(data = {}) {
     if (!previousData[key] || previousData[key] !== data[key]) {
       //@ts-expect-error
       pendingData[key] = data[key];
+    }
+
+    if (typeof previousData[key] === 'function') {
+      throw new Error(`${key} - 禁止修改 data 上已经存在的函数`);
     }
   }
 

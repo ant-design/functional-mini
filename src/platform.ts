@@ -31,6 +31,8 @@ export interface IPlatformConstants {
     //@ts-expect-error
     observers,
   ) => Record<string, any>;
+
+  supportHandleEventResult: boolean;
 }
 
 export interface IWechatProperty {
@@ -117,6 +119,7 @@ export const blockedProperty = ['mixins', 'methods', 'observers'];
 export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
   [ETargetPlatform.alipay]: {
     name: ETargetPlatform.alipay,
+    supportHandleEventResult: true,
     tellIfInThisPlatform: ifInAlipay,
     pageEvents: mergeObjectKeys(commonPageEvents, alipayPageEvents),
     pageLifeCycleToMount: commonPageEvents.onLoad,
@@ -185,6 +188,7 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
   [ETargetPlatform.wechat]: {
     name: ETargetPlatform.wechat,
     tellIfInThisPlatform: ifInWeChat,
+    supportHandleEventResult: false,
     pageEvents: Object.keys(commonPageEvents),
     pageLifeCycleToMount: commonPageEvents.onLoad,
     pageLifeCycleToUnmount: commonPageEvents.onUnload,
