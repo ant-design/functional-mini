@@ -98,6 +98,15 @@ const totalSize = distFileSize.reduce((acc, size) => acc + size, 0);
 
 console.log(`Total size: ${totalSize / 1024}KB`);
 
+const distNodeModules = await fs.readdir(
+  resolveRoot('dist/esm/3rd-party/node_modules'),
+);
+const distNodeModulesFiles = distNodeModules.sort().join(',');
+if (distNodeModulesFiles !== 'preact,preact-render-to-string') {
+  console.log('监测到产物包含软链, 请使用 npm 或者 yarn 安装依赖');
+  process.exit(1);
+}
+
 if (totalSize > 60 * 1024) {
   console.error('Size limit exceeded');
   process.exit(1);
