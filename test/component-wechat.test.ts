@@ -137,6 +137,24 @@ describe('component - wechat', async () => {
     });
   });
 
+  test('测试 useEvent 和 properties 冲突', async () => {
+    const C = function (props) {
+      useEvent(
+        'onFormat',
+        () => {
+          return props.onFormat();
+        },
+        { handleResult: true },
+      );
+
+      return {};
+    };
+    const componentOptions = wechatComponent(C, { onFormat: '' });
+    expect(() => mountWechatComponent(componentOptions)).toThrow(
+      '事件 onFormat 注册失败，在 handleResult 开启后，事件不能同时在 properties 与 useEvent 中定义。',
+    );
+  });
+
   test('测试 handleResult', async () => {
     const C = function (props) {
       useEvent(

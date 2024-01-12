@@ -129,6 +129,14 @@ export function useEvent(
   if (putMethodOnData) {
     const stableHandler = useStableCallback(handler);
     useEffect(() => {
+      if (
+        instance.properties &&
+        typeof instance.properties[name] !== 'undefined'
+      ) {
+        throw new Error(
+          `事件 ${name} 注册失败，在 handleResult 开启后，事件不能同时在 properties 与 useEvent 中定义。`,
+        );
+      }
       instance.setData({
         [name]: stableHandler,
       });

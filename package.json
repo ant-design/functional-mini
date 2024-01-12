@@ -10,7 +10,10 @@
     "LICENSE",
     "page.js",
     "component.js",
-    "compat.js"
+    "compat.js",
+    "page.d.ts",
+    "component.d.ts",
+    "compat.d.ts"
   ],
   "scripts": {
     "prepare": "npm run build",
