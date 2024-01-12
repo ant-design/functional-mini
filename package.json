@@ -9,8 +9,11 @@
     "doc.md",
     "LICENSE",
     "page.js",
+    "page.d.ts",
     "component.js",
-    "compat.js"
+    "component.d.ts",
+    "compat.js",
+    "compat.d.ts"
   ],
   "scripts": {
     "prepare": "npm run build",

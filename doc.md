@@ -378,7 +378,7 @@ Component(
 
 有时我们需要把函数传递给子组件，用来定制组件的内部功能。比如在 Antd Mini 的表单组件中，常常需要外部业务传入 `onFormat` 方法，用来指定文案的展示形式。
 
-- 在微信端，我们需要使用 `useEvent` 注册函数并设置 `{ handleResult: true }`, 然后我们就可以在子组件的 props 里获取到父组件传递的函数。
+- 在微信端，我们需要使用 `useEvent` 注册函数并设置 `{ handleResult: true }`, 然后我们就可以在子组件的 props 里获取到父组件传递的函数。在 handleResult 开启后, 事件函数会挂载到组件实例的 data 上，所以 useEvent 不能使用 properties 存在的事件名。
 - 在支付宝端，我们只需要使用 `useEvent` 注册函数即可。
 
 ```xml
