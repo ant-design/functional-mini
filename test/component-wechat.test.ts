@@ -151,7 +151,7 @@ describe('component - wechat', async () => {
     };
     const componentOptions = wechatComponent(C, { onFormat: '' });
     expect(() => mountWechatComponent(componentOptions)).toThrow(
-      '事件 onFormat 注册失败 ,在 handleResult 开启后，事件不能同时在 properties 与 useEvent 中定义',
+      '事件 onFormat 注册失败，在 handleResult 开启后，事件不能同时在 properties 与 useEvent 中定义。',
     );
   });
 
