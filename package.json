@@ -9,10 +9,10 @@
     "doc.md",
     "LICENSE",
     "page.js",
-    "page.d.ts",
     "component.js",
-    "component.d.ts",
     "compat.js",
+    "page.d.ts",
+    "component.d.ts",
     "compat.d.ts"
   ],
   "scripts": {
