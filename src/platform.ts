@@ -8,6 +8,7 @@ export interface IPlatformConstants {
   pageLifeCycleToMount: string;
   pageLifeCycleToUnmount: string;
   componentEvents: string[]; // 平台的组件生命周期方法
+  componentPageLifeCycle: string[];
   blockedProperty: string[]; // 不允许开发者注册使用的属性
   componentLifeCycleToMount: string; // 触发加载 react 组件的生命周期方法
   componentLifeCycleToUnmount: string;
@@ -30,6 +31,9 @@ export interface IPlatformConstants {
     options,
     //@ts-expect-error
     observers,
+
+    //@ts-expect-error
+    componentPageLifeCycleHandlers,
   ) => Record<string, any>;
 
   supportHandleEventResult: boolean;
@@ -93,6 +97,30 @@ export const alipayPageEvents = {
   beforeReload: 'beforeReload',
 };
 
+export const commonComponentPageEvents = {
+  'page:show': 'page:show',
+  'page:hide': 'page:hide',
+};
+
+export type ComponentPageEvents = keyof typeof commonComponentPageEvents;
+
+/**
+ * @see https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/lifetimes.html
+ */
+export const wechatComponentPageEvents: Record<ComponentPageEvents, string> = {
+  'page:hide': 'hide',
+  'page:show': 'show',
+};
+
+/**
+
+ * @see https://opendocs.alipay.com/mini/framework/page-detail#events
+ */
+export const alipayComponentPageEvents: Record<ComponentPageEvents, string> = {
+  'page:hide': 'onHide',
+  'page:show': 'onShow',
+};
+
 export const commonComponentEvents: Record<string, string> = {
   created: 'created',
   attached: 'attached',
@@ -114,7 +142,7 @@ export const wechatComponentEvents = {
 };
 
 // 保留字，不允许开发者注册使用
-export const blockedProperty = ['mixins', 'methods', 'observers'];
+export const blockedProperty = ['mixins', 'methods', 'observers', 'pageEvents'];
 
 export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
   [ETargetPlatform.alipay]: {
@@ -128,6 +156,7 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
       commonComponentEvents,
       alipayComponentEvents,
     ),
+    componentPageLifeCycle: Object.keys(commonComponentPageEvents),
     componentLifeCycleToMount: alipayComponentEvents.onInit,
     componentLifeCycleToUnmount: alipayComponentEvents.didUnmount,
     blockedProperty,
@@ -141,6 +170,8 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
       lifeCycleHandlers,
       userEventHandlers,
       options = null,
+      _observers,
+      componentPageLifeCycleHandlers,
     ) => {
       if (elementType === EElementType.page) {
         return Object.assign(
@@ -167,8 +198,14 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
           }
         });
 
+        const pageEvents: Record<string, any> = {};
+        Object.keys(componentPageLifeCycleHandlers).map((p) => {
+          pageEvents[alipayComponentPageEvents[p as ComponentPageEvents]] =
+            componentPageLifeCycleHandlers[p];
+        });
         return Object.assign(
           {
+            pageEvents,
             props, // 支付宝端：直接传入 props
             data,
             options: Object.assign(
@@ -187,6 +224,7 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
   },
   [ETargetPlatform.wechat]: {
     name: ETargetPlatform.wechat,
+    componentPageLifeCycle: Object.keys(commonComponentPageEvents),
     tellIfInThisPlatform: ifInWeChat,
     supportHandleEventResult: false,
     pageEvents: Object.keys(commonPageEvents),
@@ -215,6 +253,7 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
       userEventHandlers,
       options = {},
       observers,
+      componentPageLifeCycleHandlers,
     ) => {
       if (elementType === EElementType.page) {
         return Object.assign(
@@ -259,7 +298,13 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
           };
         }
 
+        const pageLifetimes: Record<string, any> = {};
+        Object.keys(componentPageLifeCycleHandlers).map((p) => {
+          pageLifetimes[wechatComponentPageEvents[p as ComponentPageEvents]] =
+            componentPageLifeCycleHandlers[p];
+        });
         return {
+          pageLifetimes,
           properties,
           data,
           options,

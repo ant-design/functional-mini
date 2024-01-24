@@ -1,6 +1,10 @@
 import { functionalMiniElement, TElementFunction } from './element.js';
 import { getLifeCycleHooks } from './hooks.js';
-import { alipayComponentEvents, commonComponentEvents } from './platform.js';
+import {
+  alipayComponentEvents,
+  commonComponentEvents,
+  commonComponentPageEvents,
+} from './platform.js';
 import { EElementType, ETargetPlatform } from './types.js';
 
 export interface ComponentOption {
@@ -40,6 +44,13 @@ export function wechatComponent<TProps extends Record<string, any>>(
 export const useAttached = getLifeCycleHooks(commonComponentEvents.attached);
 export const useReady = getLifeCycleHooks(commonComponentEvents.ready);
 export const useMoved = getLifeCycleHooks(commonComponentEvents.moved);
+
+export const usePageShow = getLifeCycleHooks(
+  commonComponentPageEvents['page:show'],
+);
+export const usePageHide = getLifeCycleHooks(
+  commonComponentPageEvents['page:hide'],
+);
 
 export const useDidMount = getLifeCycleHooks(
   alipayComponentEvents.didMount,
