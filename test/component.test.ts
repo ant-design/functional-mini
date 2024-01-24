@@ -749,7 +749,7 @@ describe('component - common and alipay', () => {
     });
   });
 
-  test('测试 ', async () => {
+  test('支付宝测试 callPageLifecycle', async () => {
     const C = function () {
       usePageShow(() => {
         return 'pageshow';

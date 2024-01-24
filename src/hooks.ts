@@ -48,7 +48,6 @@ function useEventCall(
 
   const appxInstanceContext = useAppxContext();
 
-  console.log('---------', name, appxInstanceContext.ifServerRender);
   if (appxInstanceContext.ifServerRender) {
     // 虚拟渲染时，注册空实现
     appxInstanceContext.handlersController.addHandler(

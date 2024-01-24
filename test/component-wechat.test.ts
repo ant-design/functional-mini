@@ -236,7 +236,7 @@ describe('component - wechat', async () => {
     `,
     );
   });
-  test('测试 ', async () => {
+  test('微信测试 callPageLifecycle', async () => {
     const C = function () {
       usePageShow(() => {
         return 'pageshow';
