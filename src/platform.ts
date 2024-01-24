@@ -8,7 +8,7 @@ export interface IPlatformConstants {
   pageLifeCycleToMount: string;
   pageLifeCycleToUnmount: string;
   componentEvents: string[]; // 平台的组件生命周期方法
-  componentPageLifeCycle: string[];
+  componentPageEvents: string[]; //平台的组件监听页面的生命周期方法
   blockedProperty: string[]; // 不允许开发者注册使用的属性
   componentLifeCycleToMount: string; // 触发加载 react 组件的生命周期方法
   componentLifeCycleToUnmount: string;
@@ -156,7 +156,7 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
       commonComponentEvents,
       alipayComponentEvents,
     ),
-    componentPageLifeCycle: Object.keys(commonComponentPageEvents),
+    componentPageEvents: Object.keys(commonComponentPageEvents),
     componentLifeCycleToMount: alipayComponentEvents.onInit,
     componentLifeCycleToUnmount: alipayComponentEvents.didUnmount,
     blockedProperty,
@@ -224,7 +224,7 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
   },
   [ETargetPlatform.wechat]: {
     name: ETargetPlatform.wechat,
-    componentPageLifeCycle: Object.keys(commonComponentPageEvents),
+    componentPageEvents: Object.keys(commonComponentPageEvents),
     tellIfInThisPlatform: ifInWeChat,
     supportHandleEventResult: false,
     pageEvents: Object.keys(commonPageEvents),

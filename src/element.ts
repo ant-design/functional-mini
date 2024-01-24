@@ -114,7 +114,7 @@ export function functionalMiniElement<TProps>(
     pageLifeCycleToMount,
     pageLifeCycleToUnmount,
     getPropsFromInstance,
-    componentPageLifeCycle,
+    componentPageEvents,
   } = platformConfig[targetPlatform];
 
   displayName = displayName || element.name;
@@ -395,16 +395,15 @@ export function functionalMiniElement<TProps>(
   // 把生命周期和一般事件处理分开归类，因为组件的事件处理要多裹一层
   const lifeCycleHandlers = {};
   const userEventHandlers = {};
-  const componentPageLifeCycleHooks = {};
-  console.log(componentPageLifeCycle);
+  const componentPageEventsHandlers = {};
   const handlers = handlersController.getHandlersImplProxy();
   for (const name in handlers) {
     if (platformExposedEvents.indexOf(name) >= 0) {
       //@ts-expect-error
       lifeCycleHandlers[name] = handlers[name];
-    } else if (componentPageLifeCycle.indexOf(name) >= 0) {
+    } else if (componentPageEvents.indexOf(name) >= 0) {
       //@ts-expect-error
-      componentPageLifeCycleHooks[name] = handlers[name];
+      componentPageEventsHandlers[name] = handlers[name];
     } else {
       //@ts-expect-error
       userEventHandlers[name] = handlers[name];
@@ -419,7 +418,7 @@ export function functionalMiniElement<TProps>(
     userEventHandlers,
     elementOption.options,
     observers,
-    componentPageLifeCycleHooks,
+    componentPageEventsHandlers,
   );
   log('element options', finalOptions);
   return finalOptions;
