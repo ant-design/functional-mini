@@ -345,6 +345,23 @@ const MyPage = function(props) {
 <button class="counter" onTap="onClickCounter">{{value}}</button>
 ```
 
+#### 在自定义组件里监听页面生命周期方法
+
+我们可以使用 `usePageShow` , `usePageHide` 这两个 hooks 监听页面的 show 与 hide 事件。
+
+```typescript
+import { usePageShow } from 'functional-mini/component';
+
+const useCounter = () => {
+  const [value, setValue] = useState(0);
+  usePageShow(() => {
+    // 会在页面 show 的时候触发
+    console.log('page show');
+  });
+  return value;
+};
+```
+
 #### 获取父组件传递的参数
 
 我们可以通过 props 获取父组件的传入的 props。 和 page 不同，我们需要通过 `alipayComponent`, `wechatComponent` 的第二个参数定义 props 的类型。
@@ -593,3 +610,8 @@ component 相关的 API 统一从 `functional-mini/component` 导入。
 - useDidMount
 - useReady
 - useMoved
+
+详细参数可以看 [支付宝小程序](https://opendocs.alipay.com/mini/framework/page-detail#events) 与 [微信小程序](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/lifetimes.html) 文档。
+
+- usePageShow
+- usePageHide

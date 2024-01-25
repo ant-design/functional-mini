@@ -3,6 +3,7 @@ export interface ITestInstance {
   updateProps: (props: Record<string, any>) => void;
   callMethod: (methodName: string, ...args) => any;
   callLifecycle: (lifecycleName: string, ...args) => any;
+  callPageLifecycle: (lifecycleName: string, ...args) => any;
   unmount: () => void;
   data: Record<string, any>;
   triggerEvent?: (

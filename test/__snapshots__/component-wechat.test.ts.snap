@@ -2,6 +2,7 @@
 
 exports[`component - wechat > basic opt 1`] = `
 "{
+  \\"pageLifetimes\\": {},
   \\"properties\\": {
     \\"ss\\": {
       \\"type\\": \\"[function String]\\",

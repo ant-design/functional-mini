@@ -6,6 +6,7 @@ interface ITestInstance {
   updateProps: (props: Record<string, any>) => void;
   callMethod: (methodName: string, ...args) => any;
   callLifecycle: (lifecycleName: string, ...args) => any;
+  callPageLifecycle: (lifecycleName: string, ...args) => any;
   unmount: () => void;
   data: Record<string, any>;
   triggerEvent?: (
@@ -109,6 +110,9 @@ export function mountWechatComponent(
     },
     callLifecycle(lifecycleName, ...args) {
       return option.lifetimes[lifecycleName]?.call(mockInstance, ...args);
+    },
+    callPageLifecycle(lifecycleName, ...args) {
+      return option.pageLifetimes[lifecycleName]?.call(mockInstance, ...args);
     },
     unmount() {
       return option.detached?.call(mockInstance);

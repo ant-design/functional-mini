@@ -47,6 +47,7 @@ function useEventCall(
   const realHandler = useStableCallback(handler);
 
   const appxInstanceContext = useAppxContext();
+
   if (appxInstanceContext.ifServerRender) {
     // 虚拟渲染时，注册空实现
     appxInstanceContext.handlersController.addHandler(

@@ -6,6 +6,7 @@ import {
   useEvent,
   wechatComponent,
   useAttached,
+  usePageShow,
 } from '../src/component';
 import { useEffect, useState } from '../src/r';
 import { mountWechatComponent, setupWechatEnv } from './utils/common';
@@ -234,6 +235,18 @@ describe('component - wechat', async () => {
       }
     `,
     );
+  });
+  test('微信测试 callPageLifecycle', async () => {
+    const C = function () {
+      usePageShow(() => {
+        return 'pageshow';
+      });
+      return {};
+    };
+    const componentOptions = wechatComponent(C);
+    const instance = mountWechatComponent(componentOptions);
+    expect(typeof componentOptions.pageLifetimes.show).toBe('function');
+    expect(instance.callPageLifecycle('show')).toEqual('pageshow');
   });
 
   test('test component option', async () => {

@@ -1,6 +1,12 @@
 /* eslint-disable no-prototype-builtins */
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
-import { alipayComponent, useDidMount, useEvent } from '../src/component';
+import {
+  alipayComponent,
+  useDidMount,
+  useEvent,
+  usePageShow,
+  useReady,
+} from '../src/component';
 import { useEffect, useState } from '../src/r';
 import { EComponent2Status, updateComponent2Status } from '../src/utils';
 import { mountAlipayComponent, setupAlipayEnv } from './utils/common';
@@ -741,5 +747,17 @@ describe('component - common and alipay', () => {
     expect(instance.data.props).toEqual({
       foo: '2',
     });
+  });
+
+  test('支付宝测试 callPageLifecycle', async () => {
+    const C = function () {
+      usePageShow(() => {
+        return 'pageshow';
+      });
+      return {};
+    };
+    const componentOptions = alipayComponent(C);
+    const instance = mountAlipayComponent(componentOptions);
+    expect(instance.callPageLifecycle('onShow')).toEqual('pageshow');
   });
 });
