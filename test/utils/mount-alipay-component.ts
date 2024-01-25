@@ -34,10 +34,10 @@ export function mountAlipayComponent(
       return option.lifetimes?.[lifecycleName]?.call(mockInstance, ...args);
     },
     callPageLifecycle(lifecycleName, ...args) {
-      if (!option?.pageEvents) {
+      if (!option?.rootEvents) {
         return;
       }
-      return option.pageEvents?.[lifecycleName]?.call(mockInstance, ...args);
+      return option.rootEvents?.[lifecycleName]?.call(mockInstance, ...args);
     },
     unmount() {
       return option.didUnmount?.call(mockInstance);

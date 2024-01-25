@@ -198,14 +198,14 @@ export const platformConfig: Record<ETargetPlatform, IPlatformConstants> = {
           }
         });
 
-        const pageEvents: Record<string, any> = {};
+        const rootEvents: Record<string, any> = {};
         Object.keys(componentPageLifeCycleHandlers).map((p) => {
-          pageEvents[alipayComponentPageEvents[p as ComponentPageEvents]] =
+          rootEvents[alipayComponentPageEvents[p as ComponentPageEvents]] =
             componentPageLifeCycleHandlers[p];
         });
         return Object.assign(
           {
-            pageEvents,
+            rootEvents,
             props, // 支付宝端：直接传入 props
             data,
             options: Object.assign(
