@@ -32,7 +32,7 @@ var FakeDomNode = /*#__PURE__*/function () {
         this.appendChild(child);
         return;
       }
-      var index = this._childNodes.indexOf(before);
+      var index = this._childNodes.lastIndexOf(before);
       if (index === -1) {
         throw new Error('Node not found');
       }
