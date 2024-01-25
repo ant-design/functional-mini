@@ -15,7 +15,8 @@ export class FakeDomNode {
       this.appendChild(child);
       return;
     }
-    const index = this._childNodes.indexOf(before);
+    // 由于每次实例化的时候都是插入到当前节点到后一个节点，所以 lastIndexOf 的消耗低很多
+    const index = this._childNodes.lastIndexOf(before);
     if (index === -1) {
       throw new Error('Node not found');
     }

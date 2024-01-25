@@ -11,6 +11,7 @@ import { useEffect, useState } from '../src/r';
 import { EComponent2Status, updateComponent2Status } from '../src/utils';
 import { mountAlipayComponent, setupAlipayEnv } from './utils/common';
 import { delay } from './utils/utils';
+import { IAlipayInstance } from './utils/test-instance';
 
 interface IComponentState {
   stateFoo: string;
@@ -759,5 +760,29 @@ describe('component - common and alipay', () => {
     const componentOptions = alipayComponent(C);
     const instance = mountAlipayComponent(componentOptions);
     expect(instance.callPageLifecycle('onShow')).toEqual('pageshow');
+  });
+
+  test('新增性能消耗测试', async () => {
+    const C = function () {
+      return {};
+    };
+    const componentOptions = alipayComponent(C);
+    const instanceList: IAlipayInstance[] = [];
+
+    const mountOneStart = process.hrtime.bigint();
+    const instance = mountAlipayComponent(componentOptions);
+    instance.unmount();
+    const mountOneTime = process.hrtime.bigint() - mountOneStart;
+
+    let start = process.hrtime.bigint();
+    for (let i = 0; i < 1000; i++) {
+      const instance = mountAlipayComponent(componentOptions);
+      instanceList.push(instance);
+    }
+    instanceList.forEach((e) => e.unmount());
+    const mountComponent = process.hrtime.bigint() - start;
+    // 这个在 ci 的时候会变慢，所以改成 10000
+    // 如果是之前的实现，其实根本无法执行 10000 次
+    expect(Number(mountComponent / mountOneTime) < 10000).toBeTruthy();
   });
 });
