@@ -6,6 +6,7 @@
 ![npm](https://img.shields.io/npm/v/functional-mini) [![codecov](https://codecov.io/gh/ant-design/functional-mini/branch/main/graph/badge.svg?token=DPV84U7YP8)](https://codecov.io/gh/ant-design/functional-mini) ![npm](https://img.shields.io/npm/dw/functional-mini)
 
 在前端开发生态中，React 函数式组件因其高效、简洁的特性，深受广大开发者喜爱。在使用 hooks 时，我们能轻松抽象和复用常见的业务逻辑。
+
 然而，在尝试将这种模式引入 antd-mini 组件开发时，现有的开源方案让我们感到不便。这些方案虽然在编程体验上有优势，但复杂的预编译过程和反直觉的视图层更新模式增加了维护难度，并为 Bug 排查带来了困难。
 
 因此，我们开发了 `functional-mini` 这个 SDK，旨在让开发者在小程序开发中更自然地使用 React 函数式组件。
@@ -21,6 +22,7 @@
 项目库的 [`/example/todo-alipay`](./example/todo-alipay/) 和 [`/example/todo-wechat`](./example/todo-wechat/) 目录下分别提供了完整的支付宝和微信小程序演示项目供参考。
 
 ![](./home.svg)
+
 ## 快速开始
 
 我们以最简单的计数器页面为例。
@@ -53,7 +55,7 @@ const Counter = ({ query }) => {
   // 将这些值提交到视图层
   return {
     count,
-    isOdd: count % 2 === 1, // 使用`%`判断 count 是否为奇数
+    isOdd: count % 2 === 1,
   };
 };
 
@@ -62,6 +64,7 @@ Page(alipayPage(Counter)); // 支付宝小程序使用 alipayPage
 // 或
 Page(wechatPage(Counter)); // 微信小程序使用 wechatPage
 ```
+
 ### step 3. 视图层代码保持不变
 
 视图层代码和各端原生规范一致，没有任何变化。这里是把 `{counter: number, isOdd: boolean}` 渲染到视图层，并绑定 `add` 事件的示意代码。

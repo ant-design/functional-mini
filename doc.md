@@ -17,7 +17,7 @@ import {
   useState,
   useEvent,
   alipayPage,
-  wechatPage
+  wechatPage,
 } from 'functional-mini/page'; // 从 functional-mini/page 引入 hooks
 
 // 编写页面逻辑
@@ -33,7 +33,7 @@ const Counter = ({ query }) => {
   return {
     count,
     // 判断 count 是否为奇数
-    isOdd: count % 2 !== 0
+    isOdd: count % 2 !== 0,
   };
 };
 
@@ -42,6 +42,7 @@ Page(alipayPage(Counter)); // 支付宝小程序使用 alipayPage
 // 或
 Page(wechatPage(Counter)); // 微信小程序使用 wechatPage
 ```
+
 ### step 3. 视图层代码保持不变
 
 视图层代码和各端原生规范一致，没有任何变化。
@@ -79,76 +80,167 @@ const Counter = () => {
   });
 };
 ```
+
 ## 常见用法
 
 ### 注册页面生命周期
 
 下面是页面生命周期与 hooks 对应关系，详细参数可以看[支付宝小程序](https://opendocs.alipay.com/mini/framework/page-detail)与[微信小程序](https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html)文档。
 
-| 小程序页面生命周期 | `import { hook } from 'functional-mini/page'` |
-| -------------- | ------------------------------------------ |
-| onLoad<br />onUnload | `useEffect(() => {`<br /> `  // 相当于 onLoad。query 参数在函数 Props 中获取`<br /> `  return () => {`<br /> `    // 相当于 onUnload`<br /> `  };`<br />`}, []);` |
-| onShow          | `useOnShow`                                |
-| onReady         | `useOnReady`                               |
-| onHide          | `useOnHide`                                |
+<table>
+  <tr>
+    <th>小程序页面生命周期</th>
+    <th><code>import { hook } from 'functional-mini/page'<code></th>
+  </tr>
+  <tr>
+    <td>onLoad<br />onUnload</td>
+    <td>
+      <pre><code>useEffect(() => {
+  // 相当于 onLoad。query 参数在函数 Props 中获取
+  return () => {
+    // 相当于 onUnload
+  };
+}, []);</code></pre>
+    </td>
+  </tr>
+  <tr>
+    <td>onShow</td>
+    <td>useOnShow</td>
+  </tr>
+  <tr>
+    <td>onReady</td>
+    <td>useOnReady</td>
+  </tr>
+  <tr>
+    <td>onHide</td>
+    <td>useOnHide</td>
+  </tr>
+</table>
+
 ### 注册页面事件
 
 下面是页面生命周期与事件处理的 hooks，详细参数可以看 [支付宝小程序](https://opendocs.alipay.com/mini/framework/page-detail) 与 [微信小程序](https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html) 文档。
 
 #### 微信小程序
 
-| 微信小程序页面事件     | `import { hook } from 'functional-mini/page'` |
-| ---------------------- | --------------------------------------------- |
-| onPullDownRefresh      | `useOnPullDownRefresh`                        |
-| onReachBottom          | `useOnReachBottom`                            |
-| onShareAppMessage      | `useOnShareAppMessage`                        |
-| onPageScroll           | `useOnPageScroll`                             |
-| onTabItemTap           | `useOnTabItemTap`                             |
-| onResize               | `useOnResize`                                 |
+| 微信小程序页面事件 | `import { hook } from 'functional-mini/page'` |
+| ------------------ | --------------------------------------------- |
+| onPullDownRefresh  | `useOnPullDownRefresh`                        |
+| onReachBottom      | `useOnReachBottom`                            |
+| onShareAppMessage  | `useOnShareAppMessage`                        |
+| onPageScroll       | `useOnPageScroll`                             |
+| onTabItemTap       | `useOnTabItemTap`                             |
+| onResize           | `useOnResize`                                 |
 
 #### 支付宝小程序
 
-| 支付宝小程序页面事件   | `import { hook } from 'functional-mini/page'` |
-| ---------------------- | --------------------------------------------- |
-| onPullDownRefresh      | `useOnPullDownRefresh`                        |
-| onReachBottom          | `useOnReachBottom`                            |
-| onShareAppMessage      | `useOnShareAppMessage`                        |
-| onPageScroll           | `useOnPageScroll`                             |
-| onTabItemTap           | `useOnTabItemTap`                             |
-| onTitleClick           | `useOnTitleClick`                             |
-| onOptionMenuClick      | `useOnOptionMenuClick`                        |
-| beforeTabItemTap       | `useBeforeTabItemTap`                         |
-| onKeyboardHeight       | `useOnKeyboardHeight`                         |
-| onBack                 | `useOnBack`                                   |
-| onSelectedTabItemTap   | `useOnSelectedTabItemTap`                     |
-| beforeReload           | `useBeforeReload`                             |
+| 支付宝小程序页面事件 | `import { hook } from 'functional-mini/page'` |
+| -------------------- | --------------------------------------------- |
+| onPullDownRefresh    | `useOnPullDownRefresh`                        |
+| onReachBottom        | `useOnReachBottom`                            |
+| onShareAppMessage    | `useOnShareAppMessage`                        |
+| onPageScroll         | `useOnPageScroll`                             |
+| onTabItemTap         | `useOnTabItemTap`                             |
+| onTitleClick         | `useOnTitleClick`                             |
+| onOptionMenuClick    | `useOnOptionMenuClick`                        |
+| beforeTabItemTap     | `useBeforeTabItemTap`                         |
+| onKeyboardHeight     | `useOnKeyboardHeight`                         |
+| onBack               | `useOnBack`                                   |
+| onSelectedTabItemTap | `useOnSelectedTabItemTap`                     |
+| beforeReload         | `useBeforeReload`                             |
+
 ### 注册组件生命周期
 
 下面是小程序自定义组件生命周期和 hooks 对应关系。详细参数可以查看 [支付宝小程序](https://opendocs.alipay.com/mini/framework/component-lifecycle?pathHash=9b628e01) 和 [微信小程序](https://developers.weixin.qq.com/miniprogram/dev/reference/api/Component.html) 的文档。
 
 #### 微信小程序
 
-| 微信小程序 | `import { hook } from 'functional-mini/component'` |
-| -------------- | --------------------------------------------------------------- |
-| created<br />detached | `useEffect(() => {`<br />  `// 相当于 created`<br />  `return () => {`<br />    `// 相当于 detached`<br />  `};`<br />`}, []);` |
-| attached        | `useAttached` |
-| ready             | `useReady`     |
-| moved           | `useMoved`   | 
+<table>
+  <tr>
+    <th>微信小程序</th>
+    <th><code>import { hook } from 'functional-mini/component'</code></th>
+  </tr>
+  <tr>
+    <td>created<br />detached</td>
+    <td>
+      <pre><code>useEffect(() => {
+  // 相当于 created
+  return () => {
+    // 相当于 detached
+  };
+}, []);</code></pre>
+    </td>
+  </tr>
+  <tr>
+    <td>attached</td>
+    <td>useAttached</td>
+  </tr>
+  <tr>
+    <td>ready</td>
+    <td>useReady</td>
+  </tr>
+  <tr>
+    <td>moved</td>
+    <td>useMoved</td>
+  </tr>
+</table>
 
 #### 支付宝小程序
-| 支付宝小程序         | `import { hook } from 'functional-mini/component'`         |
-| ------------------ | ---------------------------------------------------------- |
-| onInit<br />didUnmount | `useEffect(() => {`<br />&nbsp;&nbsp;`// 相当于 onInit`<br />&nbsp;&nbsp;`return () => {`<br />&nbsp;&nbsp;&nbsp;&nbsp;`// 相当于 didUnmount`<br />&nbsp;&nbsp;`};`<br />`}, []);` |
-| created<br />detached  | 没有对应，可以使用 onInit 与 didUnmount 代替。                     |
-| attached            | useAttached                                                    |
-| didMount            | useDidMount                                                    |
-| ready               | useReady                                                      |
-| deriveDataFromProps | 我们可以在渲染过程中更新 `state`，以达到实现 deriveDataFromProps 的目的。|
-| didUpdate           | `useEffect(() => {`<br />&nbsp;&nbsp;`// 相当于 didUpdate`<br />`}, [deps]);` |
-| moved               | useMoved                                                      |
+
+<table>
+  <tr>
+    <th>支付宝小程序</th>
+    <th><code>import { hook } from 'functional-mini/component'</code></th>
+  </tr>
+  <tr>
+    <td>onInit<br />didUnmount</td>
+    <td>
+      <pre><code>useEffect(() => {
+  // 相当于 onInit
+  return () => {
+    // 相当于 didUnmount
+  };
+}, []);</code></pre>
+    </td>
+  </tr>
+  <tr>
+    <td>created<br />detached</td>
+    <td>没有对应，可以使用 onInit 与 didUnmount 代替。</td>
+  </tr>
+  <tr>
+    <td>attached</td>
+    <td>useAttached</td>
+  </tr>
+    <tr>
+    <td>didMount</td>
+    <td>useDidMount</td>
+  </tr>
+  <tr>
+    <td>ready</td>
+    <td>useReady</td>
+  </tr>
+    <tr>
+    <td>deriveDataFromProps</td>
+    <td>我们可以在<strong>渲染过程中更新 state</strong>，以达到实现 deriveDataFromProps 的目的。</td>
+  </tr>
+  <tr>
+    <td>didUpdate</td>
+    <td>
+      <pre><code>useEffect(() => {
+  // 相当于 didUpdate
+}, [deps]);</code></pre>
+    </td>
+  </tr>
+  <tr>
+    <td>moved</td>
+    <td>useMoved</td>
+  </tr>
+</table>
+
 ### 设置页面的初始 data
 
 在组件真正运行前，functional 会在小程序里执行一次预渲染（理解为 server-side-render / SSR），收集返回值，这些数据将作为页面初始化的 data。
+
 预渲染时，所有的 useEffect、生命周期 hooks 都不会被触发。
 
 ```javascript
@@ -175,6 +267,7 @@ Page({
 });
 */
 ```
+
 ### 注册视图层事件
 
 我们可以使用 `useEvent` 这个 hook 来注册事件。
@@ -201,9 +294,14 @@ const useCounter = () => {
   return value;
 };
 ```
+
 ### 精细控制 setData 频次
 
-函数式组件返回 JSON 后，`functional-mini` 会对每个 key 做浅比较，如果和小程序实例上的数据不一致，就自动触发 setData 完成同步。如果有场景需要减小 setData 的性能损耗，可以使用 `useMemo` 把不变化的数据固定下来。这里是一个使用案例：
+函数式组件返回 JSON 后，`functional-mini` 会对每个 key 做浅比较，如果和小程序实例上的数据不一致，就自动触发 setData 完成同步。
+
+如果有场景需要减小 setData 的性能损耗，可以使用 `useMemo` 把不变化的数据固定下来。
+
+这里是一个使用案例：
 
 ```diff
 import { useMemo } from 'functional-mini/page';
@@ -273,31 +371,25 @@ const useCounter = () => {
   return value;
 };
 ```
+
 #### 获取父组件传递的参数
 
 我们可以通过 `props` 获取父组件传入的 `props`。与 `page` 不同，我们需要通过 `alipayComponent`、`wechatComponent` 的第二个参数定义 `props` 的类型。
 
 ```javascript
-import {
-  wechatComponent,
-  alipayComponent
-} from 'functional-mini/component';
+import { wechatComponent, alipayComponent } from 'functional-mini/component';
 
 function Counter(props) {
   console.log(props.value); // 通过 props 获取
 }
 
 const defaultProps = {
-  value: 1
+  value: 1,
 };
 
-Component(
-  alipayComponent(Counter, defaultProps)
-);
+Component(alipayComponent(Counter, defaultProps));
 
-Component(
-  wechatComponent(Counter, defaultProps)
-);
+Component(wechatComponent(Counter, defaultProps));
 ```
 
 #### 将函数传递给子组件
@@ -344,6 +436,7 @@ const CounterChild = (props) => {
   return { formatText };
 };
 ```
+
 #### 子组件向父组件传递数据
 
 - 在微信端，我们通过 `useComponent` 获取组件实例，然后通过 `component.triggerEvent('eventname', value)` 的方式向父组件传递数据。
@@ -374,6 +467,7 @@ const Counter = (props) => {
   return {};
 };
 ```
+
 #### 获取页面、组件实例
 
 在页面里可以通过 `usePage` 获取页面实例。相当于小程序 `Page` 和 `Component` 的 `this`。
@@ -397,7 +491,7 @@ import { useComponent } from 'functional-mini/component';
 
 const MyComponent = (props) => {
   const component = useComponent();
-  
+
   return {};
 };
 ```
@@ -462,6 +556,7 @@ page 相关的 API 应从 `functional-mini/page` 导入。
 - `useRef`
 - `useCallback`
 - `useMemo`
+
 #### 生命周期与页面事件 hooks
 
 详细参数可以看[支付宝小程序](https://opendocs.alipay.com/mini/framework/page-detail)与[微信小程序](https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html) 文档。
@@ -482,6 +577,7 @@ page 相关的 API 应从 `functional-mini/page` 导入。
 - `useOnBack`
 - `useOnSelectedTabItemTap`
 - `useBeforeReload`
+
 ### Component
 
 Component 相关的 API 统一从 `functional-mini/component` 导入。
@@ -518,6 +614,7 @@ Component 相关的 API 统一从 `functional-mini/component` 导入。
 - `useRef`
 - `useCallback`
 - `useMemo`
+
 #### 生命周期与页面事件 hooks
 
 详细参数可以参阅[支付宝小程序](https://opendocs.alipay.com/mini/framework/component-lifecycle?pathHash=9b628e01)与[微信小程序](https://developers.weixin.qq.com/miniprogram/dev/reference/api/Component.html)文档。
